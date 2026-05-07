@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prep Doc — General Mills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ====== IMPACT / RELEVANCE / FEASIBILITY SCREEN ====== */
+  .irf {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 28px 0 32px 0;
+    border: 1px solid var(--gray-200);
+    max-width: var(--max-reading);
+  }
+  .irf-cell {
+    padding: 16px 18px;
+    border-right: 1px solid var(--gray-200);
+    background: var(--white);
+  }
+  .irf-cell:last-child { border-right: none; }
+  .irf-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .irf-score {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    color: var(--black);
+  }
+  .irf-note {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--gray-700);
+  }
+
+  /* ====== PARTNERSHIP MODEL GRID ====== */
+  .partnership {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 32px 0;
+    border: 1px solid var(--gray-200);
+  }
+  .partnership-side {
+    padding: 28px;
+    background: var(--white);
+  }
+  .partnership-side.advisory {
+    background: var(--apricot-tint);
+    border-left: 1px solid var(--gray-200);
+  }
+  .partnership-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .partnership-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px 0;
+    color: var(--black);
+  }
+  .partnership-side p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gray-700);
+    margin: 0 0 12px 0;
+  }
+  .partnership-side ul { list-style: none; padding: 0; margin: 0; }
+  .partnership-side li {
+    font-size: 14px; line-height: 1.55;
+    color: var(--gray-700);
+    padding: 5px 0 5px 18px;
+    position: relative;
+  }
+  .partnership-side li::before {
+    content: ''; position: absolute; left: 0; top: 13px;
+    width: 10px; height: 1px; background: var(--terracotta);
+  }
+  .partnership-divider-arrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--terracotta-deep);
+    text-align: center;
+    padding: 12px 0;
+    background: var(--white);
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  /* ====== ADVISORY NOTE (per area) ====== */
+  .advisory-note {
+    margin: 28px 0;
+    padding: 16px 20px;
+    background: var(--gray-50);
+    border-left: 3px solid var(--gray-500);
+    max-width: var(--max-reading);
+  }
+  .advisory-note-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .advisory-note p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--gray-700);
+    font-style: italic;
+  }
+
+  /* ====== SEQUENCING RATIONALE ROW ====== */
+  .sequencing-block {
+    margin: 24px 0;
+    padding: 16px 20px;
+    background: var(--gray-50);
+    border-left: 3px solid var(--gray-300);
+    max-width: var(--max-reading);
+  }
+  .sequencing-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .sequencing-block p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--gray-700);
+  }
+
+  /* ====== TOKENS ====== */
+  :root {
+    --black: #000000;
+    --white: #ffffff;
+    --terracotta: #A64A30;
+    --terracotta-deep: #7C3621;
+    --apricot: #F6D1A3;
+    --apricot-soft: #FAEFE7;
+    --apricot-tint: #FBF6F1;
+    --confidential: #5B1F12;
+    --confidential-bg: #F5E6E0;
+    --gray-50: #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E8E6E1;
+    --gray-300: #D4D2CC;
+    --gray-500: #807D77;
+    --gray-700: #3A3835;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    --max-reading: 720px;
+    --rail-width: 260px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--black);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+  a { color: inherit; }
+
+  /* ====== TOPBAR ====== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--black); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-style: italic; font-weight: 500;
+    font-size: 16px; letter-spacing: -0.02em; flex-shrink: 0;
+  }
+  .topbar-meta {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gray-500); line-height: 1.4;
+  }
+  .topbar-meta strong { color: var(--terracotta-deep); font-weight: 600; }
+  .topbar-right { display: flex; gap: 8px; align-items: center; }
+  .btn {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 8px 14px; border-radius: 999px;
+    transition: all 0.15s ease;
+    border: 1px solid var(--gray-300); background: var(--white); color: var(--black);
+  }
+  .btn:hover { border-color: var(--black); background: var(--black); color: var(--white); }
+  .btn-primary { background: var(--black); color: var(--white); border-color: var(--black); }
+  .btn-primary:hover { background: var(--terracotta-deep); border-color: var(--terracotta-deep); }
+
+  /* ====== CONFIDENTIAL BANNER (KEEP IT VISIBLE) ====== */
+  .confidential-banner {
+    background: var(--confidential);
+    color: var(--white);
+    padding: 8px 32px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  /* ====== LAYOUT ====== */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail-width) 1fr;
+    gap: 0;
+    min-height: calc(100vh - 95px);
+  }
+
+  /* ====== RAIL ====== */
+  .rail {
+    border-right: 1px solid var(--gray-200);
+    padding: 48px 24px 48px 32px;
+    position: sticky;
+    top: 95px;
+    height: calc(100vh - 95px);
+    overflow-y: auto;
+    background: var(--gray-50);
+  }
+  .rail-eyebrow {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray-500); margin-bottom: 20px; display: block;
+  }
+  .rail-link {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 10px 12px 10px 0;
+    font-family: var(--font-body); font-size: 13.5px; font-weight: 500;
+    color: var(--gray-700); text-decoration: none;
+    border-left: 2px solid transparent;
+    padding-left: 14px; margin-left: -16px;
+    transition: all 0.15s ease; line-height: 1.35;
+  }
+  .rail-link:hover { color: var(--black); border-left-color: var(--gray-300); }
+  .rail-link.active { color: var(--terracotta-deep); border-left-color: var(--terracotta); font-weight: 600; }
+  .rail-num {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    color: var(--gray-500); flex-shrink: 0; width: 14px; line-height: 1.6;
+  }
+  .rail-link.active .rail-num { color: var(--terracotta); }
+  .rail-divider { height: 1px; background: var(--gray-200); margin: 20px 0; }
+  .rail-progress {
+    margin-top: 32px; padding: 14px;
+    background: var(--white); border: 1px solid var(--gray-200);
+  }
+  .rail-progress-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-500); margin-bottom: 8px;
+  }
+  .rail-progress-bar { height: 3px; background: var(--gray-200); position: relative; overflow: hidden; }
+  .rail-progress-fill { height: 100%; background: var(--terracotta); transition: width 0.2s ease; width: 0%; }
+
+  /* ====== MAIN ====== */
+  main { padding: 64px 80px 120px 80px; max-width: 920px; }
+
+  /* ====== TITLE ====== */
+  .title-block { margin-bottom: 56px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::after {
+    content: ''; flex: 1; height: 1px; background: var(--gray-200); max-width: 80px;
+  }
+  h1.title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(40px, 5vw, 64px); line-height: 1.05;
+    letter-spacing: -0.025em; margin: 0 0 20px 0;
+    font-variation-settings: 'opsz' 144;
+  }
+  h1.title em { font-style: italic; font-weight: 300; color: var(--terracotta-deep); }
+  .subtitle {
+    font-family: var(--font-display); font-size: 22px; font-weight: 300;
+    font-style: italic; line-height: 1.4; color: var(--gray-700);
+    max-width: 640px; margin: 0;
+  }
+
+  /* ====== INTERNAL CONTEXT (sensitive, prominent, clearly marked) ====== */
+  .internal-context {
+    margin: 48px 0;
+    border: 2px solid var(--confidential);
+    background: var(--confidential-bg);
+    padding: 0;
+    position: relative;
+  }
+  .internal-context-header {
+    background: var(--confidential);
+    color: var(--white);
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .internal-context-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .internal-context-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .internal-context-body { padding: 24px 28px 28px 28px; }
+  .internal-context-body h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.3;
+    margin: 0 0 10px 0;
+    color: var(--confidential);
+    letter-spacing: -0.01em;
+  }
+  .internal-context-body p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 0 0 12px 0;
+    color: var(--gray-700);
+  }
+  .internal-context-body p:last-child { margin: 0; }
+  .internal-context-body strong { color: var(--confidential); font-weight: 600; }
+  .internal-context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(91, 31, 18, 0.2);
+  }
+  .internal-context-grid h5 {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--confidential);
+    margin: 0 0 8px 0;
+  }
+  .internal-context-grid p { font-size: 13.5px; line-height: 1.6; }
+
+  /* ====== DOSSIER ====== */
+  .dossier {
+    border-top: 1px solid var(--black);
+    border-bottom: 1px solid var(--gray-200);
+    margin: 48px 0;
+  }
+  .dossier-row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 32px;
+    padding: 18px 0; border-bottom: 1px solid var(--gray-200); align-items: start;
+  }
+  .dossier-row:last-child { border-bottom: none; }
+  .dossier-key {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-500); padding-top: 3px;
+  }
+  .dossier-val { font-size: 15px; line-height: 1.55; color: var(--black); }
+  .dossier-val strong { font-weight: 600; }
+
+  /* ====== STATS ====== */
+  .stat-callout {
+    display: flex; gap: 32px; margin: 32px 0; padding: 24px 0;
+    border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200);
+    flex-wrap: wrap;
+  }
+  .stat { flex: 1; min-width: 140px; }
+  .stat-num {
+    font-family: var(--font-display); font-size: 36px; font-weight: 300;
+    line-height: 1; color: var(--terracotta-deep);
+    margin-bottom: 6px; letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-500); line-height: 1.4;
+  }
+
+  /* ====== TLDR ====== */
+  .tldr {
+    background: var(--apricot-soft);
+    padding: 36px 40px;
+    border-left: 4px solid var(--terracotta);
+    margin: 56px 0;
+  }
+  .tldr-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 16px; display: block;
+  }
+  .tldr p {
+    font-family: var(--font-display); font-size: 17px; line-height: 1.5;
+    margin: 0 0 14px 0; color: var(--black); font-weight: 400;
+  }
+  .tldr p:last-child { margin-bottom: 0; }
+  .tldr p strong { font-weight: 600; color: var(--terracotta-deep); }
+
+  /* ====== SECTION HEADERS ====== */
+  h2.section-h {
+    font-family: var(--font-display); font-weight: 400; font-size: 36px;
+    line-height: 1.15; letter-spacing: -0.02em;
+    margin: 80px 0 8px 0; padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-200);
+    font-variation-settings: 'opsz' 100;
+  }
+  .section-h-num {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    color: var(--terracotta-deep); margin-right: 12px; vertical-align: 6px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ====== HORIZON GRID — 12-month vs 24-36 month ====== */
+  .horizon {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .horizon-card {
+    border: 1px solid var(--gray-200);
+    padding: 28px;
+    background: var(--white);
+    position: relative;
+  }
+  .horizon-card.long {
+    background: var(--apricot-tint);
+    border-color: var(--terracotta);
+  }
+  .horizon-eyebrow {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 6px; display: block;
+  }
+  .horizon-title {
+    font-family: var(--font-display); font-size: 20px; font-weight: 500;
+    line-height: 1.25; letter-spacing: -0.01em;
+    margin: 0 0 16px 0; color: var(--black);
+  }
+  .horizon-card ul { list-style: none; padding: 0; margin: 0; }
+  .horizon-card li {
+    font-size: 14.5px; line-height: 1.6;
+    color: var(--gray-700); padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .horizon-card li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 10px; height: 1px; background: var(--terracotta);
+  }
+  .horizon-card.long li::before { background: var(--terracotta-deep); }
+
+  /* ====== SUMMARY TABLE ====== */
+  .summary-table { margin: 40px 0; border-top: 2px solid var(--black); }
+  .summary-row {
+    display: grid; grid-template-columns: 56px 1fr 180px 90px;
+    gap: 20px; padding: 20px 0;
+    border-bottom: 1px solid var(--gray-200); align-items: start;
+    transition: background 0.15s ease;
+    text-decoration: none; color: inherit; cursor: pointer;
+  }
+  .summary-row:hover {
+    background: var(--apricot-soft);
+    padding-left: 12px; padding-right: 12px;
+    margin-left: -12px; margin-right: -12px;
+  }
+  .summary-num {
+    font-family: var(--font-display); font-size: 32px; font-weight: 300;
+    line-height: 0.9; color: var(--terracotta); letter-spacing: -0.02em;
+  }
+  .summary-area {
+    font-family: var(--font-display); font-size: 19px; font-weight: 400;
+    line-height: 1.3; color: var(--black); letter-spacing: -0.01em;
+  }
+  .summary-outcome {
+    font-family: var(--font-body); font-size: 13px; line-height: 1.45;
+    color: var(--gray-500); margin-top: 6px;
+  }
+  .summary-lens {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em; color: var(--gray-700); line-height: 1.5;
+    padding-top: 6px;
+  }
+  .summary-conf {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+    color: var(--terracotta-deep); text-align: right; padding-top: 6px;
+  }
+
+  /* ====== AREA ====== */
+  .area { margin: 80px 0; padding-top: 24px; scroll-margin-top: 100px; }
+  .area-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+  .area-num {
+    font-family: var(--font-display); font-size: 60px; font-weight: 300;
+    line-height: 0.8; color: var(--terracotta); letter-spacing: -0.03em;
+  }
+  .area-meta-text { flex: 1; min-width: 200px; }
+  .lens-tag {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border: 1px solid var(--gray-300);
+    color: var(--gray-700); margin-right: 6px; margin-bottom: 4px;
+  }
+  .confidence-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 12px; background: var(--black); color: var(--white);
+  }
+  .confidence-pill.warn { background: var(--terracotta); }
+  h3.area-title {
+    font-family: var(--font-display); font-weight: 400; font-size: 32px;
+    line-height: 1.15; letter-spacing: -0.02em;
+    margin: 4px 0 28px 0; max-width: 720px;
+    font-variation-settings: 'opsz' 144;
+  }
+  h3.area-title em { font-style: italic; color: var(--terracotta-deep); }
+
+  /* ====== CONTENT BLOCKS ====== */
+  .block { margin: 24px 0; max-width: var(--max-reading); }
+  .block-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray-500); margin-bottom: 10px; display: block;
+  }
+  .block p {
+    font-size: 15.5px; line-height: 1.7;
+    margin: 0 0 14px 0; color: var(--gray-700);
+  }
+  .block p:last-child { margin-bottom: 0; }
+  .block ul { list-style: none; padding: 0; margin: 0; }
+  .block li {
+    font-size: 15.5px; line-height: 1.65; color: var(--gray-700);
+    padding: 6px 0 6px 24px; position: relative;
+  }
+  .block li::before {
+    content: ''; position: absolute; left: 0; top: 16px;
+    width: 12px; height: 1px; background: var(--terracotta);
+  }
+
+  /* ====== TALKING POINTS ====== */
+  .talking {
+    background: var(--apricot-soft);
+    border-left: 4px solid var(--terracotta);
+    padding: 0; margin: 32px 0; max-width: var(--max-reading);
+  }
+  .talking-header {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px; text-align: left;
+    transition: background 0.15s ease;
+  }
+  .talking-header:hover { background: rgba(166, 74, 48, 0.08); }
+  .talking-header-left { display: flex; align-items: center; gap: 14px; }
+  .talking-icon {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terracotta-deep); background: var(--white);
+    padding: 4px 10px; border: 1px solid var(--terracotta);
+  }
+  .talking-title {
+    font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    color: var(--terracotta-deep); letter-spacing: 0.02em;
+  }
+  .talking-toggle {
+    font-family: var(--font-mono); font-size: 18px; font-weight: 400;
+    color: var(--terracotta-deep); transition: transform 0.2s ease; line-height: 1;
+  }
+  .talking.open .talking-toggle { transform: rotate(45deg); }
+  .talking-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .talking.open .talking-body { max-height: 1200px; }
+  .talking-content { padding: 4px 28px 24px 28px; }
+  .quote {
+    position: relative; padding: 14px 0 14px 28px;
+    border-bottom: 1px solid rgba(166, 74, 48, 0.18);
+    font-family: var(--font-display); font-size: 16.5px; line-height: 1.5;
+    font-style: italic; color: var(--black); font-weight: 400;
+  }
+  .quote:last-child { border-bottom: none; }
+  .quote::before {
+    content: '"'; position: absolute; left: 0; top: 6px;
+    font-family: var(--font-display); font-size: 32px; line-height: 1;
+    color: var(--terracotta); font-weight: 300;
+  }
+  .quote-actions { margin-top: 8px; display: flex; gap: 12px; }
+  .copy-btn {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gray-500); padding: 0; transition: color 0.15s ease;
+  }
+  .copy-btn:hover { color: var(--terracotta-deep); }
+  .copy-btn.copied { color: var(--terracotta); }
+
+  /* ====== Q&A ACCORDION ====== */
+  .qa-list { margin: 32px 0; border-top: 1px solid var(--gray-200); }
+  .qa-item { border-bottom: 1px solid var(--gray-200); }
+  .qa-q-btn {
+    width: 100%; text-align: left; padding: 22px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    font-family: var(--font-display); font-size: 19px; font-weight: 400;
+    line-height: 1.35; color: var(--black); font-style: italic;
+    transition: color 0.15s ease;
+  }
+  .qa-q-btn:hover { color: var(--terracotta-deep); }
+  .qa-q-toggle {
+    font-family: var(--font-mono); font-size: 22px; font-weight: 300;
+    color: var(--terracotta); flex-shrink: 0;
+    transition: transform 0.2s ease; line-height: 1;
+  }
+  .qa-item.open .qa-q-toggle { transform: rotate(45deg); }
+  .qa-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .qa-item.open .qa-a { max-height: 700px; }
+  .qa-a-content {
+    font-size: 15.5px; line-height: 1.7; color: var(--gray-700);
+    padding: 0 0 28px 0; max-width: var(--max-reading); font-style: normal;
+  }
+
+  /* ====== APPENDIX ====== */
+  .appendix-list { margin: 32px 0; border-top: 2px solid var(--black); }
+  .appendix-item {
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+    padding: 20px 0; border-bottom: 1px solid var(--gray-200);
+  }
+  .appendix-key {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--terracotta-deep); line-height: 1.55;
+  }
+  .appendix-val { font-size: 14px; line-height: 1.65; color: var(--gray-700); }
+
+  /* ====== NOTE BOX ====== */
+  .note-box {
+    margin: 24px 0; padding: 20px 24px;
+    border: 1px dashed var(--terracotta);
+    background: var(--apricot-tint); max-width: var(--max-reading);
+  }
+  .note-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 10px; display: block;
+  }
+  .note-box p {
+    font-size: 14.5px; line-height: 1.6;
+    margin: 0 0 8px 0; color: var(--gray-700);
+  }
+  .note-box p:last-child { margin: 0; }
+
+  /* ====== FOOTER ====== */
+  footer {
+    margin-top: 120px; padding-top: 32px;
+    border-top: 1px solid var(--gray-200);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-text {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500);
+  }
+  .footer-text strong { color: var(--terracotta-deep); font-weight: 600; }
+
+  /* ====== TOAST ====== */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--black); color: var(--white);
+    padding: 12px 20px; font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; transition: transform 0.3s ease; z-index: 100;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 1024px) {
+    .shell { grid-template-columns: 1fr; }
+    .rail { display: none; }
+    main { padding: 48px 32px 80px 32px; }
+    .summary-row { grid-template-columns: 40px 1fr 80px; }
+    .summary-lens { display: none; }
+    .dossier-row { grid-template-columns: 1fr; gap: 6px; }
+    .appendix-item { grid-template-columns: 1fr; gap: 6px; }
+    .horizon { grid-template-columns: 1fr; }
+    .internal-context-grid { grid-template-columns: 1fr; }
+    .partnership { grid-template-columns: 1fr; }
+    .partnership-side.advisory { border-left: none; border-top: 1px solid var(--gray-200); }
+    .irf { grid-template-columns: 1fr; }
+    .irf-cell { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .irf-cell:last-child { border-bottom: none; }
+  }
+  @media (max-width: 600px) {
+    .topbar { padding: 12px 20px; }
+    .topbar-meta { display: none; }
+    main { padding: 32px 20px 60px 20px; }
+    h1.title { font-size: 36px; }
+    .tldr { padding: 24px; }
+  }
+
+  @media print {
+    .topbar, .rail, .btn, footer, .confidential-banner { display: none; }
+    .shell { grid-template-columns: 1fr; }
+    main { padding: 24px; max-width: none; }
+    .talking-body, .qa-a { max-height: none !important; }
+    .talking-toggle, .qa-q-toggle { display: none; }
+    body { font-size: 11pt; }
+    h2.section-h { page-break-before: auto; }
+    .area { page-break-inside: avoid; }
+    .internal-context { border-color: var(--black); }
+    .internal-context-header { background: var(--black); }
+  }
+</style>
+</head>
+<body>
+
+<!-- CONFIDENTIAL BANNER -->
+<div class="confidential-banner">
+  Confidential · Internal Consello prep material
+</div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="logo-mark">C</div>
+    <div class="topbar-meta">
+      <strong>Prep Doc</strong><br>
+      General Mills · Brand, Experience &amp; Growth
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="btn" onclick="window.print()">Print</button>
+    <button class="btn btn-primary" onclick="expandAll()">Expand All</button>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- RAIL -->
+  <nav class="rail">
+    <span class="rail-eyebrow">Contents</span>
+    <a href="#overview" class="rail-link"><span class="rail-num">01</span><span>Meeting at a Glance</span></a>
+    <a href="#partnership" class="rail-link"><span class="rail-num">02</span><span>How We Partner</span></a>
+    <a href="#tldr" class="rail-link"><span class="rail-num">03</span><span>TL;DR</span></a>
+    <a href="#horizon" class="rail-link"><span class="rail-num">04</span><span>The Two Horizons</span></a>
+    <a href="#five" class="rail-link"><span class="rail-num">05</span><span>The Five + Advisory</span></a>
+
+    <div class="rail-divider"></div>
+
+    <a href="#area-1" class="rail-link"><span class="rail-num">1</span><span>Pet Membership</span></a>
+    <a href="#area-2" class="rail-link"><span class="rail-num">2</span><span>Reframe Good Rewards</span></a>
+    <a href="#area-3" class="rail-link"><span class="rail-num">3</span><span>Unify the Narrative</span></a>
+    <a href="#area-4" class="rail-link"><span class="rail-num">4</span><span>Operating-Model Reset</span></a>
+    <a href="#area-5" class="rail-link"><span class="rail-num">5</span><span>First-Party Media</span></a>
+    <a href="#area-6" class="rail-link" style="font-weight: 600;"><span class="rail-num" style="color: var(--terracotta);">6</span><span>The Advisory Layer</span></a>
+
+    <div class="rail-divider"></div>
+
+    <a href="#sequencing" class="rail-link"><span class="rail-num">06</span><span>Sequencing</span></a>
+    <a href="#qa" class="rail-link"><span class="rail-num">07</span><span>Anticipated Questions</span></a>
+    <a href="#appendix" class="rail-link"><span class="rail-num">08</span><span>Source Trail</span></a>
+
+    <div class="rail-progress">
+      <div class="rail-progress-label">Reading progress</div>
+      <div class="rail-progress-bar"><div class="rail-progress-fill" id="progress-fill"></div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- TITLE -->
+    <div class="title-block" id="overview">
+      <span class="eyebrow">Brand, Experience &amp; Growth Practice</span>
+      <h1 class="title">General Mills<br><em>prep guide</em></h1>
+      <p class="subtitle">Execution capacity where it accelerates the work — and an advisory overlay that pressure-tests priorities, sharpens objectives, and brings independent inputs to the questions that matter most.</p>
+    </div>
+
+    <!-- DOSSIER -->
+    <h2 class="section-h"><span class="section-h-num">01</span>Meeting at a Glance</h2>
+    <div class="dossier">
+      <div class="dossier-row">
+        <div class="dossier-key">Client</div>
+        <div class="dossier-val">General Mills, Inc. <strong>(NYSE: GIS)</strong> — Minneapolis, MN. The largest segment is North America Retail. North America Pet is the fastest-growing.</div>
+      </div>
+      <div class="dossier-row">
+        <div class="dossier-key">Why now</div>
+        <div class="dossier-val">GIS stock down ~40% over twelve months, near 15-year lows ~$38. 6.6% dividend yield signals investor skepticism. Activists circling but not yet engaged (Motley Fool, May 4, 2026). FY26 reinvestment phase ends Q3. <strong>FY27 must show dollar growth</strong> — and the Street will start asking about FY28 within the next two quarters.</div>
+      </div>
+      <div class="dossier-row">
+        <div class="dossier-key">How we engage</div>
+        <div class="dossier-val">Two layers, working together. <strong>Execution capacity</strong> on the workstreams where we have direct operating expertise — membership architecture, marketing operating-model, narrative integration. <strong>Advisory overlay</strong> across the broader portfolio, including the areas we are not staffing directly — pressure-testing objectives, sharpening priorities, and bringing independent inputs to the decisions that matter most. The two are designed to reinforce each other, not be chosen between.</div>
+      </div>
+      <div class="dossier-row">
+        <div class="dossier-key">Consello objective</div>
+        <div class="dossier-val">Establish a multi-year relationship anchored to the operating side of the business. Land 1–2 areas for follow-on scoping where execution support adds the most. Open the broader advisory dialogue. Leave with named next steps, not a generic check-in.</div>
+      </div>
+      <div class="dossier-row">
+        <div class="dossier-key">Tone</div>
+        <div class="dossier-val">Peer-to-peer. The operator across the table has run multiple segments and held the strategy seat. Diagnosis is not the value-add — sparring with people who have made these decisions before is. Mindy and Janey lead the relationship.</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stat-callout">
+      <div class="stat"><div class="stat-num">~40%</div><div class="stat-label">Stock decline,<br>trailing 12 months</div></div>
+      <div class="stat"><div class="stat-num">16M</div><div class="stat-label">Monthly users on<br>first-party platforms</div></div>
+      <div class="stat"><div class="stat-num">25%</div><div class="stat-label">NPD revenue<br>growth in FY26</div></div>
+      <div class="stat"><div class="stat-num">$1.5B</div><div class="stat-label">Stranded costs from<br>yogurt divestiture</div></div>
+    </div>
+
+    <!-- ============== HOW WE PARTNER ============== -->
+    <h2 class="section-h" id="partnership"><span class="section-h-num">02</span>How We Partner</h2>
+    <p style="font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--gray-700); max-width: 720px; margin: 24px 0 0 0;">The engagement is two layers, designed to reinforce each other. We deliver execution capacity where we have direct operating expertise — and we sit alongside the broader portfolio as an advisory overlay across everything else.</p>
+
+    <div class="partnership">
+      <div class="partnership-side">
+        <span class="partnership-eyebrow">Layer One · Execution</span>
+        <h4 class="partnership-title">Where we do the work</h4>
+        <p>Direct operating support on the workstreams where we have lived experience and can move from day one. Small teams — three to five people — embedded shoulder-to-shoulder with internal leaders.</p>
+        <ul>
+          <li>Membership architecture and loyalty economics</li>
+          <li>Marketing operating-model and agency-restructure</li>
+          <li>Brand narrative integration and investor-day storytelling</li>
+          <li>First-party data activation and commercial productization</li>
+        </ul>
+      </div>
+      <div class="partnership-side advisory">
+        <span class="partnership-eyebrow">Layer Two · Advisory Overlay</span>
+        <h4 class="partnership-title">Where we sit alongside</h4>
+        <p>An ongoing thought-partnership across areas we are <em>not</em> staffing directly — including the parts of the business that are working well. The overlay exists to bring independent inputs to the decisions that matter most.</p>
+        <ul>
+          <li>Pressure-testing priorities — separating urgent from important</li>
+          <li>Sharpening objectives so wins are measurable and defensible</li>
+          <li>Independent inputs from outside the operating cadence</li>
+          <li>Pattern recognition from operators who have been in the seat</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="partnership-divider-arrow">
+      Every recommendation in this guide is screened against three filters — <em>Impact, Relevance, Feasibility</em>.<br>The screen is shown explicitly on each area below.
+    </div>
+
+    <!-- TLDR -->
+    <h2 class="section-h" id="tldr"><span class="section-h-num">03</span>TL;DR</h2>
+    <div class="tldr">
+      <span class="tldr-label">If you only read three paragraphs</span>
+      <p>The next chapter has two horizons running in parallel: <strong>finish FY26 strong on the current playbook</strong>, and <strong>set up the FY28 investor day</strong>. Five execution-led priorities, sequenced for impact and feasibility. Pet membership leads — operations stay inside, the architecture decision is uniquely Consello-shaped. Good Rewards scales the same logic across the largest segment. The narrative work re-rates the multiple. The operating-model reset funds the rest. First-party media is the horizon idea, held back unless raised from inside.</p>
+      <p>Plus a sixth, distinct offer: <strong>the advisory layer</strong>. A continuous operator-level thought partnership across the entire portfolio — including the parts we are <em>not</em> staffing directly, including the parts that are working well. It exists to help cut through the noise, sharpen objectives, and add clarity on where to lean in and where to pull back. It can stand alone, run alongside execution, or be how the relationship begins.</p>
+      <p>Differentiation: <strong>Mindy was the sitting CEO of WW and HSN.</strong> <strong>Janey built Walmart+ and Walmart Connect.</strong> <strong>Wendy ran Dentsu across 145 markets.</strong> What this client needs from outside is not analysis. It is operators who have made these decisions before — and have the scars.</p>
+    </div>
+
+    <!-- ============== HORIZON GRID ============== -->
+    <h2 class="section-h" id="horizon"><span class="section-h-num">04</span>The Two Horizons</h2>
+    <p style="font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--gray-700); margin: 24px 0 0 0; max-width: 720px;">Every recommendation is built to deliver visible progress on the FY27 commitment <em>and</em> seed the story that will land at the FY28 investor day.</p>
+    <div class="horizon">
+      <div class="horizon-card">
+        <span class="horizon-eyebrow">Horizon One · 12 Months</span>
+        <h4 class="horizon-title">Finish the Remarkability chapter strong</h4>
+        <ul>
+          <li>Pet membership architecture decided and ready to launch</li>
+          <li>Good Rewards member metric in earnings disclosure</li>
+          <li>Coherent narrative across the FY26 innovation slate</li>
+          <li>Marketing efficiency target stated and defended — the funding mechanism</li>
+          <li>FY27 dollar growth, not just volume growth</li>
+        </ul>
+      </div>
+      <div class="horizon-card long">
+        <span class="horizon-eyebrow">Horizon Two · 24–36 Months</span>
+        <h4 class="horizon-title">Set up the next chapter</h4>
+        <ul>
+          <li>Pet as a recurring-revenue business with disclosed subscriber count</li>
+          <li>Membership architecture extended portfolio-wide</li>
+          <li>A repositioning of GIS as a nutritional-density company, not a center-store CPG</li>
+          <li>Self-funding marketing engine that can absorb the next reinvestment</li>
+          <li>An investor day story that re-rates the multiple</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============== FIVE AREAS SUMMARY ============== -->
+    <h2 class="section-h" id="five"><span class="section-h-num">05</span>The Five Areas — Plus an Advisory Layer</h2>
+    <p style="font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--gray-700); max-width: 720px; margin: 24px 0 8px 0;">Five execution-led priorities, sequenced for impact and feasibility. Plus a sixth, distinct offer — a continuous advisory layer that runs across the portfolio. The first five are about <em>what work happens</em>. The sixth is about <em>how the operator gets clarity</em> on which work matters most. Click any row to jump to detail.</p>
+    <div class="summary-table">
+      <a href="#area-1" class="summary-row">
+        <div class="summary-num">1</div>
+        <div>
+          <div class="summary-area">Stand up Blue Buffalo / fresh pet membership</div>
+          <div class="summary-outcome">Stated subscriber count and Pet retention metric in disclosure</div>
+        </div>
+        <div class="summary-lens">Whiteside / Grossman / Mandell</div>
+        <div class="summary-conf">85%</div>
+      </a>
+      <a href="#area-2" class="summary-row">
+        <div class="summary-num">2</div>
+        <div>
+          <div class="summary-area">Reframe Good Rewards into a true membership engine</div>
+          <div class="summary-outcome">Member growth, basket lift, retention metric defensible in earnings</div>
+        </div>
+        <div class="summary-lens">Whiteside / Mandell</div>
+        <div class="summary-conf">90%</div>
+      </a>
+      <a href="#area-3" class="summary-row">
+        <div class="summary-num">3</div>
+        <div>
+          <div class="summary-area">Unify the GLP-1 / 55+ / Hispanic slate into one narrative</div>
+          <div class="summary-outcome">Coherent investor-day story · Measurable marketing ROI lift</div>
+        </div>
+        <div class="summary-lens">Grossman / Mandell</div>
+        <div class="summary-conf">90%</div>
+      </a>
+      <a href="#area-4" class="summary-row">
+        <div class="summary-num">4</div>
+        <div>
+          <div class="summary-area">Marketing operating-model and stranded-cost reset</div>
+          <div class="summary-outcome">Stated efficiency target · Funds areas 1&#x2013;3 · Activist-defensible</div>
+        </div>
+        <div class="summary-lens">Clark / Gunning</div>
+        <div class="summary-conf">85%</div>
+      </a>
+      <a href="#area-5" class="summary-row">
+        <div class="summary-num">5</div>
+        <div>
+          <div class="summary-area">Brand-direct first-party media monetization layer</div>
+          <div class="summary-outcome">Soft launch with 3&#x2013;5 anchor partners · FY27 stated revenue line</div>
+        </div>
+        <div class="summary-lens">Whiteside / Bader</div>
+        <div class="summary-conf">80%</div>
+      </a>
+      <a href="#area-6" class="summary-row" style="background: var(--apricot-tint);">
+        <div class="summary-num" style="color: var(--terracotta-deep);">6</div>
+        <div>
+          <div class="summary-area">The advisory layer — cutting through the noise</div>
+          <div class="summary-outcome">Continuous operator-level thought partnership across the portfolio · Can stand alone</div>
+        </div>
+        <div class="summary-lens">Grossman / Clark / Whiteside</div>
+        <div class="summary-conf" style="color: var(--terracotta-deep);">Standalone</div>
+      </a>
+    </div>
+
+    <!-- ============== AREA 1 — PET MEMBERSHIP ============== -->
+    <article class="area" id="area-1">
+      <div class="area-meta">
+        <div class="area-num">01</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Whiteside / Grossman / Mandell</span>
+          <span class="confidence-pill">Confidence 85%</span>
+        </div>
+      </div>
+      <h3 class="area-title">Stand up a Blue Buffalo / fresh pet membership <em>before The Farmer&#x2019;s Dog defines the category.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Why this leads</span>
+        <p>Pet operations are well-run and don&#x2019;t need outside help. But the <em>membership and subscription architecture decision</em> sitting on top of Pet is a different question — and it is the most Consello-shaped problem on the list. <strong>Janey sold Blue Buffalo to General Mills</strong> as part of her time leading the brand, so she knows the asset, the consumer, and the integration history first-hand. <strong>Jon Mandell architected the DTC strategy for Open Farm</strong> on top of building and optimizing numerous large-scale loyalty programs and membership businesses. Mindy ran HSN&#x2019;s membership-driven omnichannel. The architecture window in pet humanization closes fast, and the structural call made now compounds for a decade.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The strategic frame</span>
+        <p>Pet is the bright spot — Harmening has said so on three consecutive earnings calls. Pet humanization continues to outperform the rest of the portfolio. Blue Buffalo&#x2019;s Buddies app is live, and General Mills has publicly committed to fresh pet food investment to compete with The Farmer&#x2019;s Dog (FY26 commentary).</p>
+        <p>The Farmer&#x2019;s Dog reportedly does $1B+ in annual revenue on a subscription model with no scaled physical retail presence. Blue Buffalo has every input The Farmer&#x2019;s Dog has — brand, retail distribution, formulation expertise — plus assets they don&#x2019;t. The strategic question is not whether to compete; it is how the architecture lines up. Specifically: <strong>do Buddies and the new fresh business report as one membership product or two channels?</strong> That is a structural call. Structural calls compound.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What execution looks like</span>
+        <ul>
+          <li><strong>Membership tier design:</strong> price points, benefit ladder, tier triggers, what crosses the paywall</li>
+          <li><strong>Buddies / fresh integration architecture:</strong> single ID, unified P&amp;L, shared CRM, joint pricing logic</li>
+          <li><strong>Disclosure design:</strong> which subscriber metrics start reporting, when, how — built in coordination with IR before launch, not after</li>
+          <li><strong>Brand permission work:</strong> positioning Blue Buffalo as a premium retail brand <em>with</em> subscription extension, not a subscription-first DTC competitor</li>
+          <li><strong>Operator partnership:</strong> we work alongside the internal Pet team and existing supply-chain leaders — we do not own cold-chain, fulfillment, or formulation</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What lands at the next investor day</span>
+        <ul>
+          <li>Launched membership tier with stated subscriber count and retention metric</li>
+          <li>Pet segment disclosure that gives the Street a recurring-revenue line to underwrite</li>
+          <li>Multiple expansion potential — Wall Street pays for visible recurring revenue in a way it does not pay for shelf-stable kibble</li>
+        </ul>
+      </div>
+
+      <div class="irf">
+        <div class="irf-cell">
+          <span class="irf-label">Impact</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">First disclosable subscriber metric in Pet. Re-rates how the Street values the segment. Defines category position before The Farmer&#x2019;s Dog locks it in.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Relevance</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Builds directly on stated FY26 fresh investment and the existing Buddies platform. No reposition required.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Feasibility</span>
+          <div class="irf-score">Medium-High</div>
+          <div class="irf-note">Architecture and brand work are 90-day moves. Operational ramp on fresh is on the company&#x2019;s timeline, not ours. We do not staff supply chain.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Risks</span>
+        <ul>
+          <li>Fresh pet food is operationally complex — cold chain, last-mile, fulfillment. That work belongs inside; we do not own it.</li>
+          <li>Brand permission risk if Blue Buffalo dilutes by chasing The Farmer&#x2019;s Dog&#x2019;s ground rather than holding its own.</li>
+          <li>Margin profile of fresh is lower than dry kibble; the membership economics need to hold up when modeled honestly.</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note">
+        <span class="advisory-note-label">Advisory note</span>
+        <p>Where the advisory layer adds value here: pressure-testing the membership-vs-channel architecture decision before it gets locked in, sparring on disclosure design with IR ahead of launch, and providing an independent read on whether the brand permission strategy is differentiated from The Farmer&#x2019;s Dog or convergent with it.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use in room</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              Pet operations are not where outside help is needed. But the membership and subscription architecture sitting on top of Pet is genuinely a different problem, and it&#x2019;s the one structural call where outside pattern recognition is hard to source any other way.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              Janey sold Blue Buffalo to General Mills — she knows the brand, the consumer, and the integration history from the inside. Jon Mandell architected the DTC strategy for Open Farm on top of building large-scale loyalty programs. The pattern recognition on this specific category is unusually deep on our side.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              Where Consello earns its keep here is the membership construct, the brand architecture, and the disclosure design with IR. The supply chain and cold-chain work, you have stronger operators on the inside than we&#x2019;d ever bring to the table.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== AREA 2 — GOOD REWARDS ============== -->
+    <article class="area" id="area-2">
+      <div class="area-meta">
+        <div class="area-num">02</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Whiteside / Mandell</span>
+          <span class="confidence-pill">Confidence 90%</span>
+        </div>
+      </div>
+      <h3 class="area-title">Reframe Good Rewards into <em>a true membership engine.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Why this is second</span>
+        <p>Highest confidence on the list. Most portable. The membership construct built here scales the Pet logic across the rest of NAR — the largest segment in the business — and gives the company its first disclosable consumer-relationship metric in earnings. <strong>Janey did this exact build at Walmart+. Jon Mandell has built and optimized numerous large-scale loyalty programs and membership businesses</strong> — the bench depth on this specific construct is the value-add.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The strategic frame</span>
+        <p>Good Rewards launched January 2025 with Fetch. The combined first-party footprint — Good Rewards plus Box Tops plus BettyCrocker.com plus Pillsbury.com — reaches 16 million monthly users with consented household-level data. Cheriti Swigart and the team have publicly framed this as a "marketing engagement platform" (CGT, January 2025). Nature Valley shifted nearly 70% of brand spend to first-party-data-targeted media with high-single-digit lift.</p>
+        <p>Sixteen million monthly users with consented data is membership scale, not a CRM list. Today the consumer experiences Good Rewards as a Fetch overlay, not a General Mills relationship. The opportunity is to reframe it from a coupon utility into a tiered membership the household sees as worth opening every week. Janey ran exactly this conversion at Walmart+ — taking fragmented perks and unifying them under a single predictable subscription that reduced cognitive load and drove repeat behavior.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What execution looks like</span>
+        <ul>
+          <li><strong>Tier architecture:</strong> what stays free, what crosses the paywall, where the value exchange feels worth opening the app weekly</li>
+          <li><strong>Fetch relationship redesign:</strong> a 6&#x2013;9 month conversation about what GIS owns directly versus what stays partnered</li>
+          <li><strong>Box Tops integration:</strong> clear differentiation by purpose so the two programs don&#x2019;t cannibalize</li>
+          <li><strong>Cross-portfolio activation:</strong> 45+ brands talking to one household through one membership relationship, not 45 fragmented touchpoints</li>
+          <li><strong>Disclosure design:</strong> a member metric the CFO can defend in earnings within 12 months</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What the board sees in 12 months</span>
+        <ul>
+          <li>Active member growth and member household penetration as a stated metric</li>
+          <li>Member-vs-non-member basket size and category cross-purchase lift</li>
+          <li>A retention/repeat metric the CFO can defend in earnings commentary</li>
+        </ul>
+      </div>
+
+      <div class="irf">
+        <div class="irf-cell">
+          <span class="irf-label">Impact</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">First disclosable consumer-relationship metric in earnings. Foundation for membership across the portfolio. Multiple expansion lever.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Relevance</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Direct extension of CGT/Salesforce-cited investments. Builds on the Nature Valley first-party data lift already public.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Feasibility</span>
+          <div class="irf-score">Medium-High</div>
+          <div class="irf-note">Fetch partnership creates a 6&#x2013;9 month restructuring path. Architecture work proceeds in parallel. No technology dependency that blocks start.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Risks</span>
+        <ul>
+          <li>The Fetch partnership constrains how much of the experience GIS owns directly. Restructuring is a 6&#x2013;9 month conversation, not a flip of a switch.</li>
+          <li>Consumer expectations for CPG loyalty programs are low. The bar to feel "remarkable" — Harmening&#x2019;s word — is correspondingly high.</li>
+          <li>Box Tops cannibalization risk if the two programs aren&#x2019;t clearly differentiated by purpose.</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note">
+        <span class="advisory-note-label">Advisory note</span>
+        <p>Where the advisory layer adds value: independent read on whether the Fetch partnership terms are durable enough to support the membership ambition, sparring on tier-design choices that map to actual household behavior, and IR coordination on what to start disclosing and when.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use in room</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              You have 16 million monthly users on your first-party platforms. That&#x2019;s larger than several public membership businesses. The question we&#x2019;d start with is whether Good Rewards is being designed as a membership product or as a data-collection layer — because the architecture for those two is different.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              Janey architected exactly this conversion at Walmart, taking fragmented perks under a single membership the household opens every week. The construct ports.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              The win we&#x2019;d target by the next investor day: a member metric you can disclose and defend.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== AREA 3 — NARRATIVE ============== -->
+    <article class="area" id="area-3">
+      <div class="area-meta">
+        <div class="area-num">03</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Grossman / Mandell</span>
+          <span class="confidence-pill">Confidence 90%</span>
+        </div>
+      </div>
+      <h3 class="area-title">Unify the GLP-1, 55+, and Hispanic slate <em>into one brand narrative.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Why this is third</span>
+        <p>The product slate is already strong — three priority cohorts publicly named, ~25% NPD growth in FY26, elasticities holding on 90% of price investments. The gap is the one-sentence story the Street can repeat. <strong>Mindy and Jon Mandell were on the front lines of GLP-1 at Weight Watchers</strong> — running the brand through exactly this consumer transition, in real time, at scale. They also led <strong>WW&#x2019;s expansion to a more Hispanic audience, including a partnership with Adamari López as brand ambassador</strong>. Two of the three priority cohorts on the GIS list are cohorts they have lived experience activating against. That is the value-add.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The strategic frame</span>
+        <p>Three priority cohorts were named publicly by leadership at CAGNY (February 2026) and FoodNavigator (October 2025): GLP-1 users, 55+ shoppers, Hispanic households. The innovation pipeline backing those cohorts is real — Cheerios Protein, Ghost partnership, Annie&#x2019;s Super Mac, Honey Nut Cheerios Protein, smaller pack sizes for Pillsbury.</p>
+        <p>The vulnerability: the company is communicating these as three separate plays. The Street is reading them as three separate plays. They are actually one play. General Mills is repositioning its core portfolio around the consumer who eats less but more nutritionally dense food — and that consumer is GLP-1 user, 55+ household, and many Hispanic family meal planners simultaneously. Mindy did this exact reframe at Nike with "if you have a body, you are an athlete" — broadening the brand&#x2019;s permission rather than fragmenting the consumer base. <strong>And at Weight Watchers, Mindy and Jon Mandell ran the brand through the GLP-1 transition in real time, including the Hispanic-audience expansion with Adamari López as brand ambassador.</strong> Two of the three priority cohorts on the GIS list are cohorts they have already activated against operationally.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Where the competitive set is</span>
+        <ul>
+          <li><strong>Kraft Heinz:</strong> $600M reinvestment, new CEO, halted split. Has a narrative.</li>
+          <li><strong>PepsiCo:</strong> Simply NKD line, removing artificial colors from Lay&#x2019;s and Gatorade. Has a narrative.</li>
+          <li><strong>General Mills:</strong> more product news than either, but a less-clear story. Product slate is the asset; narrative is the gap.</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What execution looks like</span>
+        <ul>
+          <li><strong>Platform brief:</strong> the one-sentence story tying all three cohorts together — built around nutritional density and portion intelligence, not weight loss</li>
+          <li><strong>Brand-level activation:</strong> coherent advertising platform across Cheerios Protein, Nature Valley, Annie&#x2019;s, Progresso, Pillsbury small-pack — speaking to one consumer insight</li>
+          <li><strong>Investor-day integration:</strong> the platform brief becomes the spine of the next investor day, not a marketing slide buried in the appendix</li>
+          <li><strong>Hispanic authenticity work:</strong> real organizational commitment, not a campaign overlay; partnership choices and creative leadership decisions matter</li>
+          <li><strong>Marketing ROI proof:</strong> measurably improved efficiency on spend already deployed, since the redirection is of intent, not budget</li>
+        </ul>
+      </div>
+
+      <div class="irf">
+        <div class="irf-cell">
+          <span class="irf-label">Impact</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Re-rates the multiple if executed well. The narrative is what the Street underwrites — product news without a story is noise.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Relevance</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Direct extension of the CAGNY/FoodNavigator commentary already on the record. Builds on, not against, the existing playbook.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Feasibility</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Marketing dollars already deployed. Redirection of intent, not new spend. 60-day discovery to platform brief.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Risks</span>
+        <ul>
+          <li>Narrative reframes can feel like marketing spin if the product slate doesn&#x2019;t deliver. Only works if execution stays on track.</li>
+          <li>"GLP-1 brand" is polarizing. Frame as nutritional density and portion intelligence, not weight loss. The drug should be referenced, never centered.</li>
+          <li>Hispanic consumer authenticity is hard to fake — this requires real organizational commitment, not a campaign overlay.</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note">
+        <span class="advisory-note-label">Advisory note</span>
+        <p>Where the advisory layer adds value: pressure-testing whether the narrative reads as authentic or as marketing repositioning, independent read on the Hispanic-cohort approach versus best-in-class CPG benchmarks, and Mindy&#x2019;s direct involvement in the investor-day spine before it ships.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use in room</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              You have more product news than Kraft Heinz or Pepsi right now. What you don&#x2019;t have — yet — is the one-sentence story the Street can repeat about what GIS is becoming. That&#x2019;s the next move on the table.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              Two of your three priority cohorts — GLP-1 and Hispanic — are cohorts Mindy and Jon Mandell activated against in real time at Weight Watchers, including the Adamari López brand partnership for the Hispanic expansion. That is lived operational experience on this exact consumer transition, not theory.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              The marketing dollars are already being spent. The question is whether they&#x2019;re spent in service of one story or three — and that is the operational lever Mindy and Jon have pulled before.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== AREA 4 — OPERATING MODEL ============== -->
+    <article class="area" id="area-4">
+      <div class="area-meta">
+        <div class="area-num">04</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Clark / Gunning</span>
+          <span class="confidence-pill">Confidence 85%</span>
+        </div>
+      </div>
+      <h3 class="area-title">Marketing operating-model and stranded-cost reset — <em>the funding mechanism.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Why this is fourth</span>
+        <p>The single most important <em>defensive</em> opportunity on the list — but not the lead, because it is a fix-the-back-office story rather than a build-the-future one. It belongs paired alongside areas 1&#x2013;3 as the funding mechanism, not in front of them. Wendy ran exactly this exercise across 145 markets at Dentsu. <strong>Gunning has saved clients on average 10&#x2013;20% on their agency and media spend — and for one client, more than $100M.</strong> The depth on this specific work is hard to source any other way.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The strategic frame</span>
+        <p>The Yoplait/yogurt divestiture left an estimated $1.5B in stranded costs (per IBT, March 18, 2026). Capex is up ~23%, the highest of any Big Food peer per LSEG data. Activists are circling — Trian at Kraft Heinz, Elliott at PepsiCo. The Motley Fool note from May 4, 2026 explicitly calls out General Mills as the unaddressed target.</p>
+        <p>Harmening confirmed in Q2 that media ROI has improved — that is the moment to push further, not declare victory. The conversation General Mills needs to be in front of the board and the Street with — before an activist sets the agenda — is how the marketing, brand, and growth operating model self-funds the next phase. <strong>This is not a cost-cutting brief. It is a marketing-as-investment brief.</strong></p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What execution looks like</span>
+        <ul>
+          <li><strong>Working-vs-non-working spend audit</strong> across the $1B+ marketing budget — what reaches consumers, what reaches process</li>
+          <li><strong>Agency-roster review</strong> — pushing further from the Q2 ROI improvement, not declaring victory at it</li>
+          <li><strong>Partner-ecosystem rationalization</strong> that frees capacity to fund the protein / GLP-1 / membership investments without an incremental ask</li>
+          <li><strong>Operating-model architecture:</strong> how creative, media, brand, and analytics fuse into one accountable engine — Wendy ran this construct across Dentsu&#x2019;s 145 markets; Gunning has delivered 10&#x2013;20% savings on average across client agency and media spend</li>
+          <li><strong>Stated efficiency target:</strong> a number the CFO can take to the audit committee and the Street, defensible to an activist deck</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What the board sees in 12 months</span>
+        <ul>
+          <li>A stated marketing efficiency target with measurable progress</li>
+          <li>A reallocation story the CFO can take to the audit committee</li>
+          <li>The funding mechanism for areas 1, 2, and 3 — without an incremental budget ask</li>
+        </ul>
+      </div>
+
+      <div class="irf">
+        <div class="irf-cell">
+          <span class="irf-label">Impact</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Funds the rest of the sequence. Activist-defensible. Re-rates operating discipline without requiring a new growth ask.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Relevance</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">Tied directly to public commentary on margin discipline and Holistic Margin Management language already in use.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Feasibility</span>
+          <div class="irf-score">High</div>
+          <div class="irf-note">In flight within 30 days. No IT, supply chain, or legal dependencies. Wendy and team can staff immediately.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Risks</span>
+        <ul>
+          <li>Going hard on marketing efficiency right after a "remarkability" reinvestment narrative creates Street whiplash. The framing has to be reinvestment, not retreat.</li>
+          <li>Agency-roster moves can disrupt in-flight innovation campaigns; sequencing matters and the operating team will know this better than we do.</li>
+          <li>An aggressive efficiency story without a corresponding growth story reads as setup for sale-of-the-company speculation. Precisely why areas 1&#x2013;3 sit alongside it.</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note">
+        <span class="advisory-note-label">Advisory note</span>
+        <p>Where the advisory layer adds value: independent benchmarking against Big Food peer marketing efficiency, pressure-testing the narrative framing so reinvestment doesn&#x2019;t read as retreat, and Wendy&#x2019;s direct involvement in the agency-roster review where the structural choices have the longest tail.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use in room</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              The question isn&#x2019;t "is media ROI improving" — Q2 said yes — it&#x2019;s "what&#x2019;s the next target, and how do you fund FY27 growth from your own marketing line rather than asking for incremental budget."
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              With activists where they are right now, the operator who arrives at the boardroom with a self-funding plan is in a different position than the operator who arrives with an ask. That posture is built before the letter shows up, not after.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              Wendy ran this across 145 markets at Dentsu. Gunning has saved clients 10&#x2013;20% on their agency and media spend on average — and over $100M for one client. The construct ports, and the track record is concrete.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== AREA 5 — FIRST-PARTY MEDIA ============== -->
+    <article class="area" id="area-5">
+      <div class="area-meta">
+        <div class="area-num">05</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Whiteside / Bader</span>
+          <span class="confidence-pill warn">Confidence 80% &middot; publish with note</span>
+        </div>
+      </div>
+      <h3 class="area-title">Brand-direct first-party media monetization — <em>not a network, a product.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Why this sits last — and why the team is unusually credentialed for it</span>
+        <p>The most ambitious recommendation and the least signaled by leadership. Leading with this in the first conversation overweights what is in fact a horizon idea, when there are more grounded moves to make first. Hold for the second meeting unless the client raises it directly. <strong>That said, this is the area on the list where the bench is most uniquely matched: Eric Bader created the commerce media platforms at United Airlines (Kinective Media) and Fiserv</strong> — that is precisely the brand-direct, non-retail-network construct on the table here. Janey ran Walmart Connect. The combination of Eric&#x2019;s build-side experience and Janey&#x2019;s scale-side experience is hard to source elsewhere.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The strategic frame</span>
+        <p>This is the recommendation that requires the most care in framing. General Mills is not Walmart and should not pretend it can build Walmart Connect (which did $4.4B in FY25 ad revenue per Marketing Dive coverage). What it can do — and what analyst commentary has not fully surfaced — is monetize its 16M monthly first-party audience as a brand-direct media product for adjacent, non-competing partners: kitchen appliance OEMs, complementary grocery, family-finance services, GLP-1 adjacent health brands.</p>
+        <p>The proof point is in their own commentary. The Pillsbury / air-fryer targeting case Mark Nudi described publicly shows General Mills already has the audience-building capability internally. The gap is that today it is used only to drive their own brand sales. <strong>A modest commercial layer would be the highest-margin dollar in the company.</strong> The construct exists in production at scale today: United Airlines&#x2019; Kinective Media — which Eric built — turned a non-retail, first-party audience into a brand-direct media product without competing with the retailer networks. The shape ports.</p>
+      </div>
+
+      <div class="note-box">
+        <span class="note-label">Estimate — state as such</span>
+        <p>Year-one revenue range: <strong>$30&#x2013;75M</strong> [estimate, sized against retail-media adjacency economics where mature CPG-adjacent networks run at 70%+ contribution margins].</p>
+        <p>Specific GIS sizing requires audience-engagement data that is not in public filings. Do not commit to a number in the room — commit to a scoping conversation that produces one.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What execution would look like</span>
+        <ul>
+          <li><strong>Anchor partner identification:</strong> 3&#x2013;5 non-competing brands where audience match is provable</li>
+          <li><strong>Product design:</strong> a brand-direct media product, not a network — selling targeted audience, not inventory</li>
+          <li><strong>Channel-conflict management:</strong> structured to be complement to retailer media networks (Walmart, Kroger), not substitute</li>
+          <li><strong>Privacy and consent architecture:</strong> consented household data, GIS-controlled, defensible to legal review</li>
+          <li><strong>FY27 stated revenue line:</strong> a soft-launched product disclosed in the FY27 outlook</li>
+        </ul>
+      </div>
+
+      <div class="irf">
+        <div class="irf-cell">
+          <span class="irf-label">Impact</span>
+          <div class="irf-score">High <em>if greenlit</em></div>
+          <div class="irf-note">Highest-margin dollar in the company at scale. Contingent on CEO appetite, which has not been publicly signaled.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Relevance</span>
+          <div class="irf-score">Medium</div>
+          <div class="irf-note">Builds on existing first-party data capability. Represents a strategic posture shift, not just a tactical one.</div>
+        </div>
+        <div class="irf-cell">
+          <span class="irf-label">Feasibility</span>
+          <div class="irf-score">Low <em>without exec mandate</em></div>
+          <div class="irf-note">Channel conflict and privacy complexity make this a top-down decision. Engage only if the door opens from inside.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="block-label">The reason for the 80% confidence rating</span>
+        <p>Harmening and the team have not publicly signaled appetite for monetizing first-party assets to third parties. This is a horizon-adjacent recommendation. The Wendy Clark filter — "would the CFO see this as an investment or a cost?" — has not been answered by the company on the record. We bring this in the room as a question we want to test, not a recommendation we land.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Risks</span>
+        <ul>
+          <li>Channel conflict — retailers (Walmart, Kroger) may view this as competitive to their own networks. The product design has to make this complement, not substitute.</li>
+          <li>Privacy and regulatory complexity in monetizing consented household data to third parties. Legal sits with GIS, not us — flag and move.</li>
+          <li>Without leadership signal in the last 12 months, this requires CEO buy-in before scoping.</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note">
+        <span class="advisory-note-label">Advisory note</span>
+        <p>Where the advisory layer adds value: independent point of view on whether this opportunity is worth elevating to CEO/CFO conversation right now, market intelligence on where adjacent CPGs are landing on the same question, and quiet pre-scoping ahead of any formal decision to engage.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use only if raised</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              This one we&#x2019;d flag with caveats. You have an asset most CPGs don&#x2019;t — 16M monthly first-party users, plus a demonstrated capability to do precision targeting on it. The question is whether there&#x2019;s a conversation to be had about that audience as a commercial product, not just a marketing efficiency tool.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              We&#x2019;re not pitching you Walmart Connect at GIS scale — that&#x2019;s not the right comp. The right comp is closer to what Eric Bader built at United Airlines with Kinective Media — a brand-direct, non-retailer commerce platform that monetizes a first-party audience without picking a fight with Walmart or Kroger. That construct exists. The question is whether it belongs in the FY27 conversation here.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              If the answer is "we haven&#x2019;t thought about it," we&#x2019;d love to bring you a one-page point of view in 30 days. If the answer is "we&#x2019;ve thought about it and decided no," we&#x2019;d want to understand why before pushing.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== AREA 6 — THE ADVISORY LAYER (NEW) ============== -->
+    <article class="area" id="area-6">
+      <div class="area-meta">
+        <div class="area-num">06</div>
+        <div class="area-meta-text">
+          <span class="lens-tag">Lens — Grossman / Clark / Whiteside</span>
+          <span class="confidence-pill" style="background: var(--terracotta-deep);">Standalone offer</span>
+        </div>
+      </div>
+      <h3 class="area-title">The advisory layer — <em>cutting through the noise.</em></h3>
+
+      <div class="sequencing-block">
+        <span class="sequencing-label">Distinct from areas 1&#x2013;5</span>
+        <p>Areas 1&#x2013;5 are execution offers. This is different. The advisory layer is a continuous operator-level thought partnership that sits across the entire portfolio — including the parts of the business we are <em>not</em> staffing directly, including the parts that are working well, and including the parts where the right move is to do less rather than more. It is the layer designed to help cut through the noise of any operating role and add clarity about where to lean in and where to pull back.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What this is</span>
+        <p>An ongoing relationship with operators who have done this work — Mindy as a sitting public-company CEO twice over, Janey as the architect of two consumer platforms inside Walmart, Wendy as the operator of a global agency network. Not consultants. Not retainers. People who have made the equivalent decisions and now act as an independent expert voice for someone navigating their own version of the same questions.</p>
+        <p>This layer runs alongside execution work but does not require it. It can be the only thing the engagement is. It can be the thing that opens the door to execution work later. Or it can be how the relationship begins, with the rest deferred to whether the right work surfaces.</p>
+      </div>
+
+      <div class="block">
+        <span class="block-label">What it looks like in practice</span>
+        <ul>
+          <li><strong>Operating-cadence sessions:</strong> a recurring working forum structured to surface what isn&#x2019;t being said inside the company — what to lean into, what to pull back from, where the noise is loudest, where the signal is being missed</li>
+          <li><strong>Org and operating-model assessment:</strong> independent read on org design, span of control, decision rights, and where the team structure is helping or quietly getting in the way</li>
+          <li><strong>Strategy review at multiple levels:</strong> portfolio strategy, segment strategy, brand-level strategy, functional strategy — pressure-tested at the cadence and depth each requires</li>
+          <li><strong>Pre-meeting prep:</strong> independent inputs ahead of board sessions, investor days, earnings calls — a second read on the narrative, the disclosure, the Q&amp;A risk surface</li>
+          <li><strong>Strategic decision pressure-testing:</strong> when a structural call is being weighed — org design, portfolio shape, capital allocation, M&amp;A, talent moves — an outside vantage point that has lived through the equivalent at scale</li>
+          <li><strong>Independent voice on tradeoffs:</strong> the conversations where the answer requires saying no to something the organization wants to say yes to — where the value of an outside operator is precisely that they don&#x2019;t carry the internal politics</li>
+          <li><strong>Pattern recognition across our portfolio:</strong> we sit alongside other operators in adjacent industries and bring back what we&#x2019;re seeing, anonymously and selectively, when it&#x2019;s useful</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <span class="block-label">Where it adds the most</span>
+        <ul>
+          <li><strong>Onboarding into a new role:</strong> the first 6&#x2013;12 months of any expanded scope is when the highest-leverage decisions get made and the operating cadence is least settled. Outside perspective compounds.</li>
+          <li><strong>Pressure-testing objectives:</strong> separating urgent from important, making sure the wins being prioritized are the wins that actually matter</li>
+          <li><strong>Cutting through the noise:</strong> the operating role takes inputs from dozens of sources — management team, board, Street, agencies, consultants, peers. The advisory layer is one independent voice whose only job is to be useful to the operator</li>
+          <li><strong>Coverage of the working parts of the business:</strong> the parts that don&#x2019;t need execution help still need a sounding board on whether they&#x2019;re truly working or just performing well</li>
+        </ul>
+      </div>
+
+      <div class="advisory-note" style="background: var(--apricot-soft); border-left-color: var(--terracotta);">
+        <span class="advisory-note-label" style="color: var(--terracotta-deep);">The frame to use in the room</span>
+        <p>Areas 1&#x2013;5 are about <em>what work happens</em>. Area 6 is about <em>how the operator gets clarity</em> on which work matters, which work can wait, and which work shouldn&#x2019;t happen at all. The advisory layer can stand alone, run alongside execution, or be how the relationship begins. It is the thing that makes the rest of the portfolio more legible — not a separate workstream, but the lens through which the rest get evaluated.</p>
+      </div>
+
+      <div class="talking">
+        <button class="talking-header" onclick="toggleTalking(this)">
+          <div class="talking-header-left">
+            <span class="talking-icon">Use in room</span>
+            <span class="talking-title">Talking points · 3</span>
+          </div>
+          <span class="talking-toggle">+</span>
+        </button>
+        <div class="talking-body">
+          <div class="talking-content">
+            <div class="quote">
+              The first five areas are execution offers. The sixth is different — it&#x2019;s an ongoing thought partnership with operators who have made these decisions before, designed to help cut through the noise of any operating role and add clarity about where to lean in and where to pull back.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              An operating role takes inputs from dozens of places — management team, board, Street, agencies. We&#x2019;d be one independent voice whose only job is to be useful to the operator, including telling you what <em>not</em> to do.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+            <div class="quote">
+              This can stand alone. It can run alongside whatever execution work makes sense. Or it can be how the relationship begins. The structure is built to be the relationship that lasts, not the project that ends.
+              <div class="quote-actions"><button class="copy-btn" onclick="copyQuote(this)">Copy</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============== SEQUENCING ============== -->
+    <h2 class="section-h" id="sequencing"><span class="section-h-num">06</span>Sequencing</h2>
+    <div class="block">
+      <p>The order is deliberate. <strong>Pet (Area 1)</strong> leads because the architecture window in pet humanization closes fastest and the membership/subscription decision is uniquely Consello-shaped — operations stay inside, the architectural call is where outside pattern recognition adds the most. <strong>Good Rewards (Area 2)</strong> is highest-confidence and scales the same membership logic across the largest segment in the company. <strong>The unified narrative (Area 3)</strong> is the multiple re-rate — Mindy&#x2019;s reinvention lens applied to a product slate that&#x2019;s already strong. <strong>The operating-model reset (Area 4)</strong> is the funding mechanism that pays for areas 1&#x2013;3 without an incremental ask. <strong>First-party media (Area 5)</strong> is the horizon idea, held back unless the door opens from inside.</p>
+      <p>None of areas 1&#x2013;5 require IT infrastructure work, supply-chain rebuilds, or legal restructuring. All sit inside the Consello Brand, Experience &amp; Growth staffing footprint and could be in flight within 30 days of engagement.</p>
+      <p><strong>Area 6 — the advisory layer — is structurally different.</strong> It is not a workstream. It runs continuously across the engagement, including across the parts of the portfolio not being staffed directly. It can stand alone, run alongside execution, or be how the relationship begins.</p>
+    </div>
+
+    <div class="tldr" style="margin-top: 32px;">
+      <span class="tldr-label">The single most important sequencing call</span>
+      <p>Stand up <strong>Area 4 — operating-model and marketing efficiency review — in parallel with Areas 1 and 2 in the first 60 days</strong>. Area 4 funds Areas 1, 2, and 3 from reallocated spend rather than incremental budget asks. That is the difference between a 12-month plan that lands at the next investor day and one that gets stuck in the budget cycle.</p>
+    </div>
+
+    <!-- ============== Q&A ============== -->
+    <h2 class="section-h" id="qa"><span class="section-h-num">07</span>Anticipated Questions</h2>
+    <p style="font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--gray-700); margin: 24px 0 8px 0;">Tuned for an experienced operator. Assume diagnostic instincts as good as ours.</p>
+    <div class="qa-list">
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"How is this different from what McKinsey or BCG would bring?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            We're operators, not career consultants. Mindy was the sitting CEO of WW and HSN. Janey ran Walmart+ and Walmart Connect from inside Walmart. Wendy ran Dentsu across 145 markets. We've been in the seat on every recommendation here. The differentiator with this client isn't methodology — they have methodology. The differentiator is sparring with people who have made these decisions before, not advised on them.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"Why now? We're already executing the Remarkability playbook."</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            Exactly because of that. Q3 was the inflection. Price investments end this quarter. FY27 has to show dollar growth, not just volume growth — and the Street will start asking about FY28 within two quarters. The architecture decisions you make in the next twelve months are the ones that define the next chapter. We're built for that conversation.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"How do you not step on our internal teams?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            We work shoulder-to-shoulder, not over the top. The supply chain side, the technology infrastructure, the formulation work — those stay with your operators, which include some of the best in the industry. We bring the membership architecture, the brand narrative, the agency-restructure experience. It's a complement, not a takeover. And we sit small — three to five people, not twenty.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"Pet is in good shape — why is it Area 1?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            Pet operations are in good shape — that&#x2019;s exactly why it leads. Operations stay inside; we&#x2019;re not proposing to architect Pet for the team. What lives at Area 1 is the membership and subscription architecture decision sitting on top of Pet, which is uniquely Consello-shaped. Janey built Walmart+. Mindy ran HSN&#x2019;s membership-driven omnichannel. The architecture window in pet humanization closes fastest of anything on the list, and the structural call made now compounds for a decade. That&#x2019;s why it&#x2019;s first.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"What's the smallest first move?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            Two-week scoping diagnostic on Pet membership architecture (Area 1) and the marketing operating-model audit (Area 4). Pet because the architecture window is closing fastest. Operating-model because it funds the rest of the sequence and is the activist-defensible move. The advisory layer (Area 6) runs alongside from day one — across the rest of the portfolio, including the parts we&#x2019;re not staffing. End of two weeks: a sized opportunity, a sequencing plan, and a clear view of which advisory cadence makes sense. No commitment beyond that.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"Who is on the team?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            Janey Whiteside leads the membership architecture work for Pet (Area 1) and Good Rewards (Area 2) — Janey sold Blue Buffalo to GIS, so the brand and consumer history are first-hand for her. Jon Mandell sits across Areas 1, 2, and 3 — DTC architecture from Open Farm, large-scale loyalty builds, and the GLP-1 / Hispanic activation work from Weight Watchers including the Adamari López ambassador partnership. Mindy Grossman is the senior partner across the brand narrative (Area 3) and the broader advisory layer (Area 6). Wendy Clark and Gunning lead the marketing operating-model reset (Area 4) — Gunning has averaged 10&#x2013;20% savings on client agency and media spend, with one engagement saving over $100M. Eric Bader pairs with Janey on Area 5 — Eric created the commerce media platforms at United Airlines (Kinective Media) and Fiserv, which is exactly the brand-direct first-party monetization construct on the table. We staff three to five people on execution work, not large teams. The advisory layer is delivered by the partners directly.
+          </div>
+        </div>
+      </div>
+      <div class="qa-item">
+        <button class="qa-q-btn" onclick="toggleQA(this)">
+          <span>"What if I want to start with just one thing?"</span>
+          <span class="qa-q-toggle">+</span>
+        </button>
+        <div class="qa-a">
+          <div class="qa-a-content">
+            Pet membership architecture. The window closes fastest, the structural call made now compounds for a decade, and the value-add — Janey on Walmart+, Mindy on HSN — is hardest to source any other way. If only one thing happens in the next six months, that&#x2019;s it. Alternatively, if execution capacity isn&#x2019;t the right entry point at all, the advisory layer (Area 6) can be how the relationship begins on its own.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== APPENDIX ============== -->
+    <h2 class="section-h" id="appendix"><span class="section-h-num">08</span>Appendix · Source Trail</h2>
+    <p style="font-size: 15.5px; color: var(--gray-700); line-height: 1.7; max-width: var(--max-reading); margin: 24px 0;">Every recommendation traces to a verifiable source from the last 12 months. Below is the source trail, organized by area, in case anyone in the room asks where a specific data point comes from.</p>
+    <div class="appendix-list">
+      <div class="appendix-item">
+        <div class="appendix-key">Area 1<br>Pet Membership</div>
+        <div class="appendix-val">Pet as bright spot: GIS earnings calls Q1, Q2, Q3 FY26. Buddies app: CGT, January 2025. Investment in fresh pet food to compete with The Farmer&#x2019;s Dog: GIS FY26 commentary; IBT, March 18, 2026.</div>
+      </div>
+      <div class="appendix-item">
+        <div class="appendix-key">Area 2<br>Good Rewards</div>
+        <div class="appendix-val">16M monthly users on first-party platforms: CGT (January 2025); Salesforce customer story (June 2023, updated). Good Rewards launch with Fetch: CGT, January 2025. Nature Valley first-party data lift: The Current, February 2023.</div>
+      </div>
+      <div class="appendix-item">
+        <div class="appendix-key">Area 3<br>Narrative</div>
+        <div class="appendix-val">Three priority cohorts (GLP-1, 55+, Hispanic): Dana McNabb, FoodNavigator, October 2025; CAGNY, February 2026. ~25% NPD growth in FY26: Harmening, GIS Q3 FY26 earnings. Kraft Heinz $600M reinvestment, halted split: GV Wire, February 2026. PepsiCo Simply NKD: GV Wire, February 2026.</div>
+      </div>
+      <div class="appendix-item">
+        <div class="appendix-key">Area 4<br>Operating Model</div>
+        <div class="appendix-val">$1.5B yogurt-divestiture stranded costs (estimate): IBT, March 18, 2026. Capex up ~23%, highest of Big Food peers: LSEG via GV Wire, February 2026. Activist circling but not engaged: Motley Fool, May 4, 2026. Media ROI improvement: GIS Q2 FY26 earnings, December 2025.</div>
+      </div>
+      <div class="appendix-item">
+        <div class="appendix-key">Area 5<br>First-Party Media</div>
+        <div class="appendix-val">Pillsbury / air-fryer targeting case: Mark Nudi, The Current, February 2023. Walmart Connect $4.4B FY25 retail media revenue: Marketing Dive, December 2025; ALM Corp, February 2026. Retail media spend $60B in 2025, $71B projected 2026: eMarketer via ALM Corp.</div>
+      </div>
+      <div class="appendix-item">
+        <div class="appendix-key">Stock &amp; Valuation</div>
+        <div class="appendix-val">GIS down ~40% over 12 months, near 15-year lows ~$38, 6.6% dividend yield: Ad-Hoc-News, April 2, 2026; Motley Fool, May 4, 2026. Q3 FY26 results miss, guidance cut: Investing.com, March 18, 2026.</div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top: 40px;">
+      <span class="note-label">Confidence notes</span>
+      <p>All five areas score at or above 80% confidence under the Consello standard — meaning a direct executive quote, analyst signal, or primary financial source from within the last 12 months supports each recommendation.</p>
+      <p>Area 5 (first-party media) is at 80% specifically because executive appetite for third-party monetization has not been publicly signaled. We bring it as a question to test, not a recommendation to land — and only if the client opens the door.</p>
+      <p>No financial projections in this document beyond the explicit [estimate] range in Area 5, which is sourced to peer-comp economics — not a GIS-specific model.</p>
+    </div>
+
+    <footer>
+      <div class="footer-text"><strong>Consello</strong> · Brand, Experience &amp; Growth Practice</div>
+      <div class="footer-text" style="color: var(--confidential);">Confidential · Internal · Do not forward</div>
+    </footer>
+
+  </main>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+  function toggleTalking(btn) {
+    btn.parentElement.classList.toggle('open');
+  }
+  function toggleQA(btn) {
+    btn.parentElement.classList.toggle('open');
+  }
+  function expandAll() {
+    const allTalking = document.querySelectorAll('.talking');
+    const allQA = document.querySelectorAll('.qa-item');
+    const anyClosed = [...allTalking, ...allQA].some(el => !el.classList.contains('open'));
+    [...allTalking, ...allQA].forEach(el => {
+      if (anyClosed) el.classList.add('open');
+      else el.classList.remove('open');
+    });
+    const btn = document.querySelector('.btn-primary');
+    btn.textContent = anyClosed ? 'Collapse All' : 'Expand All';
+  }
+  function copyQuote(btn) {
+    const quote = btn.closest('.quote');
+    const clone = quote.cloneNode(true);
+    const actions = clone.querySelector('.quote-actions');
+    if (actions) actions.remove();
+    const text = clone.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      showToast();
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast(); btn.textContent = 'Copied'; btn.classList.add('copied'); } catch(e){}
+      document.body.removeChild(ta);
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+  const sections = document.querySelectorAll('h2.section-h, article.area');
+  const railLinks = document.querySelectorAll('.rail-link');
+  function setActiveLink() {
+    let activeId = null;
+    const scrollY = window.scrollY + 120;
+    sections.forEach(section => {
+      if (section.offsetTop <= scrollY) activeId = section.id;
+    });
+    railLinks.forEach(link => {
+      const href = link.getAttribute('href').substring(1);
+      if (href === activeId) link.classList.add('active');
+      else link.classList.remove('active');
+    });
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100));
+    document.getElementById('progress-fill').style.width = progress + '%';
+  }
+  window.addEventListener('scroll', setActiveLink, { passive: true });
+  setActiveLink();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.talking.open, .qa-item.open').forEach(el => el.classList.remove('open'));
+    }
+  });
+</script>
+
+</body>
+</html>
