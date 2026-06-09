@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consello National Bank Message House</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#000000;          /* Black */
+    --ink-2:#2b2b2b;         /* soft black for body on light */
+    --paper:#f2f2f2;         /* very light grey background */
+    --panel:#ffffff;         /* White */
+    --panel-2:#faf3ea;       /* apricot-tinted panel */
+    --line:#e0ddd8;          /* hairline on light grey */
+    --brass:#a64a30;         /* Terracotta (primary accent) */
+    --brass-soft:#f6d1a3;    /* Apricot (soft accent) */
+    --sage:#a64a30;          /* map former sage to terracotta */
+    --sage-soft:#f6d1a3;     /* apricot */
+    --rule:#cfccc6;
+    --muted:#7a756e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'DM Sans',system-ui,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased;padding:48px 24px 80px;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+
+  .masthead{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    border-bottom:2px solid var(--ink);padding-bottom:18px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:16px;}
+  .mark{width:46px;height:46px;border-radius:50%;background:var(--ink);position:relative;flex:0 0 auto;}
+  .mark::after{content:"";position:absolute;inset:11px;border-radius:50%;border:2px solid var(--brass);}
+  .mark::before{content:"";position:absolute;left:50%;top:8px;bottom:8px;width:2px;background:var(--brass);transform:translateX(-50%);}
+  .brand h1{font-family:'DM Sans',sans-serif;font-weight:600;font-size:27px;letter-spacing:-.01em;line-height:1;}
+  .brand .sub{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);margin-top:6px;}
+  .doc-tag{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-align:right;}
+  .doc-tag span{display:block;color:var(--brass);margin-top:4px;}
+  .meta-strip{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:14px 0 40px;}
+
+  .sec-head{display:flex;align-items:center;gap:16px;margin:46px 0 18px;}
+  .sec-head .label{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+  .sec-head .bar{height:1px;background:var(--rule);flex:1;}
+
+  .lens{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:4px;
+    padding:14px 18px;font-size:12.5px;color:var(--ink-2);margin-bottom:4px;
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .lens b{color:var(--ink);}
+  .lens .tag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);flex:0 0 auto;padding-top:2px;}
+
+  .roofs{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .roofs.single{grid-template-columns:1fr;}
+  .roof{
+    background:var(--ink);color:var(--paper);border-radius:4px;
+    padding:30px 32px 28px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .roof::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--brass);}
+  .roof.alt::before{background:var(--sage);}
+  .roof .vtag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+  .roof.alt .vtag{color:var(--sage-soft);}
+  .roof .vlead{font-size:12px;color:#aeb9b3;margin-bottom:16px;}
+  .roof .master{font-family:'DM Sans',sans-serif;font-weight:400;font-size:25px;line-height:1.22;letter-spacing:-.01em;}
+  .roof .master b{font-weight:600;color:#fff;}
+  .roof .support{margin-top:14px;font-size:13px;color:#cfd8d2;}
+
+  .stack{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);}
+  .row{display:flex;align-items:stretch;border-top:1px solid var(--line);}
+  .row:first-child{border-top:none;}
+  .row .key{flex:0 0 168px;background:var(--ink);color:var(--paper);padding:16px 18px;display:flex;flex-direction:column;justify-content:center;}
+  .row.believe .key{background:var(--sage);}
+  .row .key .k-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+  .row .key .k-job{font-size:10.5px;color:#b9c4bd;margin-top:5px;line-height:1.35;font-style:italic;}
+  .row.believe .key .k-job{color:var(--brass-soft);}
+  .row .val{flex:1;padding:16px 22px;display:flex;align-items:center;}
+  .row .val .statement{font-family:'DM Sans',sans-serif;font-size:18px;line-height:1.32;color:var(--ink);}
+
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .pillar{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:24px 22px;display:flex;flex-direction:column;}
+  .pillar .num{font-family:'DM Mono',monospace;font-size:11px;color:var(--brass);letter-spacing:.1em;margin-bottom:12px;}
+  .pillar h4{font-family:'DM Sans',sans-serif;font-weight:600;font-size:19px;line-height:1.2;letter-spacing:-.01em;margin-bottom:6px;}
+  .pillar .promise{font-size:12px;color:var(--sage);font-style:italic;margin-bottom:14px;}
+  .pillar ul{list-style:none;}
+  .pillar li{font-size:12.5px;color:var(--ink-2);line-height:1.5;padding:8px 0 8px 17px;position:relative;border-top:1px solid #eee7da;}
+  .pillar li:first-child{border-top:none;}
+  .pillar li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--brass);border-radius:50%;}
+
+  .position{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);}
+  .position .cell{padding:22px 24px;border-left:1px solid var(--line);}
+  .position .cell:first-child{border-left:none;}
+  .position h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;}
+  .position .who{font-size:11px;color:var(--brass);font-family:'DM Mono',monospace;letter-spacing:.08em;margin-bottom:10px;text-transform:uppercase;}
+  .position p{font-size:13px;line-height:1.55;color:var(--ink-2);}
+  .position p .lead{font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);}
+
+  .foundation{background:var(--sage);color:var(--paper);border-radius:4px;padding:24px 28px;display:flex;align-items:center;gap:26px;flex-wrap:wrap;}
+  .foundation .f-label{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-soft);flex:0 0 auto;}
+  .foundation .f-items{display:flex;gap:12px;flex-wrap:wrap;flex:1;}
+  .foundation .f-item{font-family:'DM Sans',sans-serif;font-size:15px;padding:5px 0;}
+  .foundation .f-item:not(:last-child)::after{content:"·";margin-left:12px;color:var(--brass-soft);}
+
+  .proof{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .proof .pf{border-left:2px solid var(--brass);padding:4px 0 4px 15px;}
+  .proof .pf .k{font-family:'DM Sans',sans-serif;font-size:23px;color:var(--ink);line-height:1.05;}
+  .proof .pf .d{font-size:11.5px;color:var(--ink-2);margin-top:8px;line-height:1.45;}
+
+  .footnote{margin-top:38px;border-top:1px solid var(--line);padding-top:14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.04em;color:var(--muted);line-height:1.7;}
+
+  /* ---------- strategic focus ---------- */
+  .strat-intro{font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:880px;margin-bottom:22px;}
+  .strat-intro b{color:var(--ink);}
+  .horizons{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px;}
+  .horizon{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px 22px 20px;border-top:3px solid var(--brass);}
+  .horizon .h-when{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:8px;}
+  .horizon h4{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;line-height:1.2;margin-bottom:10px;}
+  .horizon p{font-size:12.5px;color:var(--ink-2);line-height:1.55;}
+
+  .focus-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .focus{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:24px 24px 22px;}
+  .focus.org{border-left:4px solid var(--sage);}
+  .focus.inorg{border-left:4px solid var(--brass);}
+  .focus .f-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .focus h4{font-family:'DM Sans',sans-serif;font-weight:600;font-size:20px;line-height:1.2;margin-bottom:6px;}
+  .focus .f-thesis{font-size:12.5px;color:var(--sage);font-style:italic;margin-bottom:16px;}
+  .focus ul{list-style:none;}
+  .focus li{font-size:12.5px;color:var(--ink-2);line-height:1.5;padding:8px 0 8px 17px;position:relative;border-top:1px solid #eee7da;}
+  .focus li:first-child{border-top:none;}
+  .focus li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;border-radius:50%;}
+  .focus.org li::before{background:var(--sage);}
+  .focus.inorg li::before{background:var(--brass);}
+
+  .balance{margin-top:18px;background:var(--ink);color:var(--paper);border-radius:4px;padding:26px 30px;}
+  .balance .b-head{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:18px;}
+  .balance .b-rows{display:grid;gap:18px;}
+  .balance .b-row{display:flex;gap:20px;align-items:flex-start;padding-top:16px;border-top:1px solid rgba(233,220,192,.18);}
+  .balance .b-row:first-child{padding-top:0;border-top:none;}
+  .balance .b-key{flex:0 0 190px;font-family:'DM Sans',sans-serif;font-size:16px;color:#fff;line-height:1.25;}
+  .balance .b-body{flex:1;font-size:13px;color:#cfd8d2;line-height:1.55;min-width:240px;}
+  .balance .b-body b{color:#fff;font-weight:600;}
+  @media(max-width:880px){.balance .b-row{flex-direction:column;gap:6px;}.balance .b-key{flex:auto;}}
+
+  /* ---------- data strip ---------- */
+  .datastrip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+  .ds-item{background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;}
+  .ds-item .ds-k{font-family:'DM Sans',sans-serif;font-size:22px;color:var(--ink);line-height:1;font-weight:600;}
+  .ds-item .ds-d{font-size:11.5px;color:var(--ink-2);line-height:1.45;}
+
+  /* ---------- competitive landscape ---------- */
+  .comp-intro{font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:880px;margin-bottom:22px;}
+  .comp-intro b{color:var(--ink);}
+  .comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px;}
+  .comp{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px 22px 20px;display:flex;flex-direction:column;}
+  .comp .c-type{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+  .comp h4{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;line-height:1.2;margin-bottom:4px;}
+  .comp .c-who{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:14px;}
+  .comp .c-block{margin-bottom:13px;}
+  .comp .c-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:5px;}
+  .comp .c-text{font-size:12px;color:var(--ink-2);line-height:1.5;}
+  .comp .c-win{margin-top:auto;padding-top:13px;border-top:1px solid #eee7da;}
+  .comp .c-win .c-label{color:var(--brass);}
+  .comp .c-win .c-text{color:var(--ink);}
+
+  .why-win{margin-top:18px;background:var(--ink);color:var(--paper);border-radius:4px;padding:26px 30px;}
+  .why-win .w-head{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:8px;}
+  .why-win .w-lead{font-family:'DM Sans',sans-serif;font-size:19px;line-height:1.3;margin-bottom:18px;max-width:840px;}
+  .why-win .w-lead b{color:#fff;font-weight:600;}
+  .why-win .w-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .why-win .w-stat{border-left:2px solid var(--brass);padding-left:14px;}
+  .why-win .w-stat .ws-k{font-family:'DM Sans',sans-serif;font-size:20px;color:#fff;line-height:1.05;}
+  .why-win .w-stat .ws-d{font-size:11px;color:#cfd8d2;margin-top:7px;line-height:1.45;}
+  @media(max-width:880px){.datastrip,.comp-grid,.why-win .w-stats{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- CEO talking points ---------- */
+  .ceo{background:var(--ink);color:var(--paper);border-radius:4px;padding:40px 44px;position:relative;overflow:hidden;}
+  .ceo::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--brass);}
+  .ceo .ceo-eyebrow{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .ceo .ceo-open{font-family:'DM Sans',sans-serif;font-weight:400;font-size:24px;line-height:1.32;letter-spacing:-.01em;max-width:880px;color:#fff;}
+  .ceo .ceo-open b{font-weight:600;}
+  .ceo .ceo-sub{font-size:13.5px;color:#aeb9b3;margin-top:14px;max-width:820px;line-height:1.6;}
+  .ceo .ceo-sign{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-soft);margin-top:18px;}
+
+  .ceo-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:32px;border-top:1px solid rgba(233,220,192,.2);}
+  .ceo-col{padding:24px 22px 4px;border-left:1px solid rgba(233,220,192,.2);}
+  .ceo-col:first-child{border-left:none;padding-left:0;}
+  .ceo-col:last-child{padding-right:0;}
+  .ceo-col .cc-aud{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:4px;}
+  .ceo-col .cc-to{font-size:11px;color:#8a9690;font-style:italic;margin-bottom:16px;}
+  .ceo-col ul{list-style:none;}
+  .ceo-col li{font-size:13px;color:#dfe6e2;line-height:1.5;padding:11px 0 11px 16px;position:relative;border-top:1px solid rgba(233,220,192,.12);}
+  .ceo-col li:first-child{border-top:none;}
+  .ceo-col li::before{content:"";position:absolute;left:0;top:17px;width:5px;height:5px;background:var(--brass);border-radius:50%;}
+  .ceo-col li b{color:#fff;font-weight:600;}
+  @media(max-width:880px){.ceo-cols{grid-template-columns:1fr;}.ceo-col{border-left:none;border-top:1px solid rgba(233,220,192,.2);padding-left:0;padding-right:0;}.ceo-col:first-child{border-top:none;}}
+
+  @media(max-width:880px){
+    .roofs,.pillars,.position{grid-template-columns:1fr;}
+    .proof{grid-template-columns:1fr 1fr;}
+    .horizons,.focus-grid{grid-template-columns:1fr;}
+    .row{flex-direction:column;}
+    .row .key{flex:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="brand">
+      <div class="mark"></div>
+      <div>
+        <h1>Consello National Bank</h1>
+        <div class="sub">Member FDIC · Est. 1887 · ~$210B Assets</div>
+      </div>
+    </div>
+    <div class="doc-tag">Message House</div>
+  </div>
+
+
+  <div class="sec-head"><span class="label">The Roof · Our Master Message</span><span class="bar"></span></div>
+  <div class="roofs single">
+    <div class="roof">
+      <div class="master">
+        We earn the right to be someone's bank, and we keep earning it, because <b>trust is the only asset we cannot buy back</b> once it is spent.
+      </div>
+      <div class="support">
+        Strength is how we keep our word. The same discipline that protects the balance sheet is the discipline that protects the customer, in every cycle.
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">The Architecture · Why → What → How → Who We Are</span><span class="bar"></span></div>
+  <div class="stack">
+    <div class="row">
+      <div class="key"><span class="k-name">Purpose</span><span class="k-job">Why we exist</span></div>
+      <div class="val"><span class="statement">To help people and communities get further than they could on their own.</span></div>
+    </div>
+    <div class="row">
+      <div class="key"><span class="k-name">Vision</span><span class="k-job">What the world recognizes us for</span></div>
+      <div class="val"><span class="statement">To be the bank people invite into their biggest decisions, trusted because we have earned it and kept it.</span></div>
+    </div>
+    <div class="row">
+      <div class="key"><span class="k-name">Ambition</span><span class="k-job">The standard we hold ourselves to</span></div>
+      <div class="val"><span class="statement">To be the most recommended bank across every market we serve, and the most disciplined operator behind that promise.</span></div>
+    </div>
+    <div class="row believe">
+      <div class="key"><span class="k-name">North Star</span><span class="k-job">The synthesis that guides decisions</span></div>
+      <div class="val"><span class="statement">Win by being worth recommending. Stay by being strong enough to keep our word.</span></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">Three Pillars · The Proof of the Promise</span><span class="bar"></span></div>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="num">PILLAR 01</div>
+      <h4>Decisions Made in the Customer's Interest</h4>
+      <div class="promise">We win by being worth recommending.</div>
+      <ul>
+        <li>Bankers are measured on customer outcomes and retention, not only volume booked this quarter.</li>
+        <li>We name the product that fits, even when it earns us less today.</li>
+        <li>Pricing and terms are explained in plain language before a signature, never buried after one.</li>
+        <li>Relationships are owned by people with the authority to act, close to the customer.</li>
+      </ul>
+    </div>
+    <div class="pillar">
+      <div class="num">PILLAR 02</div>
+      <h4>Strength That Lets Us Keep Our Word</h4>
+      <div class="promise">Discipline is how we stay when others leave.</div>
+      <ul>
+        <li>A fortress balance sheet and conservative underwriting mean we are still lending when the cycle turns.</li>
+        <li>We hold credit and capital standards through good years and hard ones, so customers keep their bank.</li>
+        <li>Growth is earned by deepening relationships, not bought through risk we cannot defend.</li>
+        <li>Liquidity, credit quality, and capital are how we honor a thirty-year promise.</li>
+      </ul>
+    </div>
+    <div class="pillar">
+      <div class="num">PILLAR 03</div>
+      <h4>Attention Built Into How We Operate</h4>
+      <div class="promise">Relentless focus is a system, not a slogan.</div>
+      <ul>
+        <li>Every product and channel answers one test: did this make the customer's life easier?</li>
+        <li>Technology removes friction the customer feels, not only cost the bank carries.</li>
+        <li>Frontline insight reaches decision-makers fast, and changes what we ship.</li>
+        <li>We retire what no longer serves customers, even when it is profitable to keep.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">Positioning · The Same Truth, Three Audiences</span><span class="bar"></span></div>
+  <div class="position">
+    <div class="cell">
+      <h3>Colleague Lens · Internal</h3>
+      <div class="who">For everyone who works here</div>
+      <p><span class="lead">We organize every decision around the customer's outcome, and we have the discipline to keep doing it for decades.</span> The test is simple: would we make this choice if the customer were sitting across the table? When we hold that line, growth follows.</p>
+    </div>
+    <div class="cell">
+      <h3>Customer Lens · External</h3>
+      <div class="who">For people and businesses we serve</div>
+      <p><span class="lead">A bank that earns its place in your life.</span> National strength paired with the judgment of someone who actually knows you. We grow when you grow, we stay when times are hard, and we measure our success by yours.</p>
+    </div>
+    <div class="cell">
+      <h3>Investor Lens · Markets</h3>
+      <div class="who">For the people who fund us</div>
+      <p><span class="lead">Recommendation compounds. Discipline protects.</span> Relationships earned in the customer's interest deepen over time and lower the cost of growth. Through-cycle underwriting means we are still taking share when weaker lenders pull back.</p>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">The Foundation · What Holds It All Up</span><span class="bar"></span></div>
+  <div class="foundation">
+    <div class="f-label">Values in Practice</div>
+    <div class="f-items">
+      <span class="f-item">Integrity in every transaction</span>
+      <span class="f-item">Communities we are part of</span>
+      <span class="f-item">People who stay</span>
+      <span class="f-item">Stewardship of trust</span>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">Proof · How We Know It Is True</span><span class="bar"></span></div>
+  <div class="proof">
+    <div class="pf"><div class="k">#1</div><div class="d">In customer recommendation across our footprint, the metric we manage to above all others.</div></div>
+    <div class="pf"><div class="k">30 yrs</div><div class="d">The horizon we underwrite to. We price relationships, not transactions.</div></div>
+    <div class="pf"><div class="k">"We changed it"</div><div class="d">A product retired because it stopped serving customers, even while it still earned. The behavior is the proof.</div></div>
+    <div class="pf"><div class="k">"We stayed"</div><div class="d">When the cycle turned, we kept the credit line open for the customer everyone else cut off. They are still with us.</div></div>
+  </div>
+
+  <div class="sec-head"><span class="label">Strategic Focus · Staying Relevant for the Next Generation</span><span class="bar"></span></div>
+  <div class="strat-intro">
+    The customer who carries us into the next thirty years is forming banking habits right now, in their late teens and twenties, with companies that are not banks. <b>By the time they reach their forties and need a mortgage or a business loan, the everyday relationship is already locked in elsewhere.</b> Win them at the first job and the first side hustle, or inherit them never. Future-proofing means earning the next generation early, on the terms they expect, without giving up the discipline that makes us worth staying with. The same architecture holds: we win by being worth recommending, and we stay by being strong enough to keep our word.
+  </div>
+
+  <div class="datastrip">
+    <div class="ds-item"><span class="ds-k">3 in 4</span><span class="ds-d">Gen Z consumers transact outside a traditional bank every month.</span></div>
+    <div class="ds-item"><span class="ds-k">2x</span><span class="ds-d">Under-35 customers switch banks at roughly twice the rate of those over 35.</span></div>
+    <div class="ds-item"><span class="ds-k">~15 vs 6</span><span class="ds-d">Financial relationships held by 18-34s versus the 55+ cohort. The young arrive already unbundled.</span></div>
+    <div class="ds-item"><span class="ds-k">~15% / yr</span><span class="ds-d">Projected fintech revenue growth through 2028, against roughly 6% for banks.</span></div>
+  </div>
+
+  <div class="horizons">
+    <div class="horizon">
+      <div class="h-when">Horizon 1 · Now</div>
+      <h4>Earn the relationship earlier</h4>
+      <p>Meet the next generation where they already are: the side-hustle owner, the first-job saver, the heir taking over a family business. Make opening a relationship as fast as the platforms they use now, and start the trust before their financial life hardens elsewhere.</p>
+    </div>
+    <div class="horizon">
+      <div class="h-when">Horizon 2 · Next</div>
+      <h4>Deepen as their lives grow</h4>
+      <p>Connect the moments that compound: the first account becomes a mortgage, a business loan, a wealth relationship. One bank across the whole life, so a customer never has to leave us to grow up.</p>
+    </div>
+    <div class="horizon">
+      <div class="h-when">Horizon 3 · Future</div>
+      <h4>Build for who they become</h4>
+      <p>Invest ahead of the curve in the capabilities the next generation will assume by default, so relevance is built in rather than bolted on, and the relationship outlasts the technology that started it.</p>
+    </div>
+  </div>
+
+  <div class="focus-grid">
+    <div class="focus org">
+      <div class="f-eyebrow">Growth Engine · Built In-House</div>
+      <h4>Organic Growth</h4>
+      <div class="f-thesis">Deepen first. The cheapest customer to grow is the one we already serve well.</div>
+      <ul>
+        <li>Win the next generation early and keep them through every life stage, so acquisition cost is recovered over decades, not quarters.</li>
+        <li>Deepen existing relationships across products before chasing new logos, because trust already earned converts fastest.</li>
+        <li>Remove the friction that makes people leave, starting with how long it takes to begin a relationship.</li>
+        <li>Hold credit and pricing discipline so that organic growth is profitable growth, not volume we regret.</li>
+      </ul>
+    </div>
+    <div class="focus inorg">
+      <div class="f-eyebrow">Growth Engine · Acquired</div>
+      <h4>Inorganic Growth</h4>
+      <div class="f-thesis">Buy what is hard to build. Acquire capability and customers we could not reach in time on our own.</div>
+      <ul>
+        <li>Acquire capabilities that would take too long to build, so we close a customer gap before a competitor does, not to add scale for its own sake.</li>
+        <li>Buy our way to customers who are otherwise hard to earn organically: a generation, a segment, or a market where we have no natural foothold.</li>
+        <li>Favor capability tuck-ins and talent over large scale mergers, because a sharper offering compounds where a bigger balance sheet alone does not.</li>
+        <li>Underwrite every deal to the same test as a loan: we buy what makes us more useful to customers, never a problem we cannot defend.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="balance">
+    <div class="b-head">The Balance · How the Engines Stay Aligned</div>
+    <div class="b-rows">
+      <div class="b-row">
+        <div class="b-key">Organic and inorganic</div>
+        <div class="b-body">We grow <b>organically by deepening trust</b> and <b>inorganically by buying capability and customers we cannot reach in time on our own</b>. Both answer the same test: does it let us serve customers better, for longer.</div>
+      </div>
+      <div class="b-row">
+        <div class="b-key">Digital and human</div>
+        <div class="b-body">Digital sets the everyday bar: <b>fast, frictionless, expected</b>. Human is where we win the moments that carry risk: a loan, a transition, a hard year. The model is hybrid by design, a journey that can start on a phone and finish in a conversation, or the reverse, without ever starting over.</div>
+      </div>
+      <div class="b-row">
+        <div class="b-key">Presence as advantage</div>
+        <div class="b-body">The digital-first names spent the last decade learning what we already knew: <b>a place you can walk into builds trust a screen cannot</b>. We treat presence as a strategic asset, not a cost line. The optimization is not in how many locations we keep, but in <b>how we use the space</b>: built for advice, problem-solving, and reassurance rather than transactions, hosting the moments that deepen relationships and signaling we are part of the community, not passing through it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">The Competitive Field · Who We Are Up Against and Why We Win</span><span class="bar"></span></div>
+  <div class="comp-intro">
+    The customer no longer chooses one bank. The average person holds around twelve financial relationships across five to eight providers, and only one of them is primary. <b>Primary status is the prize, and it is decided by trust, not by rate or by features alone.</b> Three kinds of competitor are fighting for it, each strong in a different place. Here is how they show up, and where we win.
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp">
+      <div class="c-type">Competitor Type 01</div>
+      <h4>National Scale Banks</h4>
+      <div class="c-who">The largest incumbents</div>
+      <div class="c-block"><div class="c-label">How they speak</div><div class="c-text">Ubiquity and breadth. Everywhere you are, everything under one roof, the safe default.</div></div>
+      <div class="c-block"><div class="c-label">Where they are strong</div><div class="c-text">Reach, marketing budget, product shelf, and a younger book than ours: some national leaders already run roughly a quarter of customers under 35.</div></div>
+      <div class="c-win"><div class="c-label">Why we win</div><div class="c-text">Scale is not intimacy. We make decisions locally, in the customer's interest, where they default to policy. Smaller institutions consistently out-advocate the giants on willingness to recommend.</div></div>
+    </div>
+
+    <div class="comp">
+      <div class="c-type">Competitor Type 02</div>
+      <h4>Neobanks and Fintechs</h4>
+      <div class="c-who">Digital-first challengers</div>
+      <div class="c-block"><div class="c-label">How they speak</div><div class="c-text">Speed, no fees, no fine print. Instant, invisible, mobile-first. They win the everyday early.</div></div>
+      <div class="c-block"><div class="c-label">Where they are strong</div><div class="c-text">Onboarding and UX, and momentum: fintech revenue is projected to grow around 15% a year against roughly 6% for banks, and younger consumers increasingly trust pay brands over a primary bank.</div></div>
+      <div class="c-win"><div class="c-label">Why we win</div><div class="c-text">They win the transaction; we win the decision that carries risk. Trust is reinforced at moments of friction, not convenience, and they have no one to sit across the table when the stakes are real.</div></div>
+    </div>
+
+    <div class="comp">
+      <div class="c-type">Competitor Type 03</div>
+      <h4>Regional and Community Banks</h4>
+      <div class="c-who">Our closest peers</div>
+      <div class="c-block"><div class="c-label">How they speak</div><div class="c-text">Local, relationship-led, part of the community. The story closest to our own.</div></div>
+      <div class="c-block"><div class="c-label">Where they are strong</div><div class="c-text">Genuine local trust and high advocacy. On recommendation, the strongest member-owned and community institutions punch well above the national giants.</div></div>
+      <div class="c-win"><div class="c-label">Why we win</div><div class="c-text">We match their intimacy and add the strength they lack: the balance sheet to keep lending through a cycle, the capability to grow with a customer from first job to business to wealth, without making them leave to do it.</div></div>
+    </div>
+  </div>
+
+  <div class="why-win">
+    <div class="w-head">The Through-Line · Why We Win</div>
+    <div class="w-lead">Everyone can match the app. <b>No one can fake the relationship.</b> We sit at the one intersection the field leaves open: the intimacy of a community bank, the capability of a national one, and the discipline to be trusted with the decisions that matter most.</div>
+    <div class="w-stats">
+      <div class="w-stat"><div class="ws-k">85%</div><div class="ws-d">of consumers hold their primary checking at their main bank. The deposit relationship is still ours to win and keep.</div></div>
+      <div class="w-stat"><div class="ws-k">Branch #1</div><div class="ws-d">Physical presence remains the most-used channel for acquiring banking services, even in a digital-first era.</div></div>
+      <div class="w-stat"><div class="ws-k">91%</div><div class="ws-d">of customers say quality service decides who they bank with. Human help, ready when it counts, is the differentiator.</div></div>
+      <div class="w-stat"><div class="ws-k">Friction</div><div class="ws-d">is where trust is built or lost. Convenience is table stakes; the hard moments are where we earn the right to stay.</div></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="label">Key Talking Points</span><span class="bar"></span></div>
+  <div class="ceo">
+    <div class="ceo-open">
+      A bank is the most personal business there is. People hand us the thing they worry about at two in the morning, and they trust us to act like it matters. <b>Everything we are building comes down to being worth that trust, and then being strong enough to keep earning it for the rest of someone's life.</b>
+    </div>
+    <div class="ceo-sub">
+      I want to be plain about what we believe, where we are going, and what I expect of us. Not a slogan. A way of operating that an employee, a shareholder, and a customer would each recognize as the same bank.
+    </div>
+    <div class="ceo-sign">Chief Executive Officer, Consello National Bank</div>
+
+    <div class="ceo-cols">
+
+      <div class="ceo-col">
+        <div class="cc-aud">To Our People</div>
+        <div class="cc-to">The people who are the bank</div>
+        <ul>
+          <li>Start every decision with one question: <b>would we make this choice if the customer were sitting across the table?</b> If the answer is no, we have our answer.</li>
+          <li>You do not need permission to do right by a customer. <b>Use your judgment.</b> I would rather defend a good decision made close to the customer than a bad one made far from them.</li>
+          <li>We are not the biggest, and we will not win by pretending to be. <b>We win by being the bank people recommend to someone they love.</b> That is earned in small moments, by you, every day.</li>
+          <li>Tell me what is broken. Candor is not disloyalty, it is how we get better. The most valuable thing you can bring me is the truth I did not want to hear.</li>
+          <li>Mistakes made reaching for the customer are forgivable. <b>The only thing we cannot afford is to stop being worth recommending.</b></li>
+        </ul>
+      </div>
+
+      <div class="ceo-col">
+        <div class="cc-aud">To Our Owners</div>
+        <div class="cc-to">The shareholders who fund us</div>
+        <ul>
+          <li>We manage this bank for the <b>next decade, not the next quarter.</b> Some of what we do will cost us a little today to be worth far more over a relationship that lasts thirty years.</li>
+          <li>Discipline is not caution. It is the habit that lets us keep lending when weaker competitors pull back. <b>The strongest hand in banking is the one still open when the cycle turns.</b></li>
+          <li>Recommendation compounds. A customer earned in their twenties and kept for life is the cheapest, most durable growth there is, and it does not show up in a single quarter's numbers.</li>
+          <li>We will grow two ways: <b>organically by deepening trust, and by acquiring capability we cannot build in time.</b> We will never buy scale we cannot underwrite or import a risk we cannot defend.</li>
+          <li>Judge us on the right things: the trust we earn, the relationships we keep, and whether we are still the bank our customers would choose again.</li>
+        </ul>
+      </div>
+
+      <div class="ceo-col">
+        <div class="cc-aud">To Our Customers</div>
+        <div class="cc-to">The people and businesses we serve</div>
+        <ul>
+          <li>We work for you, not the other way around. <b>We measure our success by yours,</b> and we would rather earn your trust slowly than your fees quickly.</li>
+          <li>We will meet you on your phone for the everyday, and we will be there in person for the decisions that keep you up at night. <b>You should never have to choose between fast and human.</b></li>
+          <li>We grow when you grow. The account you open at your first job should still fit when you buy a home, start a business, or pass something on. <b>You should never have to leave us to grow up.</b></li>
+          <li>We will tell you the truth in plain language, before you sign, not after. If a product does not fit you, we will say so, even when it earns us less.</li>
+          <li>And when times are hard, we will still be here. <b>Anyone can be your bank when it is easy. We intend to be the one that stays.</b></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footnote">
+    CONSELLO NATIONAL BANK · ILLUSTRATIVE MESSAGE HOUSE · CONFIDENTIAL · PROPERTY OF CONSELLO
+  </div>
+
+</div>
+</body>
+</html>
