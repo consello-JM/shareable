@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The North Star in Practice</title>
+<style>
+  :root{
+    --navy:#1b3a5b; --navy2:#16314e; --green:#1a7a4c; --green-dark:#157345;
+    --amber:#e8a020; --ink:#3f4a52; --ink-soft:#5a656d; --rule:#d7dadd;
+    --panel:#f4f6f8; --panel-green:#eef5f0; --grey:#8a939b; --bg:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;}
+  body{background:#cdd2d8;font-family:Arial,Helvetica,sans-serif;color:var(--ink);
+    display:flex;flex-direction:column;align-items:center;padding:18px 0;}
+
+  .frame{width:1000px;max-width:96vw;}
+  .tabs{display:flex;background:var(--navy);border-radius:6px 6px 0 0;overflow:hidden;}
+  .tab{flex:1;background:none;border:none;cursor:pointer;color:#9fb3c6;padding:14px 14px 12px 14px;
+    font-family:inherit;font-size:13px;font-weight:700;border-bottom:3px solid transparent;text-align:left;}
+  .tab .tnum{display:block;color:var(--amber);font-size:11px;letter-spacing:0.5px;margin-bottom:3px;}
+  .tab:hover{color:#cfe0ec;}
+  .tab.active{color:#fff;border-bottom-color:var(--green);background:var(--navy2);}
+
+  .stage{position:relative;width:1000px;max-width:96vw;height:562px;max-height:54vw;background:#fff;
+    box-shadow:0 14px 40px rgba(0,0,0,0.22);overflow:hidden;}
+  .deck{display:none;width:100%;height:100%;}
+  .deck.active{display:block;}
+  .slide{display:none;width:100%;height:100%;padding:38px 46px 54px 46px;position:relative;
+    flex-direction:column;}
+  .slide.show{display:flex;}
+
+  .eyebrow{color:var(--amber);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px 0;}
+  h2.title{color:var(--navy);font-size:27px;font-weight:700;line-height:1.07;margin:0 0 4px 0;letter-spacing:-0.3px;}
+  .roleline{font-size:13px;color:var(--ink-soft);font-style:italic;margin:0;}
+  .subhead{font-size:15px;color:var(--ink-soft);font-style:italic;margin:6px 0 0 0;line-height:1.4;max-width:830px;}
+  p{font-size:14.5px;line-height:1.5;margin:0 0 10px 0;}
+  b{color:var(--navy);}
+  .big{font-size:17px;line-height:1.5;color:var(--ink);}
+  .center-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;}
+
+  .anchor{border-left:5px solid var(--navy);background:var(--panel);padding:4px 20px;margin:14px 0;}
+  .anchor .row{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid #e3e7ea;}
+  .anchor .row:last-child{border-bottom:none;}
+  .anchor .k{color:var(--green-dark);font-weight:700;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;width:78px;flex-shrink:0;padding-top:2px;}
+  .anchor .v{color:var(--navy);font-size:14px;line-height:1.4;}
+  .anchor .v .note{display:block;color:var(--ink-soft);font-size:11.5px;font-style:italic;margin-top:2px;}
+
+  .callout{border-left:5px solid var(--green);background:var(--panel-green);padding:13px 18px;margin:12px 0;font-size:14.5px;line-height:1.45;}
+  .callout b{color:var(--navy);}
+  .callout.big{font-size:16px;}
+
+  .lens-statement{background:var(--navy);color:#fff;border-radius:6px;padding:24px 30px;margin:8px 0;}
+  .lens-statement .lq{font-size:21px;font-weight:700;line-height:1.25;letter-spacing:-0.2px;}
+  .lens-statement .lc{font-size:14px;color:#c7d2dc;margin-top:10px;line-height:1.45;}
+
+  .howto{display:flex;gap:16px;margin:10px 0;}
+  .howto .col{flex:1;}
+  .howto .col h4{margin:0 0 4px 0;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--green-dark);}
+  .howto .col p{font-size:13px;line-height:1.45;color:var(--ink);margin:0;}
+  .use-strip{display:flex;gap:0;border:1px solid var(--rule);margin:10px 0;}
+  .use-strip .u{flex:1;padding:11px 14px;border-right:1px solid var(--rule);}
+  .use-strip .u:last-child{border-right:none;}
+  .use-strip .ut{font-size:11px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:var(--green-dark);margin-bottom:4px;}
+  .use-strip .ud{font-size:12.5px;color:var(--ink-soft);line-height:1.4;}
+
+  .stmt-display{font-size:19px;font-weight:700;color:var(--navy);line-height:1.3;margin:6px 0 0 0;}
+  .stmt-sub{font-size:13px;color:var(--ink-soft);font-style:italic;margin-bottom:10px;}
+
+  table{width:100%;border-collapse:collapse;margin:10px 0;}
+  th{background:var(--navy);color:#fff;text-align:left;font-size:11.5px;letter-spacing:0.3px;padding:8px 12px;font-weight:700;}
+  td{border:1px solid var(--rule);padding:9px 12px;font-size:13px;line-height:1.45;vertical-align:top;}
+  td.lab{font-weight:700;color:var(--navy);width:120px;background:var(--panel);}
+  td .core{color:var(--ink-soft);font-size:11.5px;font-style:italic;display:block;margin-bottom:3px;}
+
+  .cards3{display:flex;gap:14px;margin:10px 0;}
+  .cards3 > div{flex:1;border:1px solid var(--rule);border-top:3px solid var(--green);padding:13px 15px;}
+  .cards3 h4{color:var(--navy);font-size:14px;margin:0 0 3px 0;}
+  .cards3 .tag{color:var(--green-dark);font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;margin-bottom:6px;}
+  .cards3 .say{font-style:italic;color:var(--navy);font-size:14px;margin-bottom:6px;line-height:1.35;}
+  .cards3 .use{font-size:12px;color:var(--ink-soft);line-height:1.35;}
+
+  .guard{display:flex;gap:14px;margin:10px 0;}
+  .guard > div{flex:1;padding:13px 16px;}
+  .guard .fixed{background:var(--panel);border-top:3px solid var(--navy);}
+  .guard .flex{background:#f6f9f6;border-top:3px solid var(--green);}
+  .guard .avoid{background:#fbf4ea;border-top:3px solid var(--amber);}
+  .guard h4{font-size:12px;letter-spacing:0.5px;text-transform:uppercase;margin:0 0 8px 0;}
+  .guard .fixed h4{color:var(--navy);} .guard .flex h4{color:var(--green-dark);} .guard .avoid h4{color:#b5790e;}
+  .guard ul{margin:0;padding:0;list-style:none;}
+  .guard li{font-size:12px;line-height:1.35;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .guard li:last-child{border-bottom:none;}
+  .guard li b{color:var(--navy);}
+
+  .reframe{display:flex;gap:16px;margin:10px 0;}
+  .reframe > div{flex:1;border:1px solid var(--rule);}
+  .reframe .cap{padding:8px 14px;font-weight:700;font-size:11px;letter-spacing:0.5px;color:#fff;}
+  .reframe .before .cap{background:var(--grey);}
+  .reframe .after .cap{background:var(--green);}
+  .reframe .inner{padding:12px 15px;font-size:12.5px;line-height:1.5;}
+  .reframe .inner .added{background:#d9ecdf;padding:1px 3px;border-radius:2px;}
+  .reframe .inner .cut{background:#f0d9d9;padding:1px 3px;border-radius:2px;text-decoration:line-through;color:#9a5b5b;}
+  .whatchanged{display:flex;gap:16px;margin:10px 0;}
+  .whatchanged .wc{flex:1;border-top:2px solid var(--green);padding-top:8px;}
+  .whatchanged .wc h5{margin:0 0 3px 0;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--green-dark);}
+  .whatchanged .wc p{font-size:12.5px;line-height:1.4;margin:0;color:var(--ink);}
+
+  .layers{margin:10px 0;border:1px solid var(--rule);}
+  .layer{display:flex;align-items:stretch;border-bottom:1px solid var(--rule);}
+  .layer:last-child{border-bottom:none;}
+  .layer .badge{width:150px;flex-shrink:0;padding:11px 16px;color:#fff;display:flex;flex-direction:column;justify-content:center;}
+  .layer .badge .bt{font-size:12px;font-weight:700;letter-spacing:0.4px;}
+  .layer .badge .bq{font-size:10.5px;opacity:0.85;margin-top:2px;font-style:italic;}
+  .layer .meat{padding:10px 18px;}
+  .layer .meat .lname{font-weight:700;color:var(--navy);font-size:13.5px;}
+  .layer .meat .ldesc{font-size:12px;color:var(--ink-soft);line-height:1.38;margin-top:2px;}
+  .L-id .badge{background:#243b54;} .L-dir .badge{background:#1b4d6b;}
+  .L-pos .badge{background:var(--green-dark);} .L-plan .badge{background:#3f6b54;} .L-exec .badge{background:#5a656d;}
+
+  .example-slide{border:2px solid var(--navy);border-radius:4px;margin:10px 0;overflow:hidden;}
+  .example-slide .top{background:var(--navy);color:#fff;padding:8px 16px;font-size:12px;font-weight:700;letter-spacing:0.4px;}
+  .example-slide .grid{display:flex;}
+  .example-slide .col{flex:1;padding:13px 16px;border-right:1px solid var(--rule);}
+  .example-slide .col:last-child{border-right:none;}
+  .example-slide .clayer{color:var(--green-dark);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;}
+  .example-slide .cstmt{color:var(--navy);font-size:13.5px;font-weight:700;line-height:1.25;margin-bottom:5px;}
+  .example-slide .cnote{font-size:11.5px;color:var(--ink-soft);line-height:1.35;}
+
+  .standard-box{border-left:5px solid var(--navy);background:var(--panel);padding:16px 20px;margin:10px 0;font-size:16px;line-height:1.5;color:var(--navy);}
+  .qsteps{margin:10px 0;}
+  .qstep{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #e8ebed;}
+  .qstep:last-child{border-bottom:none;}
+  .qstep .qn{width:30px;height:30px;flex-shrink:0;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+  .qstep .qbody h4{margin:0 0 2px 0;color:var(--navy);font-size:14px;}
+  .qstep .qbody p{margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.4;}
+
+  .markers{margin:6px 0;padding:0;list-style:none;}
+  .markers li{padding:8px 0 8px 26px;position:relative;font-size:13px;line-height:1.4;border-bottom:1px solid #e8ebed;}
+  .markers li:last-child{border-bottom:none;}
+  .markers li::before{content:"";position:absolute;left:0;top:10px;width:12px;height:12px;border:2px solid var(--green);border-radius:50%;}
+  .markers li b{color:var(--navy);}
+
+  .checklist{border:1px solid var(--rule);border-top:4px solid var(--green);padding:4px 22px 10px 22px;margin:8px 0;}
+  .checklist ul{margin:0;padding:0;list-style:none;}
+  .checklist li{padding:9px 0 9px 28px;position:relative;font-size:13px;line-height:1.4;border-bottom:1px solid #e8ebed;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist li::before{content:"";position:absolute;left:0;top:10px;width:14px;height:14px;border:2px solid var(--green);border-radius:3px;}
+  .checklist li b{color:var(--navy);}
+
+  .crossref{display:inline-block;background:#27496c;border:1px solid #3a5d80;border-radius:3px;padding:1px 7px;font-size:13px;color:#fff;font-weight:700;font-style:normal;cursor:pointer;}
+
+  .footer{position:absolute;left:46px;right:46px;bottom:16px;border-top:1px solid var(--rule);padding-top:7px;
+    display:flex;justify-content:space-between;color:#9aa3aa;font-size:11px;}
+
+  .controls{width:1000px;max-width:96vw;display:flex;align-items:center;justify-content:space-between;
+    margin-top:12px;background:var(--navy);border-radius:0 0 6px 6px;padding:10px 18px;}
+  .controls .nav{display:flex;gap:8px;align-items:center;}
+  .controls button.arrow{background:#2c4d6e;color:#fff;border:none;border-radius:4px;width:36px;height:32px;
+    cursor:pointer;font-size:16px;line-height:1;}
+  .controls button.arrow:disabled{opacity:0.35;cursor:default;}
+  .controls .count{color:#c7d2dc;font-size:13px;min-width:54px;text-align:center;}
+  .controls .deckname{color:#9fb3c6;font-size:12px;font-weight:700;letter-spacing:0.5px;}
+  .dots{display:flex;gap:6px;flex-wrap:wrap;max-width:320px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:#3f6080;cursor:pointer;border:none;padding:0;}
+  .dot.on{background:var(--green);}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="tabs">
+    <button class="tab active" data-deck="d1"><span class="tnum">01 · NARRATIVE</span>How we talk about it</button>
+    <button class="tab" data-deck="d2"><span class="tnum">02 · STRATEGY</span>Where it fits in the work</button>
+    <button class="tab" data-deck="d3"><span class="tnum">03 · LEADERSHIP</span>Bringing people with us</button>
+  </div>
+</div>
+
+<div class="stage">
+
+  <!-- =================== DECK 1: NARRATIVE =================== -->
+  <div class="deck active" id="d1">
+
+    <div class="slide show">
+      <div class="eyebrow">Deliverable 01 · Narrative</div>
+      <h2 class="title">How we talk about it</h2>
+      <div class="roleline">For anyone putting words on a page. Answers: how do I say it.</div>
+      <div class="center-wrap">
+        <div class="lens-statement">
+          <div class="lq">This is a framework, not a script.</div>
+          <div class="lc">No one walks up to a customer and says "welcome to M&amp;T, our vision is to be the bank invited into homes." The statements are not lines to recite. They set the direction, and they align what we say, how we say it, and most of all how we live it. Used right, you rarely quote them. You hear them in how everything else is written.</div>
+        </div>
+        <p class="big">The work in this guide is learning to write and speak so the direction comes through, without ever reading the direction out loud.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The direction, stated once</div>
+      <h2 class="title">Three statements, one customer at the center</h2>
+      <div class="center-wrap">
+        <div class="anchor">
+          <div class="row"><div class="k">Purpose</div><div class="v">To make a difference in people's lives, by knowing them, growing with them, and connecting them with everything they need to thrive.<span class="note">Why we are here. The reason people show up to the work.</span></div></div>
+          <div class="row"><div class="k">Vision</div><div class="v">To be the bank invited into homes, businesses, and communities, by earning trust and deepening relationships with every interaction.<span class="note">What we are building toward. The bank customers choose to let further in.</span></div></div>
+          <div class="row"><div class="k">North Star</div><div class="v">The bank that earns its way in and the right to stay, from a first account to the most complex need a family or business will ever have.<span class="note">How we work every day. The standard behind every customer interaction.</span></div></div>
+        </div>
+        <div class="callout big"><b>One thread runs through all three: the customer.</b> Customer-centricity is not a fourth statement. It is the lens that turns any of these into the words you actually use. Hold the customer at the center and the rest of this guide is just practice.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The engine behind every reframe</div>
+      <h2 class="title">Customer-centricity is the move, not the message</h2>
+      <p class="subhead">We are already customer-centric in what we do. The gap is that we describe it from the bank's side. The whole craft here is one shift: make the customer the subject of the sentence.</p>
+      <div class="center-wrap">
+        <div class="howto">
+          <div class="col"><h4>What we tend to write</h4><p>The bank built a capability. The bank invested. The bank strengthened its operations. True, but the customer is offstage, and the reader has to work out why it matters to them.</p></div>
+          <div class="col"><h4>What customer-centric writing does</h4><p>The customer gets something they can feel. The same fact, told so the person on the other side is the one it happens to. Nothing about the work changes. What changes is who the sentence is about.</p></div>
+        </div>
+        <div class="callout"><b>The test you can run on any sentence:</b> if you took M&amp;T out as the hero, is there still a customer who is better off? If not, rewrite it until there is. That single habit is what the reframes at the end of this section all share.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">How to use it · Purpose</div>
+      <h2 class="title">The Purpose: the "why," in your people's words</h2>
+      <div class="stmt-display">To make a difference in people's lives</div>
+      <div class="stmt-sub">by knowing them, growing with them, and connecting them with everything they need to thrive.</div>
+      <div class="center-wrap">
+        <p>The core line never moves. The "by" clause is where your part of the bank makes it real, keeping the three verbs, knowing, growing, connecting, and pointing them at the people you actually serve.</p>
+        <table>
+          <tr><th style="width:110px;">Your area</th><th>The "by" clause, in your words</th></tr>
+          <tr><td class="lab">Commercial</td><td>by knowing our clients' businesses, growing with them as they reach new goals, and connecting them with everything they need to thrive.</td></tr>
+          <tr><td class="lab">Wealth / WT</td><td>by knowing our clients across generations, growing with them through every life stage, and connecting them with everything they need to thrive.</td></tr>
+          <tr><td class="lab">HR / People</td><td>by knowing our colleagues, growing with them, and connecting them with everything they need to thrive.</td></tr>
+        </table>
+        <div class="use-strip">
+          <div class="u"><div class="ut">Use the full line</div><div class="ud">Town halls, board materials, formal writing to the whole bank, earnings remarks.</div></div>
+          <div class="u"><div class="ut">Use when it helps</div><div class="ud">Internal memos, customer narratives, strategy docs, the website.</div></div>
+          <div class="u"><div class="ut">Skip the extension</div><div class="ud">Posters, placemats, summary slides, anywhere short.</div></div>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">How to use it · Vision</div>
+      <h2 class="title">The Vision: the bank customers choose to let in</h2>
+      <div class="stmt-display">To be the bank invited into homes, businesses, and communities</div>
+      <div class="stmt-sub">by earning trust and deepening relationships with every interaction.</div>
+      <div class="center-wrap">
+        <p>The Vision is the one place "invited" belongs. It names the outcome from the customer's side: being asked further in because we earned it. You almost never say the Vision out loud. You use it to check whether what you are writing points at that outcome.</p>
+        <div class="howto">
+          <div class="col"><h4>When you reach for it</h4><p>When you describe where we are headed and want the customer, not the bank, doing the choosing. Brand work, aspiration, the future state.</p></div>
+          <div class="col"><h4>How it shapes the writing</h4><p>If a line brags about what M&amp;T did, the Vision pulls it back to what the customer felt that made them want more. Earned, then invited, never the other way round.</p></div>
+        </div>
+        <div class="callout"><b>The tell that you are using the Vision well:</b> the customer is inviting M&amp;T in, not M&amp;T announcing it arrived. "A bank people ask into their biggest decisions" is Vision. "The bank expanding into new markets" is not.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">How to use it · North Star</div>
+      <h2 class="title">The North Star: how we work, in three voices</h2>
+      <div class="stmt-display">The bank that earns its way in and the right to stay</div>
+      <div class="stmt-sub">from a first account to the most complex need a family or business will ever have.</div>
+      <div class="center-wrap">
+        <p>This is the one you will use most, because it describes how we operate, not some far-off state. Same direction, framed for who needs to hear it. The words shift; the strategy does not.</p>
+        <div class="cards3">
+          <div><div class="tag">Third person · external</div><h4>The institution</h4><div class="say">"The bank that earns its way in and the right to stay."</div><div class="use">Board decks, investor materials, external positioning.</div></div>
+          <div><div class="tag">First person · internal</div><h4>The team</h4><div class="say">"We earn our way in and the right to stay."</div><div class="use">All-hands, internal memos, what a manager tells the team.</div></div>
+          <div><div class="tag">Active · ongoing</div><h4>On the wall</h4><div class="say">"Earning our way in and the right to stay."</div><div class="use">Town hall banners, taglines, the line behind the work.</div></div>
+        </div>
+        <div class="callout"><b>Even here, you are not quoting it.</b> A relationship manager does not say the North Star to a client. They earn the account, then earn the next thing, and the line is just the name for what they already do.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The guardrails</div>
+      <h2 class="title">Consistent without being rigid</h2>
+      <p class="subhead">Lead with the spirit, hold the few keywords fixed, flex everything else. A banker in Buffalo and an advisor in Wilmington still describe M&amp;T the same way.</p>
+      <div class="center-wrap">
+        <div class="guard">
+          <div class="fixed"><h4>Stays fixed</h4><ul>
+            <li><b>Customer first.</b> Their need leads; the stance is active and earned.</li>
+            <li><b>The core Purpose.</b> "Make a difference in people's lives" is not redrafted.</li>
+            <li><b>Earn, and invited.</b> "Earn" is the working verb everywhere; "invited" lives only in the Vision.</li>
+          </ul></div>
+          <div class="flex"><h4>Can flex</h4><ul>
+            <li><b>Tone.</b> Sound like yourself. The anchor is the direction, not the wording.</li>
+            <li><b>Length.</b> Short on a poster, full in a formal piece.</li>
+            <li><b>Voice.</b> First, third, or active, by audience.</li>
+            <li><b>The "by" clause.</b> Adapt it to your area, keep the three verbs.</li>
+          </ul></div>
+          <div class="avoid"><h4>Avoid</h4><ul>
+            <li><b>Function ahead of the customer.</b> Tech and process are framed by what they do for the client.</li>
+            <li><b>Reciting the North Star as a slogan.</b> It is a direction, not a tagline.</li>
+            <li><b>"Community bank."</b> We are a bank for communities. The difference matters.</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Reframes in practice</div>
+      <h2 class="title">We do not tear things down. We read them through the customer.</h2>
+      <div class="center-wrap">
+        <p class="big">The point of what follows is not the specific wording. It is the move. Take something we already wrote, keep the words and the intent, and add or shift just enough that the customer is the one it happens to. Do that across our existing artifacts and the direction becomes real without anything being rebuilt.</p>
+        <p class="big">Three examples follow, on three kinds of writing: a values list, a shareholder letter, and our internal ways of working. Same move every time.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Reframe 1 of 3 · A values list</div>
+      <h2 class="title">The values stay. One line each turns them outward.</h2>
+      <div class="center-wrap">
+        <div class="reframe">
+          <div class="before"><div class="cap">TODAY · OWNERSHIP</div><div class="inner">We understand what is important to our customers and communities. We execute with urgency. We follow through on commitments. We act responsibly to preserve our future.</div></div>
+          <div class="after"><div class="cap">READ THROUGH THE CUSTOMER</div><div class="inner">We understand what is important to our customers and communities. We execute with urgency. We follow through on commitments. We act responsibly to preserve our future. <span class="added">We take personal responsibility to create better outcomes for those we serve, not just for the transactions we complete.</span></div></div>
+        </div>
+        <div class="whatchanged">
+          <div class="wc"><h5>What changed</h5><p>Nothing was removed. One sentence was added that names the customer as the point of the value.</p></div>
+          <div class="wc"><h5>Why</h5><p>The value was inward, about how we conduct ourselves. The addition makes it externally felt, about what the customer gets.</p></div>
+          <div class="wc"><h5>The logic to reuse</h5><p>For any internal statement, ask what it produces for a customer, and add that as the last line. Keep the original intact.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Reframe 2 of 3 · Long-form prose</div>
+      <h2 class="title">Same investment. Told as a promise to the customer.</h2>
+      <div class="center-wrap">
+        <div class="reframe">
+          <div class="before"><div class="cap">TODAY</div><div class="inner">We made a deliberate investment in Operational Excellence as a shared framework for running the company. We see this as <span class="cut">stewardship of the franchise</span>, building the capacity to grow responsibly while preserving the discipline and culture that define M&amp;T.</div></div>
+          <div class="after"><div class="cap">REFRAME</div><div class="inner">Our customers were telling us something: their experience did not always match what our people were capable of delivering. The relationships were strong; the systems behind them created friction. We invested in Operational Excellence <span class="added">to make every customer interaction faster, simpler, and more worthy of the trust our customers place in us.</span></div></div>
+        </div>
+        <div class="whatchanged">
+          <div class="wc"><h5>What changed</h5><p>The subject moved from the bank stewarding itself to the customer feeling the difference. Same investment, same outcome.</p></div>
+          <div class="wc"><h5>Why</h5><p>"Stewardship of the franchise" is the bank admiring its own discipline. The customer is nowhere in it.</p></div>
+          <div class="wc"><h5>The logic to reuse</h5><p>When prose explains a decision, lead with what the customer was experiencing that made it necessary, then what they feel now.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Reframe 3 of 3 · Internal ways of working</div>
+      <h2 class="title">The mindset holds. The customer becomes the test.</h2>
+      <div class="center-wrap">
+        <div class="reframe">
+          <div class="before"><div class="cap">TODAY · FOCUS ON WHAT MATTERS</div><div class="inner">We prioritize impact, deliver value incrementally, and measure success.</div></div>
+          <div class="after"><div class="cap">REFRAME</div><div class="inner">What matters is whether the client's life is better because they bank with us. <span class="added">We prioritize impact, deliver value incrementally, and measure success</span> against that.</div></div>
+        </div>
+        <div class="whatchanged">
+          <div class="wc"><h5>What changed</h5><p>The mindset words are all still there. They now sit under a customer test instead of standing as their own goal.</p></div>
+          <div class="wc"><h5>Why</h5><p>"Measure success" begs the question: success at what? The reframe answers it with the customer.</p></div>
+          <div class="wc"><h5>The logic to reuse</h5><p>When a statement describes how we work, put the customer outcome first as the thing the work is measured against.</p></div>
+        </div>
+        <div class="callout"><b>That is the whole method.</b> Across a values list, a letter, and a way of working, the same single move. Now you can run it on anything we have already written.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Narrative</span></div>
+    </div>
+
+  </div>
+
+  <!-- =================== DECK 2: STRATEGY =================== -->
+  <div class="deck" id="d2">
+
+    <div class="slide show">
+      <div class="eyebrow">Deliverable 02 · Strategy</div>
+      <h2 class="title">Where it fits in the work</h2>
+      <div class="roleline">For anyone deciding what to back, what to drop, and what to say about it. Answers: where does this sit.</div>
+      <div class="center-wrap">
+        <div class="lens-statement">
+          <div class="lq">The same words can mean who we are or what we are doing this quarter. Those are different jobs.</div>
+          <div class="lc">When a leader reaches for the language, it helps to know whether they are naming why the bank exists, where it is heading, or the work in front of a team on Tuesday. All of it answers to the same customer. That is what keeps the pieces connected, and it is the thing this guide makes plain.</div>
+        </div>
+        <p class="big">It is the bridge between how we talk <span class="crossref" data-goto="d1">01 · Narrative</span> and how we lead the work <span class="crossref" data-goto="d3">03 · Leadership</span>.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The layers, and the customer running through them</div>
+      <h2 class="title">Every layer answers to the same person</h2>
+      <p class="subhead">Top to bottom: why we are here, where we are going, how we win, where we focus now, how we operate. Different questions, one customer in all of them. That is the connective tissue, not the hierarchy.</p>
+      <div class="center-wrap">
+        <div class="layers">
+          <div class="layer L-id"><div class="badge"><span class="bt">WHY WE'RE HERE</span><span class="bq">Identity</span></div><div class="meat"><div class="lname">Purpose &amp; Vision</div><div class="ldesc">Why we exist and what we are building toward. The parts that hold no matter the cycle. The customer is the reason both are written.</div></div></div>
+          <div class="layer L-dir"><div class="badge"><span class="bt">WHERE WE HEAD</span><span class="bq">Direction</span></div><div class="meat"><div class="lname">North Star</div><div class="ldesc">How we work every day to earn the relationship and keep earning it. The one line everything below has to trace back to.</div></div></div>
+          <div class="layer L-pos"><div class="badge"><span class="bt">HOW WE WIN</span><span class="bq">Positioning</span></div><div class="meat"><div class="lname">Our model in market</div><div class="ldesc">Relationships held through cycles, the thing volume players cannot copy. We win by being worth recommending and strong enough to stay.</div></div></div>
+          <div class="layer L-plan"><div class="badge"><span class="bt">WHERE WE FOCUS</span><span class="bq">Planning</span></div><div class="meat"><div class="lname">Teaming for Growth &amp; Operational Excellence</div><div class="ldesc">Where we put weight over the next few years. Each is about whether the customer relationship gets deeper and easier.</div></div></div>
+          <div class="layer L-exec"><div class="badge"><span class="bt">HOW WE OPERATE</span><span class="bq">Execution</span></div><div class="meat"><div class="lname">The everyday work</div><div class="ldesc">The platform, the process, the call handled today. Real only when it makes a customer better off.</div></div></div>
+        </div>
+        <p class="subhead" style="font-style:normal;">Everything below the top two runs in service of them. If a layer stops pointing at the customer, that is the signal something has drifted.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Why knowing the layer matters</div>
+      <h2 class="title">One bank, read across the layers</h2>
+      <p class="subhead">Take one piece of work and watch where the language sits. The North Star is the line that ties the top to the bottom.</p>
+      <div class="center-wrap">
+        <div class="example-slide">
+          <div class="top">CONSOLIDATING OPERATIONS ONTO ONE PLATFORM</div>
+          <div class="grid">
+            <div class="col"><div class="clayer">Why we're here</div><div class="cstmt">"We make a difference in people's lives."</div><div class="cnote">Does not change this quarter or next. The reason any of the work is worth doing.</div></div>
+            <div class="col"><div class="clayer">Where we head</div><div class="cstmt">"We earn our way in and the right to stay."</div><div class="cnote">How the platform earns its keep: it lets us serve the customer well enough to be kept.</div></div>
+            <div class="col"><div class="clayer">The work today</div><div class="cstmt">"One platform, fewer handoffs, faster answers."</div><div class="cnote">Worth doing only because the customer feels it. That is what ties it to the line above.</div></div>
+          </div>
+        </div>
+        <p>All three are right. The mistake is defending a platform decision as if it settled who we are, or reciting the Purpose to win an argument about this year's roadmap. Know which one you are in, and keep all three pointed at the customer.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The test that does the work</div>
+      <h2 class="title">Can you draw the line to the customer?</h2>
+      <div class="center-wrap">
+        <div class="callout big"><b>Trace it both ways.</b> Any plan or project should trace a clean line back to the North Star, and through it to a customer who is better off. If you cannot draw that line, the work needs reframing, or it needs to stop. And in reverse: do not use "who we are" to win a fight that belongs to "what we are doing now." The customer is the test at every level.</div>
+        <p class="big">This is not a new process or a checklist on top of the work. It is permission to ask a question we sometimes skip: does this actually earn more of the relationship, deeper, longer, or wider? When the answer is no, the decision changes.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Where it actually changes a decision</div>
+      <h2 class="title">The same calls, made sharper</h2>
+      <p class="subhead">Not new work. The decisions we already make, with the customer as the deciding question. This is the change leaders have been asking for, made visible.</p>
+      <div class="center-wrap">
+        <table>
+          <tr><th style="width:165px;">The decision</th><th>What sharpens when the customer is the test</th></tr>
+          <tr><td class="lab">What to fund</td><td>A line tied to deepening customer relationships is harder to cut than one tied to internal tidiness. We weigh investments against the customers we will have in ten years, not just this year's budget.</td></tr>
+          <tr><td class="lab">Build or buy</td><td>One question for every move: does it make customer relationships deeper, longer, or wider? When the answer is no, the capital goes somewhere it does, including pulling back from things already in motion.</td></tr>
+          <tr><td class="lab">What we reward</td><td>Recognition follows the relationships that compound. A fifteen-year customer is worth more than an account opened last month, and pay and promotion start to show it.</td></tr>
+          <tr><td class="lab">Who we serve</td><td>We stop trying to be everything to everyone and put weight where the relationship model compounds: households, business owners, and the next generation we have not earned yet.</td></tr>
+        </table>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">It does not replace what we already run</div>
+      <h2 class="title">It anchors the priorities we already have</h2>
+      <p class="subhead">Teaming for Growth and Operational Excellence are the engines. The North Star points them at the same place and makes each easier to run.</p>
+      <div class="center-wrap">
+        <div class="howto">
+          <div class="col"><h4>Teaming for Growth</h4><p>Cross-business work stops being about the org chart and becomes about one question: did the client get the whole bank? No customer is limited by the relationship they happened to start with.</p></div>
+          <div class="col"><h4>Operational Excellence</h4><p>Earning the right to the relationship becomes the goal the work serves. Customer-back processes, faster service, fewer handoffs, measured by whether it was easier for the customer and the people serving them.</p></div>
+        </div>
+        <div class="callout"><b>What the North Star produces when it anchors both:</b> one destination instead of two parallel tracks, a customer outcome attached to every measure of success, and a shared test the room can use when the two engines pull against each other. Operational Excellence in service of Teaming for Growth, not running beside it.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Strategy</span></div>
+    </div>
+
+  </div>
+
+  <!-- =================== DECK 3: LEADERSHIP =================== -->
+  <div class="deck" id="d3">
+
+    <div class="slide show">
+      <div class="eyebrow">Deliverable 03 · Leadership</div>
+      <h2 class="title">Bringing people with us</h2>
+      <div class="roleline">For a manager about to roll something out. Answers: what do I do.</div>
+      <div class="center-wrap">
+        <div class="lens-statement">
+          <div class="lq">A new capability only changes the bank when the people running it can see themselves in it.</div>
+          <div class="lc">As we build in technology, wealth, data, and customer experience, the direction is how each person understands why we are doing this and where their own work fits. Drawing that line is not a communications task handed off to someone else. It is part of leading.</div>
+        </div>
+        <p class="big">When the line gets drawn, people build the change with us. When it does not, they experience it as something happening to them.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">The standard we hold ourselves to</div>
+      <h2 class="title">Make the path visible</h2>
+      <div class="center-wrap">
+        <div class="standard-box">When leaders draw the line clearly and often, people understand the direction and their place in it. When the line goes undrawn, people fill the gap themselves, and it fills with uncertainty. Everyone who shows up, adapts, and deepens what they bring earns a place in the next chapter of this bank. A leader's job is to make that path visible.</div>
+        <p class="big">This is not about getting people to recite the direction. It is about leading them from where they are today to where the bank is going, one connection at a time, so they help build it rather than brace against it.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">What every leader answers for their team</div>
+      <h2 class="title">Three questions, answered before they are asked</h2>
+      <p class="subhead">Change explained only as strategy or a new tool leaves people asking what it means for them. When you do not answer, they guess. Answer these in order.</p>
+      <div class="center-wrap">
+        <div class="qsteps">
+          <div class="qstep"><div class="qn">1</div><div class="qbody"><h4>What is this, and why are we doing it?</h4><p>Name it plainly and tie it to how we earn the relationship. We are doing this so we move together, decide faster, hand off less, and serve people better, which is how we earn the right to stay.</p></div></div>
+          <div class="qstep"><div class="qn">2</div><div class="qbody"><h4>Where does my work fit?</h4><p>Draw the line from the priority to the role. Every function connects to the same direction once a leader makes the connection out loud.</p></div></div>
+          <div class="qstep"><div class="qn">3</div><div class="qbody"><h4>What is being asked of me, and what backs me up?</h4><p>Be clear about how the direction sharpens their focus, and what they get to make it real: clearer goals, the language to use, the support behind it.</p></div></div>
+        </div>
+        <div class="callout"><b>The shorthand:</b> what is it, where do I fit, what is asked of me. If a person can answer all three in their own words after you talk, you led the change. If they cannot, you announced it.</div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">What it looks like by role · 1 of 2</div>
+      <h2 class="title">Find the work closest to your team</h2>
+      <div class="center-wrap">
+        <table>
+          <tr><th style="width:150px;">Role</th><th>The connection to the customer</th><th>The shift</th></tr>
+          <tr><td class="lab">Front line, RMs, advisors</td><td>Where the direction becomes real. They earn the relationship by knowing the customer and growing with them.</td><td>Start from the customer's goals, bring the whole bank to each one, and let deeper relationships and referrals be the scorecard.</td></tr>
+          <tr><td class="lab">Call center, back office</td><td>Every call and transaction either builds trust or wears it down. They make the relationship dependable when no one is in the room.</td><td>Treat each contact as a chance to deepen trust. Solve the whole issue in one touch, then fix the root cause behind it.</td></tr>
+          <tr><td class="lab">Technology &amp; data</td><td>These systems decide how fast we can know a customer and respond, which is what earns the right to be let further in.</td><td>Build for the customer moment. Judge each capability by whether it helps a colleague serve faster, and keep shipping.</td></tr>
+        </table>
+        <p>The connection is always the same shape: the work, then the customer it serves, then what changes when you lead it that way.</p>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">What it looks like by role · 2 of 2</div>
+      <h2 class="title">The work behind the work counts too</h2>
+      <div class="center-wrap">
+        <table>
+          <tr><th style="width:150px;">Role</th><th>The connection to the customer</th><th>The shift</th></tr>
+          <tr><td class="lab">Risk, legal, compliance</td><td>They guard the trust the whole thing is built on. Their work makes it safe for everyone else to grow the relationship.</td><td>Frame guidance by what it protects for the customer, and engage early to enable the work, so safety and speed show up together.</td></tr>
+          <tr><td class="lab">Leadership</td><td>People read what leaders fund, reward, and protect. That is what tells the bank whether the standard is real.</td><td>Anchor every decision to the direction, make the relationship the lens for trade-offs, and hold the line when the quarter pushes the other way.</td></tr>
+          <tr><td class="lab">HR, talent, learning</td><td>People are how the standard travels. This work makes sure every colleague can see themselves in where the bank is going.</td><td>Connect every role to the direction, help people grow into it, and hire and reward for putting the customer first.</td></tr>
+        </table>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">How it sounds in a real rollout</div>
+      <h2 class="title">One sentence turns an announcement into a reason</h2>
+      <p class="subhead">The same move from the narrative guide works inside the bank. Add the line that connects the work to the customer.</p>
+      <div class="center-wrap">
+        <div class="reframe">
+          <div class="before"><div class="cap">WHAT WE USUALLY SEND</div><div class="inner">"We are rolling out the new CRM platform in Q3. Training materials will be in the learning portal."</div></div>
+          <div class="after"><div class="cap">WITH THE LINE DRAWN</div><div class="inner">"We are rolling out the new CRM platform in Q3. <span class="added">This is part of how we earn the relationship. When the system knows what a customer needs before they have to repeat themselves, trust deepens.</span> Training materials will be in the learning portal."</div></div>
+        </div>
+        <div class="whatchanged">
+          <div class="wc"><h5>What changed</h5><p>One sentence. The facts and the logistics are untouched.</p></div>
+          <div class="wc"><h5>Why it works</h5><p>People now see why the change matters and what it asks of them, so they join it instead of absorbing it.</p></div>
+          <div class="wc"><h5>The logic to reuse</h5><p>Before any rollout note goes out, add the sentence that says what this earns for the customer.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">How we know it is taking hold</div>
+      <h2 class="title">Not a feeling. Things you can watch for.</h2>
+      <div class="center-wrap">
+        <ul class="markers">
+          <li><b>People in roles that never touch a customer</b> can explain how their work connects to the direction without being asked.</li>
+          <li><b>Wilmington Trust colleagues</b> draw the same line from their work to the direction, so it clearly travels across brands.</li>
+          <li><b>When a new initiative lands,</b> teams ask how it helps us earn the relationship before they ask what it means for headcount.</li>
+          <li><b>A leader can walk into any team meeting</b> and draw a clear line from that team's work to where the bank is going.</li>
+          <li><b>New hires hear it on day one,</b> with the role connected to the direction alongside the job description.</li>
+        </ul>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+    <div class="slide">
+      <div class="eyebrow">Before you roll anything out</div>
+      <h2 class="title">Five questions to run first</h2>
+      <p class="subhead">If you cannot answer yes to each, the capability may be ready but the leadership around it is not.</p>
+      <div class="center-wrap">
+        <div class="checklist">
+          <ul>
+            <li><b>Have I tied this to where the bank is going?</b> Before I say what it does, have I said why it matters?</li>
+            <li><b>Can every person affected see their own place in it?</b> Not the team in general. Each role.</li>
+            <li><b>Have I said what changes for them, not just what changes?</b> The difference between a feature list and a reason to care is the second person.</li>
+            <li><b>Have I connected it to the customer?</b> Can my team say how this earns our way in or the right to stay?</li>
+            <li><b>Have I planned the first win?</b> Do I know the early result I will mark, and who I will credit for it?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>&copy;2026 M&amp;T Bank · Internal use only</span><span>Leadership</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="controls">
+  <span class="deckname" id="deckname">NARRATIVE</span>
+  <div class="nav">
+    <button class="arrow" id="prev">&#8249;</button>
+    <span class="count" id="count">1 / 1</span>
+    <button class="arrow" id="next">&#8250;</button>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+
+<script>
+  const decks = { d1:{name:'NARRATIVE',i:0}, d2:{name:'STRATEGY',i:0}, d3:{name:'LEADERSHIP',i:0} };
+  let current = 'd1';
+  function slides(deckId){ return document.querySelectorAll('#'+deckId+' .slide'); }
+  function render(){
+    const d = decks[current], sl = slides(current);
+    sl.forEach((s,idx)=>s.classList.toggle('show', idx===d.i));
+    document.getElementById('count').textContent = (d.i+1)+' / '+sl.length;
+    document.getElementById('deckname').textContent = d.name;
+    document.getElementById('prev').disabled = d.i===0;
+    document.getElementById('next').disabled = d.i===sl.length-1;
+    const dots = document.getElementById('dots'); dots.innerHTML='';
+    sl.forEach((s,idx)=>{ const b=document.createElement('button');
+      b.className='dot'+(idx===d.i?' on':'');
+      b.addEventListener('click',()=>{decks[current].i=idx;render();}); dots.appendChild(b); });
+  }
+  function switchDeck(id){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.deck===id));
+    document.querySelectorAll('.deck').forEach(dk=>dk.classList.toggle('active', dk.id===id));
+    current=id; render();
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchDeck(t.dataset.deck)));
+  document.getElementById('prev').addEventListener('click',()=>{ if(decks[current].i>0){decks[current].i--;render();}});
+  document.getElementById('next').addEventListener('click',()=>{ const n=slides(current).length; if(decks[current].i<n-1){decks[current].i++;render();}});
+  document.querySelectorAll('.crossref').forEach(c=>c.addEventListener('click',()=>switchDeck(c.dataset.goto)));
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')document.getElementById('next').click(); if(e.key==='ArrowLeft')document.getElementById('prev').click(); });
+  render();
+</script>
+</body>
+</html>
