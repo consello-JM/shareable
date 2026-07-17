@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AG1 — Integrated Analysis with Former Leader Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;--white:#ffffff;--terra:#A64A30;--terra-dk:#7C3621;
+    --apricot:#F6D1A3;--apricot-soft:#FBEBD6;--ink-60:#4a4a4a;--ink-40:#737373;
+    --line:#e6e2dc;--line-soft:#f0ece6;--paper:#FCFBF9;
+    --font:'DM Sans',Arial,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+    --grn:#2f7d4f;--amb:#c79100;--blu:#3b6ea5;--gry:#9a9a9a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--black);background:var(--paper);line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 28px;}
+
+  header.mast{background:var(--white);border-bottom:2px solid var(--black);}
+  .mast-inner{max-width:960px;margin:0 auto;padding:34px 28px 26px;}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);margin:0 0 14px;}
+  .conf{float:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-40);border:1px solid var(--line);padding:4px 9px;border-radius:3px;}
+  h1{font-size:38px;line-height:1.08;font-weight:700;margin:0 0 10px;letter-spacing:-.02em;max-width:22ch;}
+  .sub{font-size:16.5px;color:var(--ink-60);max-width:62ch;margin:0 0 18px;}
+  .meta{display:flex;flex-wrap:wrap;gap:22px;font-size:13px;color:var(--ink-40);border-top:1px solid var(--line-soft);padding-top:16px;}
+  .meta b{color:var(--black);font-weight:500;}
+
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(252,251,249,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .toc-inner{max-width:960px;margin:0 auto;padding:11px 28px;display:flex;gap:26px;flex-wrap:wrap;font-size:13px;}
+  .toc-inner a{color:var(--ink-60);text-decoration:none;font-weight:500;white-space:nowrap;}
+  .toc-inner a:hover{color:var(--terra);}
+  .toc-inner span{font-family:var(--mono);color:var(--terra);margin-right:6px;font-size:11px;}
+
+  section{padding:44px 0 8px;}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--terra);display:flex;align-items:center;gap:10px;margin:0 0 8px;}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--terra);display:inline-block;}
+  h2{font-size:27px;font-weight:700;letter-spacing:-.015em;margin:0 0 6px;line-height:1.12;}
+  h3{font-size:19px;font-weight:700;margin:34px 0 8px;letter-spacing:-.01em;padding-bottom:7px;border-bottom:1px solid var(--line);}
+  h4{font-size:14.5px;font-weight:700;margin:20px 0 4px;}
+  p{margin:0 0 14px;}
+  .lead{font-size:17px;color:var(--ink-60);max-width:66ch;margin-bottom:6px;}
+  a.src{color:var(--terra-dk);text-decoration:none;border-bottom:1px solid var(--apricot);}
+  a.src:hover{background:var(--apricot-soft);}
+
+  ul.clean{list-style:none;padding:0;margin:6px 0 16px;}
+  ul.clean li{position:relative;padding:7px 0 7px 22px;border-bottom:1px solid var(--line-soft);font-size:15px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;background:var(--terra);border-radius:50%;}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0 8px;}
+  .stat{background:var(--white);padding:18px 16px;}
+  .stat .n{font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1;}
+  .stat .n span{font-size:14px;color:var(--terra);}
+  .stat .l{font-size:11.5px;color:var(--ink-40);margin-top:7px;line-height:1.35;}
+
+  /* Former leader feedback component */
+  .flf{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--ink-40);border-radius:0 6px 6px 0;padding:15px 19px 5px;margin:16px 0;}
+  .flf-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;flex-wrap:wrap;}
+  .flf-tag{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--terra-dk);background:var(--apricot-soft);padding:4px 9px;border-radius:3px;font-weight:500;}
+  .flf-support{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--ink-60);text-transform:uppercase;letter-spacing:.04em;}
+  .flf p{font-size:14.5px;margin:0 0 11px;}
+  .flf p:last-child{margin-bottom:11px;}
+  .flf ul.clean{margin:0 0 11px;}
+  .flf ul.clean li{font-size:14px;}
+  .flf .note{font-size:12.5px;color:var(--ink-40);font-style:italic;border-top:1px dashed var(--line);padding-top:8px;margin-bottom:11px;}
+  .flf.s-corr{border-left-color:var(--grn);}
+  .flf.s-part{border-left-color:var(--amb);}
+  .flf.s-cons{border-left-color:var(--blu);}
+  .flf.s-unv{border-left-color:var(--gry);}
+  .flf.s-tens{border-left-color:var(--terra);}
+
+  .dot{width:11px;height:11px;border-radius:50%;flex:none;display:inline-block;}
+  .d-corr{background:var(--grn);}.d-part{background:var(--amb);}.d-cons{background:var(--blu);}.d-unv{background:var(--gry);}.d-tens{background:var(--terra);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 8px;font-size:12px;}
+  .legend .chip{display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--line);border-radius:20px;padding:5px 12px 5px 8px;}
+  .keybar{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:16px 20px 6px;margin:20px 0;}
+  .keybar .kh{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:20px 20px 6px;}
+  .card.win{border-top:3px solid var(--grn);}
+  .card.miss{border-top:3px solid var(--terra);}
+  .card h4{margin-top:0;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-40);}
+  .card ul.clean li{font-size:14px;}
+
+  .tl{margin:18px 0 8px;border-left:2px solid var(--line);}
+  .tl-row{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:10px 0 10px 20px;border-bottom:1px solid var(--line-soft);position:relative;}
+  .tl-row::before{content:"";position:absolute;left:-7px;top:16px;width:11px;height:11px;border-radius:50%;background:var(--white);border:2px solid var(--terra);}
+  .tl-row .when{font-family:var(--mono);font-size:12.5px;color:var(--terra-dk);font-weight:500;padding-top:1px;}
+  .tl-row .what{font-size:14.5px;}
+
+  table.matrix{width:100%;border-collapse:collapse;margin:12px 0 8px;font-size:14px;}
+  table.matrix th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40);font-weight:700;border-bottom:2px solid var(--black);padding:0 12px 9px 0;vertical-align:bottom;}
+  table.matrix td{vertical-align:top;padding:14px 12px 14px 0;border-bottom:1px solid var(--line);}
+  table.matrix td:first-child{font-weight:500;width:30%;}
+  table.matrix .verdict{width:128px;}
+  .vlabel{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:12px;}
+  .ev{color:var(--ink-60);font-size:13.5px;}.ev b{color:var(--black);}
+
+  .callout{background:var(--white);border-left:3px solid var(--terra);border-radius:0 6px 6px 0;padding:16px 20px;margin:20px 0;}
+  .callout .co-h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+
+  .opp{display:grid;grid-template-columns:38px 1fr;gap:16px;background:var(--white);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin:12px 0;}
+  .opp .num{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--terra);line-height:1;}
+  .opp h4{margin:0 0 5px;font-size:16px;}
+  .opp p{font-size:14px;color:var(--ink-60);margin:0;}
+  .opp .flf-tag{display:inline-block;margin-top:8px;}
+
+  footer{border-top:2px solid var(--black);margin-top:50px;background:var(--white);}
+  .foot-inner{max-width:960px;margin:0 auto;padding:26px 28px 40px;font-size:12.5px;color:var(--ink-40);}
+  .foot-inner b{color:var(--black);}
+  .srcs{font-size:12px;line-height:1.7;margin-top:10px;}
+
+  @media(max-width:720px){
+    h1{font-size:29px;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .grid2{grid-template-columns:1fr;}
+    .tl-row{grid-template-columns:84px 1fr;gap:12px;}
+    table.matrix,table.matrix tbody,table.matrix tr,table.matrix td{display:block;width:100%!important;}
+    table.matrix thead{display:none;}
+    table.matrix td{border-bottom:none;padding:4px 0;}
+    table.matrix tr{border-bottom:1px solid var(--line);padding:14px 0;}
+    table.matrix td:first-child{font-weight:700;font-size:15px;}
+    .conf{float:none;display:inline-block;margin-bottom:14px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-inner">
+    <span class="conf">Internal working analysis</span>
+    <p class="kicker">AG1 (formerly Athletic Greens) · Membership &amp; Retention Lens</p>
+    <h1>AG1: the business, read from the outside and the inside.</h1>
+    <p class="sub">A 24-month independent analysis with a former leader's account woven directly into the narrative — each insider point clearly tagged and rated for how well the public record backs it up.</p>
+    <div class="meta">
+      <span><b>Prepared for</b> Jon McLernon</span>
+      <span><b>Lens</b> Loyalty · CRM · Membership economics</span>
+      <span><b>As of</b> June 2026</span>
+      <span><b>Window</b> H2 2024 – present</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#core"><span>01</span>Integrated Analysis</a>
+    <a href="#test"><span>02</span>Source Verification</a>
+    <a href="#exec"><span>03</span>Executional Read &amp; DD</a>
+    <a href="#opps"><span>04</span>Where the Opportunity Is</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ PART 1 ============ -->
+<section id="core">
+  <p class="eyebrow">Part 01 — Integrated analysis</p>
+  <h2>The 24-month picture</h2>
+  <p class="lead">AG1 spent fifteen years as the textbook single-SKU, DTC, subscription business. In the last two years it deliberately broke every one of those constraints at once — new CEO, reformulation, flavors, a second and third product, and a rush into mass retail — while quietly putting itself up for sale. The former-leader account fills in the <em>why it's straining</em> underneath that expansion.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">~$600<span>M</span></div><div class="l">Reported FY2024 revenue, still effectively one product (Fortune)</div></div>
+    <div class="stat"><div class="n">$1.2<span>B</span></div><div class="l">Last disclosed valuation (2022); reportedly shopping at $2B+ in 2026</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Retail doors in ~12 mos: Amazon, Costco, Vitamin Shoppe, Target, Ulta</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Products now vs. 1 a year ago: Next Gen, AGZ (sleep), AG1 Pro (creatine)</div></div>
+  </div>
+
+  <div class="keybar">
+    <div class="kh">How to read this document</div>
+    <p style="font-size:14px;margin-bottom:10px;">Standard text is independently sourced analysis. Tagged boxes are <b>former leader feedback</b> — a single insider account — with a colored support rating showing how the public record treats each claim:</p>
+    <div class="legend">
+      <span class="chip"><span class="dot d-corr"></span><b>Corroborated</b></span>
+      <span class="chip"><span class="dot d-part"></span><b>Partly corroborated</b></span>
+      <span class="chip"><span class="dot d-cons"></span><b>Consistent, unproven</b></span>
+      <span class="chip"><span class="dot d-unv"></span><b>Internal-only</b></span>
+      <span class="chip"><span class="dot d-tens"></span><b>In tension w/ public record</b></span>
+    </div>
+  </div>
+
+  <!-- A. Strategic inflection -->
+  <h3>The strategic inflection</h3>
+  <p>The throughline is a single pivot: from <strong>"one product, one channel, one flavor, DTC"</strong> to a diversified portfolio across mass retail. CEO Kat Cole (who succeeded founder Chris Ashenden in July 2024, after he resigned amid disclosures about pre-AG1 legal issues) framed it at NRF 2025 as the company finally "saying yes" after years of saying no. The decisive context: in April 2026, <a class="src" href="https://www.fastcompany.com/91538779/ag1s-green-with-envy-over-the-gummy-ification-of-wellness" target="_blank">Reuters reported (via Fast Company)</a> AG1 was shopping itself at a $2B+ valuation, and Cole told <a class="src" href="https://www.modernretail.co/operations/ag1-lands-in-target-as-its-year-of-retail-expansion-continues/" target="_blank">Modern Retail</a> that channel and product diversification "makes us more attractive" for an exit. The land-grab and the sale process are the same story.</p>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p>The product focus reads short-term — chasing vanity metrics over membership health — which is rational <em>if</em> the goal is investment or sale. The pattern looks like "throwing things at the wall": diverting from the hero into too many individual products, then launching <b>new formula, new flavors, and sleep all at once</b>.</p>
+    <p class="note">The sale process and the compressed launch cadence are confirmed publicly. The "vanity over membership health" characterization is the insider's read, not a published metric.</p>
+  </div>
+
+  <!-- B. Product evolution -->
+  <h3>Product evolution</h3>
+  <ul class="clean">
+    <li><b>AG1 Next Gen (Jan 2025)</b> — biggest reformulation in years: serving 12g→13g, probiotics ~7.2B→10B CFU, more clinical backing. Solubility improved; taste shifted.</li>
+    <li><b>New flavors (mid-2025)</b> — Tropical, Citrus, Berry added to Original. AG1 itself concedes a <em>majority still prefer Original</em>.</li>
+    <li><b>AGZ (Aug 2025)</b> — first all-new product in years; melatonin-free nighttime "rest &amp; restore" powder. The "day-to-night" stacking story.</li>
+    <li><b>AG1 Pro (June 2026)</b> — Next Gen plus 5g creatine, Ca-HMB, zinc carnosine; aimed at performance/longevity and GLP-1 users. Cole noted 30%+ of customers already stack creatine.</li>
+  </ul>
+
+  <div class="flf s-part">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback</span><span class="flf-support"><span class="dot d-part"></span>Partly corroborated</span></div>
+    <p><b>The Pro coherence problem.</b> Pro is the "elite" tier, but it started as an elite-athlete product and broadened to everyone. That undercuts the brand's long-standing claim that the core <em>is the best</em> — which no longer holds if AG1 keeps adding "needed" products <b>alongside</b> the hero rather than <b>building on top of</b> it. Pro performs well, but artificially: its forecast was cut back sharply from the original plan.</p>
+    <p class="note">Pro's elite-to-everyone positioning and the hero-coherence tension are visible in the launch framing. The forecast cut and "artificial" performance are internal-only.</p>
+  </div>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p><b>Flavors as a retention tool that wasn't.</b> New flavors were positioned as the answer; they helped acquire new members but did not win back lapsed ones — because too few sampling opportunities were created to put new flavors in at-risk and lapsed hands.</p>
+    <p class="note">Flavor launch and the taste-change backlash are corroborated; the acquire-not-reactivate split and under-resourced sampling are the insider's read, consistent with the public taste complaints.</p>
+  </div>
+
+  <!-- B2. The stacking paradox -->
+  <h3>The stacking paradox</h3>
+  <p>AG1's founding promise was the <em>end</em> of the supplement stack: one scoop replaces the cabinet of bottles. The current shop sells the opposite. Alongside Next Gen sit Pro, AGZ, Omega3, Omega3 + CoQ10, and Vitamin D3+K2 — and AG1's own merchandising bundles them into a set it literally calls the <strong>"Full Foundation Stack."</strong> The brand built to kill the stack now names one after itself.</p>
+  <p>Each add-on is a quiet admission that "one scoop covers it" was never fully true — D3+K2 and Omega3 exist precisely because they were left <em>out</em> of the flagship. Defensible on the science; corrosive to the promise. And the sprawl has no organizing logic because <strong>the core customer was never defined.</strong> "Foundational nutrition for everyone" gives no principled basis for what to add, or for whom — so the shelf just accumulates, the product finder can't differentiate, and the SKUs cannibalize one another. An ill-defined customer produces an unbounded product line.</p>
+  <div class="callout">
+    <div class="co-h">Why this is bigger than a merchandising note</div>
+    <p style="margin:0;">Simplicity <em>was</em> the moat. "You don't need twelve bottles, just take AG1" is the entire reason the brand could charge $79/month in a commodity category. Every add-on trades a little of that equity for incremental order value — and to a buyer, a six-SKU stack sold by a one-scoop brand reads as the flagship's growth stalling and the company reaching for revenue wherever it can find it.</p>
+  </div>
+
+  <!-- C. The three cancel drivers -->
+  <h3>The three cancel drivers</h3>
+  <p>Public reviews independently surface all three forces below — taste volatility, value (not price) doubt, and subscription/over-supply friction. The former leader's contribution is the <em>ranking and the mechanics</em>, which only an insider would hold.</p>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Cancel driver #1</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p><b>Overstock.</b> The original product shipped in a refrigerated pouch + canister. Next Gen introduced travel-friendly packaging; customers are shifting to it, but Original remains the most-subscribed format — and the newer pack makes it easier to extend product life, so supply outpaces consumption and members become over-supplied. Subscriptions run on Skio (a Shopify-native subscription platform): great for self-service, but it also makes pausing and cancelling frictionless.</p>
+    <p class="note">AG1 publicly concedes most customers prefer Original, and confirms the pouch/canister-vs-travel split. The easy-cancel self-service dynamic shows up in reviews. The overstock-as-#1-cancel-reason ranking and AG1's use of Skio specifically are internal-only.</p>
+  </div>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Cancel driver #2</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p><b>Taste.</b> Taste is a leading reason to leave, and the reformulation hit the loyalists for whom flavor was the reason to stay.</p>
+    <p class="note">2025–26 reviews report a bitter/metallic Next Gen aftertaste and loyalists noting the taste gap to cheaper competitors narrowed. The exact cancel-reason ranking is internal.</p>
+  </div>
+
+  <div class="flf s-part">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Cancel driver #3</span><span class="flf-support"><span class="dot d-part"></span>Partly corroborated</span></div>
+    <p><b>Cost — really value.</b> The lever has been gift-with-purchase and discounting, not added value. There are no real loyalty mechanics (e.g., streaks) to reinforce behavior; free product just worsens overstock; and there's little targeting or segmentation to manage against.</p>
+    <p class="note">Reviews consistently frame the issue as value ("replicate it for less"), and discount/GWP reliance is visible everywhere. AG1's "Membership" is a subscription-with-perks, not gamified loyalty — consistent with "no streaks." The internal specifics on segmentation aren't public.</p>
+  </div>
+
+  <!-- D. Retail expansion -->
+  <h3>Retail expansion — and its sequencing problems</h3>
+  <div class="tl">
+    <div class="tl-row"><div class="when">Apr 2025</div><div class="what"><b>Amazon</b> — first move off pure DTC.</div></div>
+    <div class="tl-row"><div class="when">May–Jun 2025</div><div class="what"><b>Costco</b> — first brick-and-mortar; 40-ct sticks of the <b>classic (old) formula</b> at ~$73, later clearance ~$60, while DTC pushed Next Gen.</div></div>
+    <div class="tl-row"><div class="when">Jan 2026</div><div class="what"><b>The Vitamin Shoppe.</b></div></div>
+    <div class="tl-row"><div class="when">Apr 2026</div><div class="what"><b>Target</b> — 7- &amp; 14-ct AG1 and AGZ, plus a "start here" trial kit with shaker and habit tracker.</div></div>
+    <div class="tl-row"><div class="when">May–Jun 2026</div><div class="what"><b>Ulta Beauty</b> — coincides with the AG1 Pro launch.</div></div>
+  </div>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Costco</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p>Costco rolled out as Next Gen launched, with no strong plan to keep value connected to DTC. The communication miss: Costco stocked the <b>old formula</b>, customers read it as simply a lower price, and the team then had to explain — frustrating the community.</p>
+    <p class="note">Confirmed: Costco launched with the classic formula at a lower per-serving price while DTC pushed Next Gen. Cole publicly named the retail learning as the need for clearer on-pack benefit communication — exactly this gap.</p>
+  </div>
+
+  <div class="flf s-unv">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Sprouts</span><span class="flf-support"><span class="dot d-unv"></span>Internal-only</span></div>
+    <p>A Sprouts attempt was made with a different, ill-defined strategy; it eventually fell through. Retail aspirations remain.</p>
+    <p class="note">No public record of a Sprouts deal exists; confirmed retail is Amazon, Costco, Vitamin Shoppe, Target, Ulta. The broad retail ambition is well documented; the Sprouts specifics are not.</p>
+  </div>
+
+  <!-- E. Marketing & acquisition -->
+  <h3>Marketing &amp; acquisition</h3>
+  <p>The engine is still influencer- and podcast-led (Huberman, Rogan, Ferriss; athletes like Hamilton and Felix), but CMO Paulie Dery (ex-Yeti) has leaned into <strong>sports community-building</strong> — England Rugby, SailGP, LIV Golf's Ripper GC — on an "earn the community first, sign the check last" philosophy, with DTC podcast spend estimated near $2M/month. The new tension: pushing into mass retail and gummy-era "treat yourself" wellness from a brand built on austere, science-forward discipline.</p>
+
+  <div class="flf s-part">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Lululemon</span><span class="flf-support"><span class="dot d-part"></span>Partly corroborated</span></div>
+    <p>The Lululemon promo gave away a free bag but lacked retention components, so people signed up for the bag and then cancelled.</p>
+    <p class="note">The Lululemon partner-perk (free belt bag for first-time AG1 subscribers) is confirmed. The "got the bag, then churned" outcome is internal — but it's the textbook GWP-acquisition failure mode, so highly consistent.</p>
+  </div>
+
+  <!-- F. Organization, culture & metrics -->
+  <h3>Organization, culture &amp; metrics</h3>
+  <p>The publicly visible signal here is Glassdoor, which tracks a clear deterioration: repeated layoffs, ambiguous or cut bonuses, executive turnover, and top-down "decisions behind closed doors" complaints — with the would-recommend rate sliding from roughly 70% to the high-40s across recent cuts. That backdrop frames the insider account.</p>
+
+  <div class="flf s-part">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — culture</span><span class="flf-support"><span class="dot d-part"></span>Partly corroborated</span></div>
+    <p>Significant attrition — both quitting and layoffs — alongside cutbacks to benefits and perks.</p>
+    <p class="note">Glassdoor strongly supports the pattern (repeated layoffs, cut/ambiguous bonuses, exec turnover, declining recommend rate). The specific benefit-cut details are the insider's account.</p>
+  </div>
+
+  <div class="flf s-tens">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — survey</span><span class="flf-support"><span class="dot d-tens"></span>In tension</span></div>
+    <p>An internal employee survey scored the executive team poorly; the outcome, per this account, was the lower layers being blamed publicly for not working hard enough rather than the ELT owning it.</p>
+    <p class="note">AG1's own 2025 Impact Report touts a 4.27/5 engagement score — the opposite public signal. Either this refers to a different/earlier internal cut or the published figure is the polished version. Hold both; pressure-test before relying on it.</p>
+  </div>
+
+  <div class="flf s-cons">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — metrics</span><span class="flf-support"><span class="dot d-cons"></span>Consistent, unproven</span></div>
+    <p>The loyalty/retention metrics carry a lot of weight but are overwhelmingly driven by the first-year cohort still committed from year one. They skew the aggregate; strip them out and retention drops sharply. Insights output, meanwhile, is vague and fluff-heavy, with limited actionable segmentation.</p>
+    <p class="note">Mechanically plausible — press confirms subscribers with 10+ year tenures, the classic survivorship-skew setup — but the cohort math and insights-quality claims are internal-only.</p>
+  </div>
+
+  <div class="flf s-unv">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — Function Health test</span><span class="flf-support"><span class="dot d-unv"></span>Internal-only</span></div>
+    <p>A long-term-subscription test ran tied to a Function Health subscription. The data miss: uptake of the long subscription was driven by Function Health, not AG1. Only one length (1 year) was tested; multiple lengths are now in market.</p>
+    <p class="note">No public reporting surfaced on an AG1 × Function Health bundle or test. Plausible and specific, but unconfirmed either way.</p>
+  </div>
+
+  <!-- G. Competitive & kids gap -->
+  <h3>The competitive squeeze &amp; the kids gap</h3>
+  <p>The defining competitive event of the period: <strong>Grüns — the green gummy-bear supplement — sold to Unilever for a reported ~$1.2B in April 2026</strong>, having launched only in 2023. Grüns owns the convenience/taste/kids formats AG1 was built to avoid, and reviews repeatedly cite ex-AG1 users switching for taste, price, and "no shaker, no fridge" convenience.</p>
+
+  <div class="flf s-corr">
+    <div class="flf-head"><span class="flf-tag">Former leader feedback — kids</span><span class="flf-support"><span class="dot d-corr"></span>Corroborated</span></div>
+    <p>AG1 has tried for a while to launch a kids product without success — form factor unresolved — while Grüns moved in to take the top spot.</p>
+    <p class="note">No AG1 kids product exists publicly, consistent with "tried without success." Grüns owns the kids gummy format (ages 2–13) and just sold to Unilever for ~$1.2B — the "took the top spot" claim is well supported.</p>
+  </div>
+
+  <!-- H. Working vs straining -->
+  <h3>What's working vs. what isn't</h3>
+  <div class="grid2">
+    <div class="card win">
+      <h4>Holding up</h4>
+      <ul class="clean">
+        <li><b>The loyal core.</b> Decade-long subscribers and a durable Original base remain the real asset.</li>
+        <li><b>Profitability &amp; self-funding.</b> Cole says profitable for years, funding its own innovation and expansion.</li>
+        <li><b>Trust scaffolding.</b> NSF Certified for Sport, $20M clinical commitment (2025–28).</li>
+        <li><b>Retail as trial funnel.</b> Lower-commitment packs address the "won't pay $79/mo unseen" barrier.</li>
+        <li><b>GLP-1 timing.</b> Pro's muscle-preservation angle is well-aimed.</li>
+      </ul>
+    </div>
+    <div class="card miss">
+      <h4>Straining</h4>
+      <ul class="clean">
+        <li><b>Reformulation backlash.</b> Next Gen's taste change hit a key reason loyalists stayed.</li>
+        <li><b>Value perception.</b> Persistent "replicate it for less" sentiment — a value, not price, problem.</li>
+        <li><b>Brand coherence.</b> If Next Gen is "the best," why Pro, AGZ, and four flavors?</li>
+        <li><b>The gummy threat.</b> Grüns/Unilever owns the format AG1 hasn't cracked.</li>
+        <li><b>Culture signals.</b> Layoffs, ambiguous bonuses, exec turnover; recommend rate ~70%→~48%.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART 2 ============ -->
+<section id="test">
+  <p class="eyebrow">Part 02 — Source verification</p>
+  <h2>The former-leader account, audited</h2>
+  <p class="lead">The same insider claims woven above, consolidated into one audit view. The account is credible: every externally observable claim checks out, the unverifiable items are exactly what an insider would know and an outsider wouldn't, and only the survey claim runs against AG1's own published figure.</p>
+
+  <table class="matrix">
+    <thead>
+      <tr><th>Former leader claim</th><th class="verdict">Verdict</th><th>What the public record shows</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Original pouch/canister still most-subscribed; Next Gen pack more travel-friendly; over-supply drives cancels</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated*</span></td><td class="ev">AG1 concedes a <b>majority prefer Original</b>; pouch/canister-vs-travel split confirmed. *Overstock as the <b>#1</b> cancel reason is internal.</td></tr>
+      <tr><td>Self-service makes pause/cancel easy (Skio platform)</td><td class="verdict"><span class="vlabel"><span class="dot d-part"></span>Partly</span></td><td class="ev">Portal advertises cancel-anytime; reviews cite cancel/charge friction. AG1's use of Skio specifically isn't publicly confirmed.</td></tr>
+      <tr><td>Taste is a major cancel driver; reformulation hurt loyalists</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated</span></td><td class="ev">Reviews report a <b>bitter/metallic Next Gen aftertaste</b> and a narrowed gap to cheaper rivals. Ranking is internal.</td></tr>
+      <tr><td>Value (not price) is the real #3; combated with GWP/discount, no loyalty mechanics</td><td class="verdict"><span class="vlabel"><span class="dot d-part"></span>Partly</span></td><td class="ev">Reviews frame cost as value; discount/GWP reliance visible. "Membership" is perks, <b>not gamified loyalty</b>.</td></tr>
+      <tr><td>Short-term focus rational if sale; formula+flavors+sleep launched at once</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated</span></td><td class="ev"><b>Reuters: $2B+ sale process</b>; Cole ties diversification to exit. Compressed cadence documented. "Vanity metrics" is internal.</td></tr>
+      <tr><td>Pro drifted elite→everyone; undercuts "the core is the best"; forecast cut back</td><td class="verdict"><span class="vlabel"><span class="dot d-part"></span>Partly</span></td><td class="ev">Pro's positioning arc and coherence tension are visible. Forecast cut / "artificial" performance are internal.</td></tr>
+      <tr><td>Layoffs, attrition, benefit cuts; blame pushed down</td><td class="verdict"><span class="vlabel"><span class="dot d-part"></span>Partly</span></td><td class="ev">Glassdoor supports the <b>pattern</b>; recommend rate ~70%→~48%. The specific blame episode is internal.</td></tr>
+      <tr><td>Internal survey scored the exec team poorly</td><td class="verdict"><span class="vlabel"><span class="dot d-tens"></span>Tension</span></td><td class="ev">AG1's <b>2025 Impact Report claims 4.27/5 engagement</b> — opposite signal. Hold both.</td></tr>
+      <tr><td>Retention skewed by year-one cohort; strip them and it plummets</td><td class="verdict"><span class="vlabel"><span class="dot d-cons"></span>Consistent</span></td><td class="ev">Plausible — 10+ year subscribers exist (survivorship skew) — but the math is internal.</td></tr>
+      <tr><td>Lululemon free-bag promo drove sign-up-then-cancel</td><td class="verdict"><span class="vlabel"><span class="dot d-part"></span>Partly</span></td><td class="ev">Lululemon belt-bag perk <b>confirmed</b>; the churn outcome is internal but textbook.</td></tr>
+      <tr><td>Function Health test was really Function-driven; only 1 length tested</td><td class="verdict"><span class="vlabel"><span class="dot d-unv"></span>Internal-only</span></td><td class="ev">No public reporting on an AG1 × Function Health bundle. Unconfirmed either way.</td></tr>
+      <tr><td>Costco shipped old formula cheaper as Next Gen launched DTC; comms miss</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated</span></td><td class="ev"><b>Confirmed</b>: classic formula at lower price; Cole admitted the on-pack communication gap.</td></tr>
+      <tr><td>Sprouts attempt fell through</td><td class="verdict"><span class="vlabel"><span class="dot d-unv"></span>Internal-only</span></td><td class="ev">No public record of a Sprouts deal; confirmed retail is the five doors above.</td></tr>
+      <tr><td>Kids product stalled on form factor while Grüns took the top spot</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated</span></td><td class="ev">No AG1 kids SKU exists; <b>Grüns owns kids gummies and sold to Unilever for ~$1.2B</b>.</td></tr>
+      <tr><td>GTM missteps in how the reformulation rolled out</td><td class="verdict"><span class="vlabel"><span class="dot d-corr"></span>Corroborated</span></td><td class="ev">Taste backlash + Costco confusion + Cole's on-pack admissions = sequencing problems, not just product ones.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="co-h">Bottom line on the source</div>
+    <p style="margin:0;">A credible debrief. Everything observable from outside — the sale process, the simultaneous launches, the Costco old-formula comms miss, the Pro positioning drift, the culture slide, the Grüns kids threat — holds up. The unverifiable items are precisely the categories a real insider would know: cancel-reason rankings, internal forecasts, cohort retention math, and specific pilot read-outs. The one claim to pressure-test is the employee survey, which runs against AG1's published engagement number.</p>
+  </div>
+</section>
+
+<!-- ============ PART 3 — EXECUTIONAL READ ============ -->
+<section id="exec">
+  <p class="eyebrow">Part 03 — Executional read</p>
+  <h2>The pattern, and what it costs in a sale</h2>
+  <p class="lead">Strip away the individual moves and one pattern remains: <strong>velocity without orchestration.</strong> AG1 shipped a decade of change in eighteen months and treated each initiative as a discrete bet rather than a sequenced system. Motion is being read as progress.</p>
+
+  <h3>Three ways it shows up</h3>
+  <ul class="clean">
+    <li><b>Timing.</b> Everything launched at once. Costco hit the shelf in the same window as the reformulation — old formula, lower price, no connecting story — and flavors, AGZ, and Pro stacked on top of each other before any one proved out.</li>
+    <li><b>Consequences.</b> Second-order effects on the base were absorbed after the fact, not designed around: the reformulation changed the taste loyalists stayed for; the Lululemon bag bought deal-seekers with no retention hook; Pro launched without resolving what it does to "the core is the best."</li>
+    <li><b>Measurement.</b> Tests weren't built to give clean answers — the Function Health trial confounded AG1's effect with Function's, and the headline retention number appears propped up by the year-one cohort. Fast, uninstrumented launches produce noise, not signal.</li>
+  </ul>
+  <p>None of this is random. It's what a business optimizing for a near-term sale looks like: the clock rewards a visible growth story — "multi-product, omnichannel platform now" — over durable results, because diversification is easier to <em>show</em> a buyer than retention discipline is to <em>build.</em></p>
+
+  <h3>What it means in diligence</h3>
+  <p>The trap: the activity meant to raise the price is exactly what diligence punishes. A buyer converts a clean story into a scored one.</p>
+  <ul class="clean">
+    <li><b>The crown jewel gets tested first.</b> AG1 is sold on loyalty. DD de-averages the cohorts on day one — if the year-one base carries the number, the real churn curve is <em>discovered by the buyer</em> instead of disclosed by the seller. Worst possible way for it to surface, and it comes straight off the multiple.</li>
+    <li><b>Revenue quality is questioned.</b> Discount/GWP acquisition, frictionless cancel, and overstock-driven churn all mark lower-quality recurring revenue. Buyers pay up for durable, full-margin revenue and discount promotional, leaky revenue.</li>
+    <li><b>Nothing attributes cleanly.</b> Because everything moved at once and the tests were confounded, management can't answer "what's driving growth?" with clean data — and buyers meet that with conservative assumptions, wider earnouts, bigger holdbacks.</li>
+    <li><b>New risks were added, not retired.</b> Channel price-integrity (Costco), brand coherence against a now-scaled Grüns/Unilever, product sprawl, and org instability are all fresh flags a disciplined single-SKU business never carried.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="co-h">The irony, stated plainly</div>
+    <p style="margin:0;">A focused, profitable, high-margin single-SKU business with a loyal core is an <em>easier</em> asset to underwrite than a half-executed diversification. Clean-and-proven commands a premium; messy-and-unproven gets discounted. The expansion needed to be either far enough along to prove out, or not started — caught in the middle is the most expensive place to be sold. Unless AG1 walks into DD able to show the new bets working with clean attribution, the rush to build the story may have lowered the quality of the story.</p>
+  </div>
+</section>
+
+<!-- ============ PART 4 — OPPORTUNITIES ============ -->
+<section id="opps">
+  <p class="eyebrow">Part 04 — Synthesis</p>
+  <h2>Where the biggest opportunity sits</h2>
+  <p class="lead">Outside analysis and the insider account converge on one diagnosis: AG1 built a category-defining loyal core, then spent two years adding surface area faster than it built the membership architecture to hold it. The opportunity is almost entirely on the retention/value side — the part the expansion playbook neglected.</p>
+
+  <div class="opp"><div class="num">01</div><div><h4>Re-architect the line as base + stack, not parallel products</h4><p>Next Gen as the protected hero; AGZ, Pro, and future SKUs as need-state add-ons that build <em>on</em> it, gated to a defined customer — not a shelf of competing "bests." AG1 already sells a "Full Foundation Stack"; the job is to give that stack a logic. Fixes "unclear what to buy," cannibalization, and the dead product-finder — and re-legitimizes "the core is the best."</p><span class="flf-tag">Originated in former leader feedback</span></div></div>
+
+  <div class="opp"><div class="num">02</div><div><h4>Move from discount/GWP to genuine value and loyalty mechanics</h4><p>The cancel driver is value, not price — yet the defense has been free product (worsens overstock) and bags (buys deal-seekers). Replace with behavioral loyalty (streaks, tenure benefits, milestone unlocks), consumption-paced fulfillment to kill the overstock cancel, and proof-of-value moments. The cleanest fit for a membership-economics engagement.</p></div></div>
+
+  <div class="opp"><div class="num">03</div><div><h4>Fix segmentation and the cohort-blind metrics</h4><p>If aggregate retention is propped up by the year-one cohort, the dashboard hides the real churn curve. De-average it, build at-risk/lapsed segments, and instrument the sampling-for-retention play the account says never got resourced.</p><span class="flf-tag">Supported by former leader feedback</span></div></div>
+
+  <div class="opp"><div class="num">04</div><div><h4>Make retail a DTC funnel, not a discount leak</h4><p>The Target trial kit is the right instinct; the Costco old-formula-at-a-lower-price episode is the cautionary tale. Define the channel role (trial → DTC membership), fix on-pack value comms, and protect DTC value perception so retail builds LTV instead of training the base to wait for the cheaper shelf.</p></div></div>
+
+  <div class="opp"><div class="num">05</div><div><h4>Close the format/occasion gap before it's an exit liability</h4><p>Grüns just proved the gummy/kids/convenience format is worth ~$1.2B to Unilever. AG1 has the brand and the science but not the form factor. Whether the goal is defense or a higher sale multiple, owning a credible convenient/kids format — and the GLP-1 occasion Pro already chases — is where category share is moving.</p></div></div>
+
+  <div class="callout">
+    <div class="co-h">The Consello angle, unsaid</div>
+    <p style="margin:0;">Four of these five are loyalty, membership-economics, CRM, and lifecycle problems — the exact operator-credible work the BEG practice sells. If AG1 is genuinely in a sale process, a sharper retention story and a coherent portfolio architecture are also the two levers that most move the multiple. That's the wedge.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p><b>Sourcing &amp; confidence.</b> Standard narrative and the verification column draw on public reporting and primary materials. Former leader feedback is a single uncorroborated account; each item is tagged inline and rated for public support. Internal-only claims (cancel rankings, forecasts, cohort retention, specific pilots) should not be treated as established fact. One claim is in tension with AG1's own published engagement figure.</p>
+    <p class="srcs"><b>Key public sources:</b> Fortune ("The battle over AG1," CEO profile, reviews) · Fast Company ("AG1 vs Grüns," May 2026, incl. Reuters sale report) · Modern Retail (Target launch, Apr 2026) · PR Newswire / Athletech / Nutraceuticals World (Costco, AGZ, AG1 Pro) · Marketing Brew (sports marketing) · AG1 corporate (Cole one-year letter, 2025 Impact Report, product &amp; membership pages) · Glassdoor (employee reviews) · Grüns / The Quality Edit / Healthline / BarBend / Forbes Health (reviews &amp; competitive) · Wikipedia / TechCrunch / PitchBook (funding &amp; valuation). Current as of late June 2026.</p>
+    <p style="margin-top:14px;color:var(--ink-40);">Internal working analysis — not for external distribution.</p>
+  </div>
+</footer>
+
+</body>
+</html>
