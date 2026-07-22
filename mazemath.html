@@ -371,19 +371,20 @@ function calculate() {
     $("resultFormula").textContent =
       "(" + fmt(units) + " \u00f7 100) \u00d7 " + fmt(conc) + " = " + fmt(dose) + " " + u.dose;
   } else {
-    $("resultLabel").textContent = "Units to draw";
+    $("resultLabel").textContent = "Volume to draw";
     const dose = parseFloat($("dose").value);
     if (!(dose >= 0)) {
       $("resultValue").innerHTML = "&mdash;";
       $("resultFormula").textContent = "";
       return;
     }
-    const volume = dose / conc;
-    const units = volume * UNITS_PER_ML;
-    $("resultValue").textContent = fmt(units) + " units";
+    const volume = dose / conc;          // mL
+    const units = volume * UNITS_PER_ML; // U-100 cross-check
+    $("resultValue").textContent = fmt(volume) + " mL";
     $("resultFormula").textContent =
-      "(" + fmt(dose) + " \u00f7 " + fmt(conc) + ") \u00d7 100 = " + fmt(units) + " units";
-    if (units > 100) $("warn").textContent = "Note: result exceeds 100 units (more than 1 mL / one full syringe).";
+      fmt(dose) + " \u00f7 " + fmt(conc) + " = " + fmt(volume) + " mL"
+      + "  (" + fmt(units) + " units on a U-100 syringe)";
+    if (units > 100) $("warn").textContent = "Note: result exceeds 1 mL (more than one full U-100 syringe).";
   }
 }
 
