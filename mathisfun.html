@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Injection Dose Calculator</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --accent-dark: #0284c7;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --result-bg: #0c4a6e;
+    --border: #334155;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 16px;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; }
+  h1 { font-size: 1.35rem; text-align: center; margin: 8px 0 4px; }
+  .sub { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  select, input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.05rem;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  .row { display: flex; gap: 10px; }
+  .row > div { flex: 1; }
+  .unit-toggle { display: flex; gap: 8px; margin-bottom: 14px; }
+  .unit-toggle button {
+    flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--muted); font-size: 0.95rem; cursor: pointer;
+  }
+  .unit-toggle button.active { background: var(--accent-dark); color: #fff; border-color: var(--accent); }
+  .mode-toggle { display: flex; gap: 8px; margin-bottom: 18px; }
+  .mode-toggle button {
+    flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--muted); font-size: 0.9rem; cursor: pointer; font-weight: 600;
+  }
+  .mode-toggle button.active { background: var(--accent); color: #04283a; border-color: var(--accent); }
+  .result {
+    background: var(--result-bg);
+    border: 1px solid var(--accent-dark);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .result .big { font-size: 2.2rem; font-weight: 700; color: #fff; }
+  .result .lbl { font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+  .formula { font-size: 0.78rem; color: var(--muted); margin-top: 10px; font-family: ui-monospace, monospace; }
+  .hint { font-size: 0.75rem; color: var(--muted); margin: -8px 0 14px; }
+  .resolved { font-size: 0.82rem; color: var(--accent); margin: -8px 0 6px; font-family: ui-monospace, monospace; min-height: 1em; }
+  .warn { color: var(--warn); font-size: 0.8rem; text-align: center; margin-top: 12px; }
+  .footer { text-align: center; color: var(--muted); font-size: 0.72rem; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Injection Dose Calculator</h1>
+  <div class="sub">U-100 insulin syringe &middot; 100 units = 1 mL</div>
+
+  <div class="card">
+    <label for="med">Medication</label>
+    <select id="med"></select>
+
+    <div id="unitToggleWrap" style="display:none;">
+      <label>Unit type</label>
+      <div class="unit-toggle" id="unitToggle"></div>
+    </div>
+
+    <label for="conc">Concentration (<span id="concUnit">mcg/mL</span>)</label>
+    <input id="conc" type="text" inputmode="text" autocomplete="off" placeholder="e.g. 40  or  40/5">
+    <div class="resolved" id="concResolved"></div>
+    <div class="hint" id="concHint"></div>
+
+    <label>Calculate</label>
+    <div class="mode-toggle" id="modeToggle">
+      <button data-mode="unitsToDose" class="active">Units &rarr; Dose</button>
+      <button data-mode="doseToUnits">Dose &rarr; Units</button>
+    </div>
+
+    <div id="inputUnits">
+      <label for="units">Syringe units drawn</label>
+      <input id="units" type="number" inputmode="decimal" step="any" placeholder="e.g. 15">
+    </div>
+
+    <div id="inputDose" style="display:none;">
+      <label for="dose">Desired dose (<span id="doseUnit">mcg</span>)</label>
+      <input id="dose" type="number" inputmode="decimal" step="any" placeholder="e.g. 6">
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="lbl" id="resultLabel">Dose</div>
+    <div class="big" id="resultValue">&mdash;</div>
+    <div class="formula" id="resultFormula"></div>
+  </div>
+  <div class="warn" id="warn"></div>
+  <div class="footer">Always double-check against your prescription. This tool assists, it does not replace clinical judgment.</div>
+</div>
+
+<script>
+"use strict";
+
+// Medication definitions.
+// unitOptions: list of {dose, conc} label pairs. If more than one, a toggle is shown.
+// defaultConc: prefilled concentration (null = manual each time).
+const MEDS = {
+  "Prostaglandin E1": {
+    unitOptions: [{ dose: "mcg", conc: "mcg/mL" }],
+    defaultConc: 40,
+    concHint: "Sample value 40 mcg/mL \u2014 edit if your pharmacy differs."
+  },
+  "HCG": {
+    unitOptions: [
+      { dose: "IU", conc: "IU/mL" },
+      { dose: "mcg", conc: "mcg/mL" }
+    ],
+    defaultConc: null,
+    concHint: "Enter the concentration from your pharmacy label."
+  },
+  "Tirzepatide": {
+    unitOptions: [{ dose: "mg", conc: "mg/mL" }],
+    defaultConc: null,
+    concHint: "Enter the concentration from your pharmacy label."
+  }
+};
+
+const UNITS_PER_ML = 100; // U-100 syringe
+
+let state = {
+  med: "Prostaglandin E1",
+  unitIndex: 0,
+  mode: "unitsToDose"
+};
+
+const $ = id => document.getElementById(id);
+
+function currentUnits() {
+  return MEDS[state.med].unitOptions[state.unitIndex];
+}
+
+function initMedSelect() {
+  const sel = $("med");
+  Object.keys(MEDS).forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name; opt.textContent = name;
+    sel.appendChild(opt);
+  });
+  sel.value = state.med;
+  sel.addEventListener("change", () => {
+    state.med = sel.value;
+    state.unitIndex = 0;
+    syncMed();
+    calculate();
+  });
+}
+
+function syncMed() {
+  const med = MEDS[state.med];
+  // unit toggle
+  const wrap = $("unitToggleWrap");
+  const toggle = $("unitToggle");
+  toggle.innerHTML = "";
+  if (med.unitOptions.length > 1) {
+    wrap.style.display = "block";
+    med.unitOptions.forEach((u, i) => {
+      const b = document.createElement("button");
+      b.textContent = u.dose + " / " + u.conc;
+      b.className = i === state.unitIndex ? "active" : "";
+      b.addEventListener("click", () => {
+        state.unitIndex = i;
+        syncMed();
+        calculate();
+      });
+      toggle.appendChild(b);
+    });
+  } else {
+    wrap.style.display = "none";
+  }
+  // concentration prefill + labels
+  const u = currentUnits();
+  $("concUnit").textContent = u.conc;
+  $("doseUnit").textContent = u.dose;
+  $("concHint").textContent = med.concHint;
+  if (med.defaultConc !== null && $("conc").dataset.med !== state.med) {
+    $("conc").value = med.defaultConc;
+  }
+  if ($("conc").dataset.med !== state.med) {
+    if (med.defaultConc === null) $("conc").value = "";
+  }
+  $("conc").dataset.med = state.med;
+}
+
+function initModeToggle() {
+  document.querySelectorAll("#modeToggle button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.mode = btn.dataset.mode;
+      document.querySelectorAll("#modeToggle button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      $("inputUnits").style.display = state.mode === "unitsToDose" ? "block" : "none";
+      $("inputDose").style.display = state.mode === "doseToUnits" ? "block" : "none";
+      calculate();
+    });
+  });
+}
+
+function fmt(n) {
+  if (!isFinite(n)) return "\u2014";
+  // up to 4 significant-ish decimals, trim trailing zeros
+  const rounded = Math.round(n * 10000) / 10000;
+  return String(rounded);
+}
+
+// Parse the concentration field. Accepts a plain number ("40") or a
+// total/volume division ("40/5" = 8). Returns { value, error, isDivision }.
+// Only a single division of two positive numbers is allowed \u2014 no general
+// expression evaluation, so this never uses eval().
+function parseConc(raw) {
+  const s = (raw || "").trim();
+  if (s === "") return { value: NaN, error: "" };
+
+  if (s.indexOf("/") !== -1) {
+    const parts = s.split("/");
+    if (parts.length !== 2) {
+      return { value: NaN, error: "Use one division, e.g. 40/5 (total / mL)." };
+    }
+    const total = parseFloat(parts[0].trim());
+    const volume = parseFloat(parts[1].trim());
+    if (!(total > 0) || !(volume > 0)) {
+      return { value: NaN, error: "Both numbers must be greater than 0, e.g. 40/5." };
+    }
+    return { value: total / volume, error: "", isDivision: true, total, volume };
+  }
+
+  const v = parseFloat(s);
+  if (!(v > 0)) return { value: NaN, error: "" };
+  return { value: v, error: "" };
+}
+
+function calculate() {
+  const u = currentUnits();
+  const parsed = parseConc($("conc").value);
+  const conc = parsed.value;
+  $("warn").textContent = "";
+
+  // Show resolved concentration (or a parse error) beneath the field.
+  const resolvedEl = $("concResolved");
+  if (parsed.error) {
+    resolvedEl.style.color = "var(--warn)";
+    resolvedEl.textContent = parsed.error;
+  } else if (parsed.isDivision && conc > 0) {
+    resolvedEl.style.color = "var(--accent)";
+    resolvedEl.textContent = "= " + fmt(conc) + " " + u.conc + "  (" + fmt(parsed.total) + " \u00f7 " + fmt(parsed.volume) + ")";
+  } else {
+    resolvedEl.textContent = "";
+  }
+
+  if (!(conc > 0)) {
+    $("resultValue").innerHTML = "&mdash;";
+    $("resultFormula").textContent = "";
+    return;
+  }
+
+  if (state.mode === "unitsToDose") {
+    $("resultLabel").textContent = "Dose";
+    const units = parseFloat($("units").value);
+    if (!(units >= 0)) {
+      $("resultValue").innerHTML = "&mdash;";
+      $("resultFormula").textContent = "";
+      return;
+    }
+    const volume = units / UNITS_PER_ML;
+    const dose = volume * conc;
+    $("resultValue").textContent = fmt(dose) + " " + u.dose;
+    $("resultFormula").textContent =
+      "(" + fmt(units) + " \u00f7 100) \u00d7 " + fmt(conc) + " = " + fmt(dose) + " " + u.dose;
+  } else {
+    $("resultLabel").textContent = "Units to draw";
+    const dose = parseFloat($("dose").value);
+    if (!(dose >= 0)) {
+      $("resultValue").innerHTML = "&mdash;";
+      $("resultFormula").textContent = "";
+      return;
+    }
+    const volume = dose / conc;
+    const units = volume * UNITS_PER_ML;
+    $("resultValue").textContent = fmt(units) + " units";
+    $("resultFormula").textContent =
+      "(" + fmt(dose) + " \u00f7 " + fmt(conc) + ") \u00d7 100 = " + fmt(units) + " units";
+    if (units > 100) $("warn").textContent = "Note: result exceeds 100 units (more than 1 mL / one full syringe).";
+  }
+}
+
+// wire up
+initMedSelect();
+initModeToggle();
+syncMed();
+["conc", "units", "dose"].forEach(id => $(id).addEventListener("input", calculate));
+calculate();
+</script>
+</body>
+</html>
