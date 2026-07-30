@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equinox Meeting Prep — Internal Briefing</title>
+<style>
+  :root{
+    --terracotta:#7C3621; --terracotta-light:#A64A30; --ink:#1A1A1A;
+    --paper:#FFFFFF; --line:#E4DED5; --muted:#6B6459; --tint:#F7F4EF;
+    --gold:#B8935F; --yes:#4A7C59; --no:#A64A30; --partial:#B8935F;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);line-height:1.55;}
+  .sans{font-family:Arial,Helvetica,sans-serif;}
+  a{color:var(--terracotta);}
+
+  .layout{display:flex;max-width:1500px;margin:0 auto;}
+  nav{
+    width:260px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+    background:var(--ink);color:#fff;padding:28px 20px;font-family:Arial,sans-serif;
+  }
+  nav .navtitle{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:18px;font-weight:700;}
+  nav a{display:block;color:#D8CFC2;text-decoration:none;font-size:13.5px;padding:7px 0;border-bottom:1px solid #33302B;}
+  nav a:hover{color:#fff;}
+
+  main{flex:1;padding:40px 56px 100px;max-width:1150px;}
+
+  header.doc-head{border-bottom:3px solid var(--terracotta);padding-bottom:24px;margin-bottom:36px;}
+  header.doc-head .eyebrow{font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--terracotta-light);font-weight:700;margin:0 0 8px;}
+  header.doc-head h1{margin:0 0 10px;font-size:32px;font-weight:400;}
+  header.doc-head p{font-family:Arial,sans-serif;color:var(--muted);font-size:14px;margin:0;max-width:780px;}
+
+  section{margin-bottom:56px;scroll-margin-top:20px;}
+  h2.sec{font-size:24px;color:var(--terracotta);border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:20px;font-weight:400;}
+  h3.sub{font-family:Arial,sans-serif;font-size:15px;color:var(--terracotta-light);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin:28px 0 12px;}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-family:Arial,sans-serif;font-size:13.5px;}
+  th{background:var(--terracotta);color:#fff;text-align:left;padding:9px 12px;font-size:12.5px;}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--tint);}
+
+  .callout{background:var(--tint);border-left:4px solid var(--terracotta);padding:14px 18px;margin:16px 0;font-family:Arial,sans-serif;font-size:13.5px;}
+  .callout.warn{border-left-color:var(--no);}
+  .callout.pov{border-left-color:var(--gold);}
+
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0;}
+  .card{border:1px solid var(--line);border-radius:4px;padding:16px 18px;font-family:Arial,sans-serif;}
+  .card h4{margin:0 0 8px;color:var(--terracotta);font-size:14.5px;}
+  .card p{margin:0 0 8px;font-size:13px;color:var(--ink);}
+  .card .stat{font-size:22px;font-weight:700;color:var(--terracotta);margin:6px 0 2px;}
+  .card .src{font-size:11px;color:var(--muted);font-style:italic;}
+
+  ul.tight li{margin-bottom:6px;font-family:Arial,sans-serif;font-size:13.5px;}
+  .cutlist{counter-reset:cutnum;}
+  .cutlist li{counter-increment:cutnum;list-style:none;margin-bottom:14px;padding-left:34px;position:relative;font-family:Arial,sans-serif;font-size:13.5px;}
+  .cutlist li::before{content:counter(cutnum);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--terracotta);color:#fff;border-radius:50%;text-align:center;line-height:24px;font-weight:700;font-size:12px;}
+  .cutlist li b{color:var(--terracotta);}
+
+  .src-note{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);font-style:italic;margin-top:4px;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<nav>
+  <div class="navtitle">Equinox &middot; Meeting Prep</div>
+  <a href="#rfp">1. What the RFP Asked For</a>
+  <a href="#process">2. Our Process</a>
+  <a href="#today">3. How It Works Today at Equinox</a>
+  <a href="#comp">4. What Competitors Are Doing</a>
+  <a href="#practice">5. Best Practices, Other Industries</a>
+  <a href="#cut">6. If Asked to Expedite</a>
+  <a href="#anticipate">7. Gaps vs. the RFP's Full Ask</a>
+</nav>
+
+<main>
+
+<header class="doc-head">
+  <p class="eyebrow sans">Internal Briefing &middot; Not for Client Distribution</p>
+  <h1>Equinox Meeting Prep</h1>
+</header>
+
+<section id="rfp">
+  <h2 class="sec">1. What the RFP Actually Asked For</h2>
+
+  <h3 class="sub">The five workstreams</h3>
+  <table>
+    <tr><th>Workstream</th><th>Question to Answer</th><th>Key Deliverables</th></tr>
+    <tr><td><b>WS1</b> Luxury Consumer &amp; Cross-Category Landscape</td><td>What can Equinox learn from best-in-class access, membership, pricing, loyalty, and premium experience models?</td><td>Cross-category benchmarking; prioritized design principles</td></tr>
+    <tr><td><b>WS2</b> Consumer Segmentation, Psychographics &amp; Lifestyle Wallet</td><td>Who is Equinox designing for, and what drives willingness to pay?</td><td>Segmentation; lifestyle-wallet sizing; implications for architecture and pricing</td></tr>
+    <tr><td><b>WS3</b> Future Membership Architecture, Pricing &amp; Policy</td><td>What should the tier structure and pricing model actually be?</td><td>Tier framework; pricing model benchmarked against luxury peers; policy framework with scenario analysis</td></tr>
+    <tr><td><b>WS4</b> Product, Service &amp; Experience Opportunities</td><td>Which products/partnerships belong inside the tier structure?</td><td>Prioritized benefits, evaluated through the tier lens, not as standalone products</td></tr>
+    <tr><td><b>WS5</b> Implementation Roadmap</td><td>How does this actually get built and rolled out?</td><td>Rollout plan, migration playbook, comms strategy, systems requirements, KPI framework</td></tr>
+  </table>
+
+  <h3 class="sub">Notes from Parinda</h3>
+  <ul class="tight">
+    <li><b>Timing:</b> asked for 12, 16, and 20-week options, separate from the RFP's own "standard/accelerated" framing, and separately floated 10-week and 8&ndash;10-week framing on the call, current draft targets 16&ndash;18 weeks for the core plan. She wants our realistic point of view.</li>
+    <li><b>Implementation is the flagged weak point.</b> Specifically: field/club-level execution consistency and buy-in. Also named a direct frustration with past consultants, strategy without anyone on the ground to help run or adjust a pilot.</li>
+    <li><b>Segmentation is being handled by a third party.</b> Full deliverable comes in September. Our job is value-tiering and structure on top of who they identify.</li>
+    <li><b>Hotels, SoulCycle, and Pure Yoga stay separate</b> from core club loyalty for now, confirmed directly.</li>
+    <li><b>"Category of one" is contested internally.</b> The RFP and Harvey use it; Parinda's words, "somewhere between premium and luxury," with real competitive pressure from smaller players in every market.</li>
+    <li><b>Quick wins matter to investor optics.</b> Silver Lake (the named lead investor) wants visible progress before year-end. Parinda responded well to the idea of an early validation checkpoint short of a full pilot.</li>
+    <li><b>Her own words on scale:</b> "Depending on your recommendation on whether we have to completely overhaul our membership design or if we build upon it will determine whether there is pilot opportunity or if full scale is our only option, and essentially we need to rip the bandaid." Separately, her own personal read: "I think we will miss the boat if it's not a complete overhaul... but I would leave it to you guys to kind of assess."</li>
+  </ul>
+</section>
+
+<section id="process">
+  <h2 class="sec">2. Our Process</h2>
+
+  <h3 class="sub">Three phases</h3>
+  <table>
+    <tr><th>Phase</th><th>Length</th><th>Covers</th><th>Price</th></tr>
+    <tr><td>Discover</td><td>~6 weeks</td><td>WS1 + WS2</td><td>$250K</td></tr>
+    <tr><td>Design</td><td>~8 weeks</td><td>WS3 + WS4</td><td>$400K</td></tr>
+    <tr><td>Roadmap</td><td>~3 weeks</td><td>WS5</td><td>$200K</td></tr>
+    <tr><td colspan="3">Sum of individual phases</td><td>$850K</td></tr>
+    <tr><td colspan="3"><b>Bundled Total, all three together</b></td><td><b>$750K</b></td></tr>
+  </table>
+  <p class="src-note sans">$750K is the bundled price when all three phases are taken together. Taking any two of the three carries a 7.5% discount off those two phases' combined price. Running a pilot and full implementation are priced separately as additional scope beyond the three phases.</p>
+
+  <h3 class="sub">Five decision gates</h3>
+  <ul class="tight">
+    <li><b>Gate 1 (week ~3):</b> Build-upon vs. complete redesign, the highest-leverage call in the engagement.</li>
+    <li><b>Gate 2 (week ~6):</b> Is the third-party segmentation data sufficient to proceed on.</li>
+    <li><b>Gate 3 (weeks 8&ndash;10):</b> Continue as scoped, or redirect, based on early hypotheses.</li>
+    <li><b>Gate 4 (week ~14):</b> Architecture approved; pilot or straight to full implementation.</li>
+    <li><b>Gate 5 (post-pilot):</b> Go/no-go on full implementation, fee contingent on this call.</li>
+  </ul>
+
+  <div class="callout">
+    <b>The throughline:</b> we're recommending one clear plan, with acceleration available as a real, named tradeoff: less complete Discover in exchange for speed.
+  </div>
+</section>
+
+<section id="today">
+  <h2 class="sec">3. How It Works Today at Equinox</h2>
+
+  <h3 class="sub">The core finding</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>Pricing discipline is real</h4>
+      <p>~5% price CAGR since 2019, tier mix essentially flat.</p>
+      <div class="src">Equinox internal financials, March 2026</div>
+    </div>
+    <div class="card">
+      <h4>Funnel is the first crack</h4>
+      <div class="stat">3,800</div>
+      <p>Net members lost in Q4 2025 alone, comparable club base, worst quarter of the year. Closing rate negative every quarter of 2025 despite double-digit lead growth.</p>
+      <div class="src">Equinox internal financials, March 2026</div>
+    </div>
+    <div class="card">
+      <h4>Margin exposure is concentrated</h4>
+      <p>3% rate increase on Select/Regional (the largest tiers by member count) vs. 11.3% correction on All Access for 2026, while club/coach/amenity costs move independent of tier.</p>
+      <div class="src">Equinox internal financials, March 2026</div>
+    </div>
+  </div>
+
+  <h3 class="sub">The tier-naming problem, concrete examples</h3>
+  <ul class="tight">
+    <li>"All Access" does not mean all access.</li>
+    <li>"Destination" does not mean every destination; there's a separate "Destination-plus-Yards" tier layered on top.</li>
+    <li>Newer amenities, contrast therapy, IV drips, red-light recovery, tend to land in whichever tier is newest, unrelated to what members would actually value.</li>
+  </ul>
+
+  <h3 class="sub">Assets that exist but aren't tied together</h3>
+  <p class="sans" style="font-size:13.5px;">Personal training, Pilates, spa, retail, Optimize, and the Circle partnership roster (BILT, Flex) each perform and generate revenue independently. None is integrated into a single membership ladder with an upgrade path.</p>
+</section>
+
+<section id="comp">
+  <h2 class="sec">4. What Competitors Are Doing</h2>
+  <p class="sans" style="font-size:13.5px;">Broken down in Lizzie's deck. The synthesis, if it's useful to have without opening the deck: Life Time proves the mix-shift mechanism works commercially. Soho House is the closer model for how Equinox's own top tier should feel, status through scarcity and curation, not amenity bundling. Barry's is the cautionary case, no ladder at all means no upgrade path and no aspiration built into the pricing.</p>
+</section>
+
+<section id="practice">
+  <h2 class="sec">5. Best Practices, Other Industries</h2>
+  <p class="sans" style="font-size:13.5px;">Four examples, each chosen to prove a different piece of the argument, and each with a direct, specific implication for Equinox, not just a general lesson.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Amazon Prime</h4>
+      <p><b>Proves:</b> bundling breadth itself is the moat.</p>
+      <div class="stat">$49.6B</div>
+      <p>FY2025 subscription revenue, up ~12% YoY. 240M+ paying members. Over 80% of members use 2+ benefits; the more perks a member uses, the more they spend overall.</p>
+      <p><b>Equinox takeaway:</b> the bundling ingredients already exist, PT, Pilates, spa, retail, Optimize, Circle. The fix is packaging what's already there into one visible bundle.</p>
+      <div class="src">EMARKETER/Bizrate, May 2026; Amazon IR, Q4 2025; BusinessStats, May 2026</div>
+    </div>
+    <div class="card">
+      <h4>Costco</h4>
+      <p><b>Proves:</b> mix-shift to a higher tier is self-funding and compounds faster than base growth.</p>
+      <div class="stat">74.2%</div>
+      <p>Share of worldwide sales from Executive members, who are only 47.7% of the paid base and growing more than 2x faster (9.6% vs. 4.1% YoY) than total membership. US renewal rate 92%+.</p>
+      <p><b>Equinox takeaway:</b> this is direct proof the recommended fix, mix-shift over another rate increase, works at real scale, already, not as an untested theory.</p>
+      <div class="src">Costco Q3 FY2026 results, longyield.substack.com, May 2026; Yahoo Finance, Oct 2025</div>
+    </div>
+    <div class="card">
+      <h4>Marriott Bonvoy</h4>
+      <p><b>Proves:</b> a real, current model for protecting members through a tier change without losing them outright.</p>
+      <p>2026 "soft landing" policy: members who don't requalify for elite status drop only one tier, never lose status entirely in one step.</p>
+      <p><b>Equinox takeaway:</b> this is the direct model for how Equinox migrates existing members through whatever the new architecture turns out to be, whichever way Gate 1 lands.</p>
+      <div class="src">LoyaltyLobby / One Mile at a Time, Nov 2025</div>
+    </div>
+    <div class="card">
+      <h4>Other considerations</h4>
+      <p>Dimensions worth checking against, beyond the four examples here:</p>
+      <ul class="tight" style="margin:8px 0 0;">
+        <li>Sizes</li>
+        <li>Numbers (of tiers)</li>
+        <li>Naming conventions</li>
+        <li>Benefits and types of benefits</li>
+        <li>Qualification</li>
+        <li>Mobility</li>
+        <li>Clarity in offering</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Delta SkyMiles Medallion</h4>
+      <p><b>Proves:</b> naming clarity and disproportionate escalation, both, in one structure.</p>
+      <p>Four tiers, Silver, Gold, Platinum, Diamond, at 5,000 / 10,000 / 15,000 / 28,000 MQDs. Each step up unlocks disproportionately more value, Diamond's benefits (Sky Club access, upgrade certificates) are worth far more than 2.8x Silver's, despite the MQD requirement only being 2.8x higher.</p>
+      <p><b>Equinox takeaway:</b> a well-tested tier count (four), instantly legible names with no explanation needed, and value that escalates faster than the price does, a direct contrast to Select/Regional/All Access/Destination, names that signal hierarchy far less clearly and, per the tier-naming problem already flagged, deliver something different from what they promise.</p>
+      <div class="src">Delta Air Lines Medallion Program Overview, 2026; The Points Guy, Jan 2026</div>
+    </div>
+  </div>
+
+  <div class="callout pov">
+    <b>On tier count and clarity specifically:</b> four is a well-tested number, enough to create real aspiration without decision paralysis. Delta publishes its full tier-by-benefit comparison openly; Equinox has no public rate card or amenity census (see Lizzie's deck, Sources &amp; Confidence). That gap in public clarity is itself part of the tier-naming problem this proposal already surfaces.
+  </div>
+</section>
+
+<section id="cut">
+  <h2 class="sec">6. Our POV: What to Cut First If Asked to Expedite</h2>
+  <p class="sans" style="font-size:13.5px;">The pilot is the cleanest first cut, it's a separable, later-stage decision that doesn't touch the evidence base at all. Discover's benchmarking depth is the last lever to reach for, not the first: it's a named RFP deliverable (WS1), and it's the evidence base the whole Section 1 argument rests on, the Life Time mechanism, the Costco proof, the Soho House model. Thinning it doesn't just save time, it weakens the credibility of the recommendation itself.</p>
+  <ol class="cutlist">
+    <li><b>The pilot itself.</b> Skipping it (Gate 4) is faster and cheaper, but removes the live-market proof Silver Lake likely wants. If speed is the priority and investor optics aren't, this is the first lever, contained on its own, the evidence upstream stays untouched.</li>
+    <li><b>Design's own pace, via overlap with Discover.</b> Real compression, real rework risk if later findings shift direction. This is where the accelerated case's premium comes from, a real cost, contained to Design's own execution, separate from the evidence underneath it.</li>
+    <li><b>Depth of Discover's benchmarking.</b> Compressible via raw segmentation data instead of the September deliverable, but this is the last lever to reach for. It's the foundation the recommendation stands on, and it's explicitly named in the RFP.</li>
+    <li><b>What we would not recommend cutting:</b> Roadmap. It's already the shortest phase (~3 weeks) and carries the actual execution planning Equinox specifically flagged as the weak muscle. Compressing this further risks reproducing the exact gap this engagement exists to close.</li>
+  </ol>
+</section>
+
+<section id="anticipate">
+  <h2 class="sec">7. Gaps Between What We Presented and the RFP's Full Ask</h2>
+  <p class="sans" style="font-size:13.5px;">Checked against the RFP's actual workstream list. These are the places we're thinner than the ask.</p>
+  <ul class="tight">
+    <li><b>WS5 asks for sales model and capability implications specifically.</b> We have field enablement covered; the sales model itself, how selling actually changes once the tiers change, still needs its own piece of work.</li>
+    <li><b>WS5 also asks for Experience KPIs, named separately from revenue and retention KPIs.</b> Our current KPI framework is a single combined dashboard; we haven't broken out an experience-specific category.</li>
+    <li><b>WS4 asks for scalability as one of the evaluation lenses</b> alongside member value, brand fit, economics, and feasibility. We've covered the other four explicitly; scalability still needs to be named as its own filter.</li>
+    <li><b>The RFP's Engagement Model names Eswar Veluri and Bindu Shah as project sponsors.</b> Neither is acknowledged by name anywhere in the proposal itself.</li>
+  </ul>
+  <p class="sans" style="font-size:13.5px; margin-top:20px;"><b>One question about our own logic, worth being ready to defend directly:</b></p>
+  <ul class="tight">
+    <li><b>What happens if the segmentation data isn't good enough when it lands?</b> Gate 2 exists for exactly this: supplemental research gets scoped and priced as an addition.</li>
+  </ul>
+</section>
+
+</main>
+</div>
+</body>
+</html>
