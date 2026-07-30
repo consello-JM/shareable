@@ -51,6 +51,10 @@
   .card .src{font-size:11px;color:var(--muted);font-style:italic;}
 
   ul.tight li{margin-bottom:6px;font-family:Arial,sans-serif;font-size:13.5px;}
+  ul.tight ul{margin:6px 0 10px;padding-left:20px;}
+  ul.tight ul li{font-size:12.5px;color:var(--muted);}
+  ul.tight ul ul{margin:4px 0 8px;}
+  ul.tight ul ul li{font-size:12px;}
   .cutlist{counter-reset:cutnum;}
   .cutlist li{counter-increment:cutnum;list-style:none;margin-bottom:14px;padding-left:34px;position:relative;font-family:Arial,sans-serif;font-size:13.5px;}
   .cutlist li::before{content:counter(cutnum);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--terracotta);color:#fff;border-radius:50%;text-align:center;line-height:24px;font-weight:700;font-size:12px;}
@@ -242,10 +246,34 @@
   <h2 class="sec">7. Gaps Between What We Presented and the RFP's Full Ask</h2>
   <p class="sans" style="font-size:13.5px;">Checked against the RFP's actual workstream list. These are the places we're thinner than the ask.</p>
   <ul class="tight">
-    <li><b>WS5 asks for sales model and capability implications specifically.</b> We have field enablement covered; the sales model itself, how selling actually changes once the tiers change, still needs its own piece of work.</li>
-    <li><b>WS5 also asks for Experience KPIs, named separately from revenue and retention KPIs.</b> Our current KPI framework is a single combined dashboard; we haven't broken out an experience-specific category.</li>
-    <li><b>WS4 asks for scalability as one of the evaluation lenses</b> alongside member value, brand fit, economics, and feasibility. We've covered the other four explicitly; scalability still needs to be named as its own filter.</li>
-    <li><b>The RFP's Engagement Model names Eswar Veluri and Bindu Shah as project sponsors.</b> Neither is acknowledged by name anywhere in the proposal itself.</li>
+    <li><b>WS5 asks for sales model and capability implications specifically.</b> We have field enablement covered; the sales model itself, how selling actually changes once the tiers change, still needs its own piece of work.
+      <ul>
+        <li><b>Shift dependent:</b> today's sales motion is transactional, "which clubs do you want access to." Whatever direction Design lands on, we'd need to align on what the new architecture actually is and how it's positioned, if it's lifestyle-affinity, for example, selling becomes a consultative conversation with the field and prospects, what does this person actually want out of their membership, not just which building they can enter.</li>
+      </ul>
+      Two concrete implications worth having ready:
+      <ul>
+        <li>New-member and existing-member sales become genuinely different motions. Closing a new lead is acquisition; getting a current Select member to move to a higher tier is upsell, and it needs its own script, its own training, arguably its own incentive structure. Right now that distinction doesn't really exist.</li>
+        <li>This connects directly to the funnel problem. If closing rate has gone negative every quarter of 2025, part of the fix may be that club staff are still selling the old access-based pitch to prospects who are already comparing Equinox to Aman and Soho House. The sales model has to catch up to the positioning before the positioning can convert.</li>
+      </ul>
+    </li>
+    <li><b>WS5 also asks for Experience KPIs, named separately from revenue and retention KPIs.</b> Our current KPI framework is a single combined dashboard; we haven't broken out an experience-specific category.
+      <ul>
+        <li>The distinction that matters: revenue and retention are outcomes, both boost LTV, but retention takes a while to measure and isn't just one thing. Experience KPIs need to be leading indicators, things that predict whether a member will renew or upgrade, not just confirm it after the fact. Real candidates:
+          <ul>
+            <li><b>Benefit activation rate</b>, the percent of members who've actually used what their tier includes, not just what they're paying for. Given the tier-naming confusion already flagged, this is likely to be a real, measurable gap.</li>
+            <li><b>Time-to-first-value</b>, how quickly a new member experiences their tier's flagship benefit (first PT session, first class, first Spa visit), since the longer that takes, the more likely they are to be in the group closing negatively.</li>
+            <li><b>Staff explanation consistency</b>, essentially a mystery-shopper check on whether club staff can actually explain the tier the way the Simplicity design principle requires. This is measurable and directly tied to a principle already in the proposal.</li>
+            <li><b>General usage frequency</b>: from direct experience at WW, member success was knowable within a week, regardless of contract length. Members who didn't track at least 7 times out of 28 opportunities rarely came back. The same logic likely holds here, an early usage-frequency threshold that predicts renewal long before the renewal date arrives.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><b>WS4 asks for scalability as one of the evaluation lenses</b> alongside member value, brand fit, economics, and feasibility. We've covered the other four explicitly; scalability still needs to be named as its own filter.
+      <ul>
+        <li>Pool access sits at ~31% of clubs, Kids Club at ~38%, Sports Club amenities at ~6%, E Club at ~4%. Most of what makes a tier feel premium is concentrated in a minority of flagship locations, not available network-wide.</li>
+        <li>So "scalability" as an explicit filter means asking, for every candidate benefit: does this require physical infrastructure most clubs don't have, making it inherently a flagship-only perk, or can it be delivered in a way that actually works the same everywhere (coaching, digital content, a service commitment)? If a benefit can't scale to the network, it probably shouldn't be promised inside a formal tier, it's a location-specific draw, not a tier benefit. That's the same lesson underneath the "All Access doesn't mean all access" problem.</li>
+      </ul>
+    </li>
   </ul>
   <p class="sans" style="font-size:13.5px; margin-top:20px;"><b>One question about our own logic, worth being ready to defend directly:</b></p>
   <ul class="tight">
