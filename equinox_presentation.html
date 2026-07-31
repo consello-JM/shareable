@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equinox — The Board</title>
+<style>
+  :root{
+    --terracotta:#7C3621; --ink:#1A1A1A; --paper:#FFFFFF;
+    --muted:#6B6459; --line:#E4DED5; --tint:#F7F4EF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:Arial,Helvetica,sans-serif; background:#fff; color:var(--ink);
+    min-height:100vh; overflow-y:auto;
+  }
+  header{display:flex; align-items:center; gap:16px; padding:22px 40px 6px;}
+  .logo{width:50px;height:50px;flex-shrink:0;object-fit:cover;}
+  h1{font-size:26px;font-weight:800;margin:0;letter-spacing:-0.3px;}
+
+  .grid{
+    display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:auto auto;
+    gap:16px; padding:14px 40px 24px;
+  }
+  .card{
+    border:1px solid var(--line); border-top:4px solid var(--terracotta); border-radius:2px;
+    padding:18px 20px 14px; display:flex; flex-direction:column;
+  }
+  .card h2{font-size:19px; margin:0 0 12px; color:var(--ink);}
+
+  .item{margin-bottom:2px;}
+  .item.sub{margin-left:22px;}
+  .item .k{
+    font-size:15px; cursor:pointer; padding:7px 0; line-height:1.4;
+    display:flex; align-items:flex-start; justify-content:space-between; gap:6px;
+  }
+  .item .k:hover{color:var(--terracotta);}
+  .item .k b{font-weight:700;}
+  .item .k .plus{color:var(--muted); font-size:14px; flex-shrink:0;}
+  .detail{
+    display:none; font-size:13.5px; color:var(--muted); line-height:1.5;
+    border-left:2px solid var(--terracotta); padding:3px 0 8px 10px; margin:3px 0 6px;
+  }
+  .item.open .detail{display:block;}
+
+  .mini-table{width:100%; font-size:11px; border-collapse:collapse; margin-top:6px;}
+  .mini-table td{padding:3px 4px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .mini-table td.ph{font-weight:700; white-space:nowrap;}
+
+  footer{
+    display:flex; justify-content:space-between; padding:8px 40px; color:var(--muted); font-size:11px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="data:image/jpeg;base64,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" alt="Consello">
+  <h1>Equinox Membership Tier Redesign</h1>
+</header>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>Key Objectives</h2>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Define the future role of core membership, and how products, services, and partnerships support it</span><span class="plus">+</span></div>
+      <div class="detail">Not just repricing existing tiers, defining what the membership itself is for.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Build a consumer-backed view of what current and prospective members value most</span><span class="plus">+</span></div>
+      <div class="detail">Grounded in Equinox's own data first, net-new research only where a real gap exists.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Recommend an architecture that's economically attractive, brand-aligned, and operationally feasible</span><span class="plus">+</span></div>
+      <div class="detail">Three tests, not one. A recommendation only clears the bar if it passes all three.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Outline a path into a pilot, so Equinox can move quickly once the direction is set</span><span class="plus">+</span></div>
+      <div class="detail">Where Design concludes a pilot is warranted, not by default.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Current State</h2>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Tiers are defined by physical access, not by the breadth of lifestyle benefits the ecosystem delivers</span><span class="plus">+</span></div>
+      <div class="detail">PT, Pilates, spa, retail, Optimize, Circle, all real, all currently separate.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Leads up double digits; closing rate negative every quarter of 2025</span><span class="plus">+</span></div>
+      <div class="detail">3,800 net members lost in Q4 alone, the worst quarter of the year.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Rate increases have been smallest where the member base is largest</span><span class="plus">+</span></div>
+      <div class="detail">~3% on Select/Regional vs. 11.3% on All Access for 2026.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Member expectations are shaped by luxury hospitality and curated retail, not other gyms</span><span class="plus">+</span></div>
+      <div class="detail">Aman, Amex Centurion, Soho House, the comp set members already use.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Opportunity</h2>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Define what members value most, and how that varies by segment and use case</span><span class="plus">+</span></div>
+      <div class="detail">Individual, family, corporate, by market, by tier, by partner.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Increase acquisition, retention, engagement, and revenue through one architecture</span><span class="plus">+</span></div>
+      <div class="detail">Mix-shift compounds the way Costco's Executive tier already proves it can.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Build something that can flex as new data, partnerships, and products come in</span><span class="plus">+</span></div>
+      <div class="detail">A hypothesis to test, not a finished blueprint.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Process</h2>
+    <p style="font-size:14px; color:var(--muted); margin:0 0 10px;">Five workstreams across three phases</p>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span><b>Discover</b> (~6 weeks)</span><span class="plus">+</span></div>
+      <div class="detail">WS1: Luxury Consumer &amp; Cross-Category Landscape<br>WS2: Consumer Segmentation, Psychographics &amp; Lifestyle Wallet</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span><b>Design</b> (~8 weeks)</span><span class="plus">+</span></div>
+      <div class="detail">WS3: Future Membership Architecture, Pricing &amp; Policy<br>WS4: Product, Service &amp; Experience Opportunities</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span><b>Roadmap</b> (~3 weeks)</span><span class="plus">+</span></div>
+      <div class="detail">WS5: Implementation Roadmap</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Implementation</span><span class="plus">+</span></div>
+      <div class="detail">We work alongside your team, including your field organization, to successfully execute the plan in the market.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Accelerated Path</span><span class="plus">+</span></div>
+      <div class="detail">Equinox can accelerate the timeline in two ways and can choose between them at different points in the project.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Design Principles</h2>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><b>1. Continuity</b><span class="plus">+</span></div>
+      <div class="detail">Protect the member we have while building for the member we want. Migration considerations designed in from the start.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><b>2. Simplicity</b><span class="plus">+</span></div>
+      <div class="detail">If club staff can't explain it in one sentence, it isn't ready.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><b>3. Design for Reality</b><span class="plus">+</span></div>
+      <div class="detail">Design for how people actually join and use the membership, individual, family, corporate, partner, and why they churn.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><b>4. Near-term Impact</b><span class="plus">+</span></div>
+      <div class="detail">Show progress before the big reveal. Quick wins and validation along the way, and manage for acquisition and retention.</div>
+    </div>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><b>5. Value Creation</b><span class="plus">+</span></div>
+      <div class="detail">Every benefit earns its place economically. New or trendy isn't a reason to add something to a tier; it needs a clear member value and a clear cost that justifies it.</div>
+    </div>
+</div>
+
+  <div class="card">
+    <h2>Implementation Support</h2>
+    <div class="item">
+      <div class="k" onclick="toggle(this)"><span>Getting it done inside the organization is where most plans stall</span><span class="plus">+</span></div>
+      <div class="detail">That's where we add the most value, not becoming a bottleneck, giving the team the ability to move fast with alignment.</div>
+    </div>
+    <div class="item sub">
+      <div class="k" onclick="toggle(this)"><b>Quarterbacks</b><span class="plus">+</span></div>
+      <div class="detail">Guiding strategy while staying hands-on.</div>
+    </div>
+    <div class="item sub">
+      <div class="k" onclick="toggle(this)"><b>Solvers</b><span class="plus">+</span></div>
+      <div class="detail">Embedded with teams to create momentum.</div>
+    </div>
+    <div class="item sub">
+      <div class="k" onclick="toggle(this)"><b>Optimizers</b><span class="plus">+</span></div>
+      <div class="detail">Finding value already in the business and making it work harder.</div>
+    </div>
+    <div class="item sub">
+      <div class="k" onclick="toggle(this)"><b>Connectors</b><span class="plus">+</span></div>
+      <div class="detail">Tying the pieces together so the whole is worth more than the parts.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Confidential. Prepared exclusively for Equinox.</span>
+  <span>Click any line to go deeper</span>
+</footer>
+
+<script>
+  function toggle(el){
+    var currentCard = el.closest('.card');
+    document.querySelectorAll('.card').forEach(function(card){
+      if(card !== currentCard){
+        card.querySelectorAll('.item.open').forEach(function(item){ item.classList.remove('open'); });
+      }
+    });
+    el.parentElement.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
