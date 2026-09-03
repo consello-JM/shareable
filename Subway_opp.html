@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subway (US) — Growth Opportunity Analysis | Consello</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000;
+    --white:#FFFFFF;
+    --terracotta:#A64A30;
+    --terracotta-dark:#7C3621;
+    --apricot:#F6D1A3;
+    --paper:#FAF8F5;
+    --line:#E4DFD6;
+    --grey:#6B655C;
+    --font:'DM Sans', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font);
+    color:var(--black);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--terracotta-dark);}
+
+  /* ---------- Header ---------- */
+  header{
+    padding:56px 40px 32px;
+    max-width:1040px;
+    margin:0 auto;
+    border-bottom:1px solid var(--line);
+  }
+  .wordmark{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;height:40px;
+    background:var(--black);
+    color:var(--white);
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:28px;
+    letter-spacing:0.02em;
+  }
+  h1{
+    font-size:clamp(32px,5vw,48px);
+    font-weight:700;
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .subhead{
+    font-size:17px;
+    color:var(--grey);
+    margin:0 0 20px;
+    font-weight:500;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    font-size:13px;
+    color:var(--grey);
+  }
+  .meta-row strong{color:var(--black);}
+  .internal-flag{
+    color:var(--terracotta-dark);
+    font-weight:500;
+  }
+
+  /* ---------- TLDR ---------- */
+  .tldr{
+    max-width:1040px;
+    margin:36px auto 0;
+    padding:0 40px;
+  }
+  .tldr-box{
+    border-left:3px solid var(--terracotta);
+    padding:4px 0 4px 24px;
+  }
+  .tldr-box p{
+    font-size:17px;
+    margin:0 0 14px;
+    max-width:78ch;
+  }
+  .tldr-box p:last-child{margin-bottom:0;}
+  .headline-stat{
+    display:flex;
+    gap:40px;
+    margin:28px 0 0;
+    flex-wrap:wrap;
+  }
+  .stat{
+    min-width:180px;
+  }
+  .stat .num{
+    font-size:40px;
+    font-weight:700;
+    line-height:1;
+    color:var(--terracotta-dark);
+  }
+  .stat .lbl{
+    font-size:13px;
+    color:var(--grey);
+    margin-top:6px;
+    max-width:24ch;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky;
+    top:0;
+    background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    z-index:50;
+    margin-top:44px;
+  }
+  .nav-inner{
+    max-width:1040px;
+    margin:0 auto;
+    padding:14px 40px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    font-family:var(--font);
+    font-size:14px;
+    font-weight:500;
+    padding:9px 18px;
+    border-radius:9999px;
+    border:1px solid var(--line);
+    background:var(--white);
+    color:var(--black);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .tab-btn:hover{border-color:var(--terracotta);}
+  .tab-btn.active{
+    background:var(--black);
+    color:var(--white);
+    border-color:var(--black);
+  }
+
+  /* ---------- Sections ---------- */
+  main{
+    max-width:1040px;
+    margin:0 auto;
+    padding:48px 40px 100px;
+  }
+  section{display:none;}
+  section.active{display:block;}
+  h2{
+    font-size:26px;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .section-intro{
+    color:var(--grey);
+    font-size:15px;
+    max-width:70ch;
+    margin:0 0 32px;
+  }
+
+  /* ---------- Summary table ---------- */
+  .rank-table{
+    width:100%;
+    border-collapse:collapse;
+  }
+  .rank-table thead th{
+    text-align:left;
+    font-size:12px;
+    font-weight:500;
+    color:var(--grey);
+    padding:0 14px 10px;
+    border-bottom:1px solid var(--black);
+  }
+  .rank-row{
+    cursor:pointer;
+    transition:background .12s ease;
+  }
+  .rank-row:hover{background:var(--paper);}
+  .rank-row td{
+    padding:16px 14px;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+    vertical-align:middle;
+  }
+  .rank-num{
+    font-size:20px;
+    font-weight:700;
+    color:var(--terracotta-dark);
+    width:34px;
+  }
+  .rank-opp{font-weight:500;}
+  .rank-focus{color:var(--grey); font-size:13px;}
+  .conf-cell{width:150px;}
+  .conf-bar-track{
+    background:var(--line);
+    height:6px;
+    border-radius:9999px;
+    overflow:hidden;
+    margin-bottom:5px;
+  }
+  .conf-bar-fill{
+    background:var(--terracotta);
+    height:100%;
+  }
+  .conf-pct{font-size:12px; color:var(--grey);}
+  .lens-cell{font-size:13px; color:var(--grey);}
+  .horizon-row td{color:var(--grey);}
+  .horizon-row .conf-bar-fill{background:var(--line);}
+  .horizon-row .rank-num{color:var(--grey);}
+  .tag-note{
+    font-size:12px;
+    color:var(--grey);
+    margin-top:18px;
+  }
+
+  /* ---------- Opportunity accordion ---------- */
+  .opp{
+    border-top:1px solid var(--line);
+  }
+  .opp:last-child{border-bottom:1px solid var(--line);}
+  .opp-head{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:22px 4px;
+    cursor:pointer;
+    background:none;
+    border:none;
+    width:100%;
+    text-align:left;
+    font-family:var(--font);
+  }
+  .opp-head:hover .opp-title{color:var(--terracotta-dark);}
+  .opp-num{
+    font-size:22px;
+    font-weight:700;
+    color:var(--terracotta-dark);
+    min-width:30px;
+  }
+  .opp-headtext{flex:1;}
+  .opp-title{
+    font-size:19px;
+    font-weight:700;
+    margin:0 0 4px;
+    transition:color .12s ease;
+  }
+  .opp-sub{
+    font-size:13px;
+    color:var(--grey);
+  }
+  .opp-conf{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    min-width:110px;
+    gap:6px;
+  }
+  .opp-conf .conf-bar-track{width:90px;}
+  .chevron{
+    width:12px;height:12px;
+    border-right:2px solid var(--black);
+    border-bottom:2px solid var(--black);
+    transform:rotate(45deg);
+    transition:transform .2s ease;
+    margin-left:8px;
+    flex-shrink:0;
+  }
+  .opp.expanded .chevron{transform:rotate(-135deg);}
+  .opp-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .opp.expanded .opp-body{max-height:4000px;}
+  .opp-body-inner{
+    padding:0 4px 36px 50px;
+  }
+  .opp-body-inner h4{
+    font-size:11px;
+    text-transform:none;
+    letter-spacing:0.02em;
+    color:var(--terracotta-dark);
+    font-weight:700;
+    margin:24px 0 8px;
+  }
+  .opp-body-inner h4:first-child{margin-top:0;}
+  .opp-body-inner p{
+    font-size:15px;
+    margin:0 0 4px;
+    max-width:72ch;
+  }
+  .impact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:20px;
+    margin-top:6px;
+  }
+  .impact-grid div{
+    border-left:2px solid var(--line);
+    padding-left:14px;
+  }
+  .impact-grid .lbl{
+    font-size:11px;
+    font-weight:700;
+    color:var(--grey);
+    margin-bottom:4px;
+  }
+  .impact-grid p{font-size:14px;}
+  ul.plain{
+    margin:0;
+    padding-left:18px;
+  }
+  ul.plain li{
+    font-size:15px;
+    margin-bottom:6px;
+    max-width:70ch;
+  }
+  .risk-list{
+    border-left:2px solid var(--terracotta);
+    padding-left:16px;
+    margin:0;
+  }
+  .risk-list li{
+    font-size:15px;
+    margin-bottom:10px;
+    max-width:68ch;
+    list-style:none;
+  }
+  .risk-list li::before{
+    content:"—";
+    color:var(--terracotta);
+    margin-right:8px;
+  }
+  .flag-box{
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:14px 16px;
+    font-size:14px;
+    margin:8px 0 0;
+    max-width:70ch;
+  }
+  .flag-box strong{display:block; margin-bottom:4px; font-size:13px;}
+
+  /* ---------- Horizon / exclusions ---------- */
+  .plain-block{
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .plain-block:last-child{border-bottom:1px solid var(--line);}
+  .plain-block h3{
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .plain-block .conf-inline{
+    font-size:13px;
+    color:var(--grey);
+    font-weight:500;
+    margin-left:10px;
+  }
+  .plain-block p{
+    font-size:15px;
+    max-width:72ch;
+    margin:0 0 8px;
+  }
+
+  /* ---------- What changed ---------- */
+  .change-card{
+    padding:24px 0;
+    border-top:1px solid var(--line);
+  }
+  .change-card:last-of-type{border-bottom:1px solid var(--line);}
+  .change-card h3{
+    font-size:16px;
+    margin:0 0 8px;
+  }
+  .change-card p{
+    font-size:15px;
+    max-width:72ch;
+    margin:0;
+    color:var(--black);
+  }
+
+  /* ---------- Sources ---------- */
+  .source-group{margin-bottom:22px;}
+  .source-group .outlet{
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:6px;
+  }
+  .source-group ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .source-group li{
+    font-size:14px;
+    color:var(--grey);
+    margin-bottom:4px;
+  }
+  .staleness{
+    font-size:13px;
+    color:var(--grey);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    margin-top:24px;
+  }
+
+  @media (max-width:640px){
+    header, main, .tldr, .nav-inner{padding-left:20px; padding-right:20px;}
+    .impact-grid{grid-template-columns:1fr;}
+    .rank-table thead{display:none;}
+    .rank-table, .rank-table tbody, .rank-table tr, .rank-table td{display:block; width:100%;}
+    .rank-row{padding:14px 0; border-bottom:1px solid var(--line);}
+    .rank-row td{border:none; padding:4px 0;}
+    .opp-conf{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">C</div>
+  <h1>Subway (US)</h1>
+  <p class="subhead">Growth Opportunity Analysis — Brand, Experience &amp; Growth</p>
+  <div class="meta-row">
+    <span><strong>Prepared from public sources</strong></span>
+    <span class="internal-flag">Internal only — strip confidence scores before anything external</span>
+    <span>September 3, 2026</span>
+  </div>
+</header>
+
+<div class="tldr">
+  <div class="tldr-box">
+    <p>Subway's new leadership ran the exact play the earlier thesis called for, a modernized Sub Club loyalty program as a frequency engine, and it broke inside four months. Not because customers rejected it. Because the mechanic was too generous for franchisee margins, franchisees revolted, and corporate walked it back twice. That's not a reason to drop the loyalty thesis. It's dated proof of the exact risk the original framing flagged, and a mandate to fix the program's economics rather than pitch a new one from scratch.</p>
+    <p>Five opportunities below have real 2025–2026 evidence behind them, not ten. Two more are directionally right but under-evidenced and sit on a watch list, not in a pitch.</p>
+  </div>
+  <div class="headline-stat">
+    <div class="stat">
+      <div class="num">40% → 35%</div>
+      <div class="lbl">Subway's share of US sub-sandwich category spend, Apr 2023 to Apr 2026 (Consumer Edge)</div>
+    </div>
+    <div class="stat">
+      <div class="num">13% → 20%</div>
+      <div class="lbl">Jersey Mike's share over the same window — gains came mostly out of Subway, per Consumer Edge's own read</div>
+    </div>
+    <div class="stat">
+      <div class="num">5,000+</div>
+      <div class="lbl">US locations whose franchisees petitioned corporate in Jan 2026 over Sub Club and lack of engagement</div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <button class="tab-btn active" data-tab="summary">Ranked Summary</button>
+    <button class="tab-btn" data-tab="opportunities">Opportunities</button>
+    <button class="tab-btn" data-tab="horizon">Horizon &amp; Exclusions</button>
+    <button class="tab-btn" data-tab="changed">What Changed</button>
+    <button class="tab-btn" data-tab="sources">Sources</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- SUMMARY -->
+  <section id="summary" class="active">
+    <h2>Ranked Summary</h2>
+    <p class="section-intro">Impact and feasibility are folded into a single confidence score, per the standard. Nothing below 75% is scored. Click a row to open the full write-up.</p>
+    <table class="rank-table">
+      <thead>
+        <tr><th></th><th>Opportunity</th><th>Focus Area</th><th>Confidence</th><th>Lens</th></tr>
+      </thead>
+      <tbody>
+        <tr class="rank-row" data-open="opp-1">
+          <td class="rank-num">1</td>
+          <td class="rank-opp">Sub Club economic redesign<div class="rank-focus"></div></td>
+          <td class="rank-focus">Loyalty, CRM &amp; Personalization</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:92%"></div></div><span class="conf-pct">92%</span></td>
+          <td class="lens-cell">Jon Mandell / Janey Whiteside</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-2">
+          <td class="rank-num">2</td>
+          <td class="rank-opp">Footprint rightsizing + remodel investment case</td>
+          <td class="rank-focus">Growth &amp; GTM</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:89%"></div></div><span class="conf-pct">89%</span></td>
+          <td class="lens-cell">Adjacent to BEG core</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-3">
+          <td class="rank-num">3</td>
+          <td class="rank-opp">Franchisee governance reset</td>
+          <td class="rank-focus">Org Design &amp; Operating Models</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:87%"></div></div><span class="conf-pct">87%</span></td>
+          <td class="lens-cell">Adjacent practice, not BEG-owned</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-4">
+          <td class="rank-num">4</td>
+          <td class="rank-opp">Marketing operating model consolidation</td>
+          <td class="rank-focus">Brand &amp; Marketing Transformation</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:84%"></div></div><span class="conf-pct">84%</span></td>
+          <td class="lens-cell">Wendy Clark</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-5">
+          <td class="rank-num">5</td>
+          <td class="rank-opp">Value / price architecture</td>
+          <td class="rank-focus">Profitability &amp; Monetization</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:82%"></div></div><span class="conf-pct">82%</span></td>
+          <td class="lens-cell">Wendy Clark</td>
+        </tr>
+        <tr class="rank-row horizon-row" data-open="opp-6">
+          <td class="rank-num">—</td>
+          <td class="rank-opp">First-party data / retail media <em>(horizon)</em></td>
+          <td class="rank-focus">Profitability &amp; Monetization</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:76%"></div></div><span class="conf-pct">76%</span></td>
+          <td class="lens-cell">Janey Whiteside</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="tag-note">Digital ordering / app platform was evaluated and excluded outright — no tier-1, dated sourcing found. See Horizon &amp; Exclusions.</p>
+  </section>
+
+  <!-- OPPORTUNITIES -->
+  <section id="opportunities">
+    <h2>The Five Opportunities</h2>
+    <p class="section-intro">Each write-up follows the standard: what it is, why now, impact by audience, deliverables, comps, competitive framing, and risks stated without hedging.</p>
+
+    <div class="opp" id="opp-1">
+      <button class="opp-head">
+        <span class="opp-num">1</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Sub Club Economic Redesign</span>
+          <span class="opp-sub">Loyalty, CRM &amp; Personalization — publish as-is</span>
+        </span>
+        <span class="opp-conf">
+          <div class="conf-bar-track"><div class="conf-bar-fill" style="width:92%"></div></div>
+          <span class="conf-pct">92% confidence</span>
+        </span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Redesign the Sub Club mechanic so it drives frequency without breaking franchisee unit economics, and build the redesign process around visible franchisee input this time.</p>
+
+        <h4>Why now</h4>
+        <p>Subway's own president, Damien Harmon, told franchisees in February 2026 the program was moving to "an interim solution" while the company works with its advisory council on "the next evolution of Sub Club." Corporate has already admitted the current version doesn't work. The mandate is open.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>The program brought in more than 1 million new loyalty members in its first weeks — proof the frequency mechanic works on the demand side. The job is keeping that acquisition rate without the redemption cost that triggered the revolt.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>Public sentiment on the walk-back was sharply negative; some customers said they'd switch to Jersey Mike's. A stable redesign avoids a third public reversal.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>A franchisee-financed loyalty program reversed twice in four months signals weak internal decision discipline to an owner two years into a turnaround.</p></div>
+        </div>
+
+        <h4>What the work could look like</h4>
+        <ul class="plain">
+          <li>Unit economics model for loyalty mechanics (redemption cost per member vs. incremental visit lift) built on real AUV and margin data, not assumptions</li>
+          <li>A franchisee-tested pilot process before any national relaunch, given the trust deficit</li>
+          <li>A points/reward structure benchmarked against what actually works elsewhere in QSR loyalty, not just the pre-2005 Subway stamp card</li>
+        </ul>
+
+        <h4>Comps &amp; competitive framing</h4>
+        <p>Firehouse Subs (RBI) is explicitly building toward first-party-data-driven targeted offers in 2026 rather than blanket discounts. Jersey Mike's core customer visits more than 6 times a year on a $200M national ad fund and celebrity ambassador strategy, not a loyalty-discount strategy — the chain gaining the most share isn't winning on giveaways.</p>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>Consello has no visibility into Subway's actual redemption economics; a specific mechanic proposal without that data is a guess dressed as a recommendation.</li>
+          <li>Franchisee trust is currently adversarial. A redesign not co-built with NAASF or the Franchise Advisory Council repeats the exact failure that just happened.</li>
+          <li>A third public change to the same program in under a year carries its own reputational cost, independent of whether the new mechanic is better.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-2">
+      <button class="opp-head">
+        <span class="opp-num">2</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Footprint Rightsizing + Remodel Investment Case</span>
+          <span class="opp-sub">Growth &amp; GTM</span>
+        </span>
+        <span class="opp-conf">
+          <div class="conf-bar-track"><div class="conf-bar-fill" style="width:89%"></div></div>
+          <span class="conf-pct">89% confidence</span>
+        </span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Build the demand-side case, traffic, AUV recovery, loyalty-driven frequency, that makes remodel capital an easy yes for franchisees in the stores Subway is choosing to keep, rather than treating rightsizing as a real estate decision alone.</p>
+
+        <h4>Why now</h4>
+        <p>Subway closed a net 729 US locations in the year covered by its April 2026 franchise disclosure document, the tenth straight year of decline, taking the system to 18,773 restaurants, down from a 2015 peak above 27,000. Corporate frames the closures as keeping only restaurants with the real estate, visibility, and operations to succeed, not just shrinking. That means the survivors are the investment thesis now.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>Fewer, better-located stores only pays off if AUV per remaining store climbs. Jersey Mike's generates at least $300,000 more revenue per unit annually than Subway or Firehouse — that gap is the number a remodel case needs to close.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>Subway is still the largest US restaurant chain by unit count, ahead of Starbucks and McDonald's. That's a marketing asset if the surviving footprint performs, a liability story if it doesn't.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>A "rightsizing" narrative reads very differently to Roark depending on whether AUV actually recovers. That proof doesn't exist publicly yet.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>AUV recovery model by remaining-store cohort</li>
+          <li>Remodel ROI case tied to demonstrated traffic lift, not corporate mandate</li>
+          <li>Franchisee-facing investment narrative built for a system with active trust problems</li>
+        </ul>
+
+        <h4>Comps</h4>
+        <p>Jersey Mike's runs 3,227 US units on AUV of $1.37M (2025), up 3.2% year over year — the opposite growth pattern (fewer, higher-volume stores) from Subway's historical playbook.</p>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>Closures reduce near-term system sales and franchisee count, a hard story regardless of long-run AUV logic.</li>
+          <li>Asking franchisees for remodel capital right when trust in corporate is at a low point is a sequencing problem, not just a financing one.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-3">
+      <button class="opp-head">
+        <span class="opp-num">3</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Franchisee Governance Reset</span>
+          <span class="opp-sub">Org Design &amp; Operating Models — adjacent practice, not BEG-owned</span>
+        </span>
+        <span class="opp-conf">
+          <div class="conf-bar-track"><div class="conf-bar-fill" style="width:87%"></div></div>
+          <span class="conf-pct">87% confidence</span>
+        </span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>A structured process for rebuilding the corporate-to-franchisee relationship, distinct from any single program fix.</p>
+
+        <h4>Why now</h4>
+        <p>In January 2026, franchisees representing more than 5,000 restaurants, over a quarter of the US system, signed a petition through NAASF asking corporate to change the Sub Club terms and to re-engage, stating corporate hadn't spoken with the group "in years." NAASF's chairman wrote directly to leadership the same month.</p>
+
+        <div class="flag-box">
+          <strong>Open question worth flagging directly</strong>
+          Harmon's February memo references working with "the franchise advisory council," a different, apparently internal body from NAASF. Public reporting doesn't make clear whether Subway is engaging the group that's actually angry, or a separate internal council instead. That distinction matters and Consello shouldn't propose a fix without knowing which forum has real standing.
+        </div>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>Every program change touching franchisee economics, loyalty, value menu, remodel capital, runs through this relationship. Fixing the forum is a multiplier on everything else on this list.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>A public franchisee petition covering over a quarter of the system is visible in press coverage regardless of what corporate says internally.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>This kind of signal shows up in FDD litigation disclosures. Owners notice.</p></div>
+        </div>
+
+        <h4>Note on ownership</h4>
+        <p>Arguably a better fit for Consello's Talent &amp; Executive Search or CEO Advisory practice than BEG, since it's a governance and relationship-design problem more than a growth or brand problem. Flagging it here because ignoring it makes the other four recommendations naive, not because BEG should own execution.</p>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>Recommending "re-engage franchisees" without confirming which body has standing risks proposing a fix to the wrong audience.</li>
+          <li>Trust repair after a "no contact in years" complaint is a multi-quarter process. A single town hall or campaign won't fix it and shouldn't be pitched as if it will.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-4">
+      <button class="opp-head">
+        <span class="opp-num">4</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Marketing Operating Model Consolidation</span>
+          <span class="opp-sub">Brand &amp; Marketing Transformation — Wendy Clark lens</span>
+        </span>
+        <span class="opp-conf">
+          <div class="conf-bar-track"><div class="conf-bar-fill" style="width:84%"></div></div>
+          <span class="conf-pct">84% confidence</span>
+        </span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Support the marketing reorganization already underway rather than propose a parallel one.</p>
+
+        <h4>Why now</h4>
+        <p>Global CMO Greg Lyons left in May 2026, about a year into the role. CEO Jonathan Fitzpatrick eliminated the global CMO position in favor of a regional structure. Jeff Klein (former Popeyes president) came in as US CMO; David Skena, previously North America CMO, moved up to Chief Strategy and Chief Commercial Officer. Omnicom now holds US media and CRM, and a creative review is underway, reportedly aimed at rebuilding cultural and emotional relevance, especially among younger consumers.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>A second major agency and leadership change inside 18 months only pays off if it produces a coherent brand voice fast; consecutive reorganizations without visible output read as instability to already-skeptical franchisees.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>The stated goal, relevance with younger consumers, is measurable. Track it, don't just assert it.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>Marketing spend efficiency under a consolidated agency model is a real line item Roark will ask about.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>A marketing accountability framework tying the regional CMO structure and Omnicom relationship to specific traffic and brand-health metrics</li>
+          <li>An incentive-alignment review between the new CRM agency relationship and the Sub Club redesign work in Opportunity 1, since CRM and loyalty now sit under the same agency</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>Two leadership changes in the CMO seat within a year raises the real cost of a third disruption; any recommendation needs to work with the current structure, not replace it again.</li>
+          <li>No public data yet shows the Omnicom move or creative review has moved a business metric. This is a bet on a process, not a proven outcome, and should be scored that way internally even though the org signal itself is well evidenced.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-5">
+      <button class="opp-head">
+        <span class="opp-num">5</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Value / Price Architecture</span>
+          <span class="opp-sub">Profitability &amp; Monetization — Wendy Clark lens</span>
+        </span>
+        <span class="opp-conf">
+          <div class="conf-bar-track"><div class="conf-bar-fill" style="width:82%"></div></div>
+          <span class="conf-pct">82% confidence</span>
+        </span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Build the case for how Subway's new Value Menu and "Meal of the Day" promotion (launched April 2026) should be priced and sequenced so they lift traffic without repeating the Sub Club margin problem.</p>
+
+        <h4>Why now</h4>
+        <p>An independent restaurant-research note (NoBullEconomics, May 2026) frames Subway's core problem as an unsolved value equation: convince customers it's as good as Jersey Mike's, or price below it. The current answer, a Value Menu plus a health/protein-forward update, is unproven. The same note calls it a step in the right direction but says results must be proven.</p>
+
+        <div class="flag-box">
+          <strong>Push back on the framing, worth saying directly</strong>
+          The share data argues against the low-price lane. Jersey Mike's is winning share at a premium, not a discount, roughly a high-teens to mid-20s percentage premium to Subway in at least one regional pricing comparison. If the category leader gaining share is proving people will pay more for a better product, a value-menu-led response may be solving the wrong problem.
+        </div>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>A value menu compresses margin per transaction. If it doesn't lift traffic enough to offset, franchisee profitability, the exact issue that broke Sub Club, gets worse, not better.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>Subway still holds roughly 53% share of the domestic sub-sandwich segment's system-wide sales by one analyst estimate (unverified against a second source). Even a modest share defense is worth a lot given that base.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>Whether Subway competes on price or product credibility is a real strategic fork Roark should see argued explicitly, not assumed.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>Price-elasticity read on the new Value Menu against Jersey Mike's premium positioning</li>
+          <li>Franchisee margin model showing the traffic lift required to offset new discount depth</li>
+          <li>A recommendation on whether Subway should compete on price or on product credibility, not both at once</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>The strategic rationale here comes from one secondary analyst source, not a Subway executive statement. Treat the "why" as inference until corroborated.</li>
+          <li>A value-led response risks reinforcing exactly the cheap, low-quality perception Subway is also trying to shed with its protein/health menu positioning. The two moves can work against each other if not sequenced deliberately.</li>
+        </ul>
+      </div></div>
+    </div>
+
+  </section>
+
+  <!-- HORIZON -->
+  <section id="horizon">
+    <h2>Horizon Ideas &amp; Exclusions</h2>
+    <p class="section-intro">Directionally right, but not ready to pitch, or cut outright rather than padded in.</p>
+
+    <div class="plain-block">
+      <h3>First-party data / retail media <span class="conf-inline">76% — horizon</span></h3>
+      <p>Firehouse Subs' CEO said at a 2026 investor day the chain will lean harder into first-party data and targeted offers this year, calling it a possible "big tailwind." That's real, but it's Firehouse's stated plan, not Subway's. No Subway executive has signaled this as a near-term priority in anything found. Worth watching, not worth pitching yet. If the Sub Club redesign (Opportunity 1) produces a clean loyalty data asset, this becomes a natural next opportunity, not before.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Digital ordering / app platform <span class="conf-inline">excluded — insufficient sourcing</span></h3>
+      <p>No tier-1, dated (last 12 months) reporting found on Subway's actual digital sales mix, app engagement, or platform investment plans. Excluding rather than guessing at a number. Internal Subway data would change this.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>International / master franchisee expansion <span class="conf-inline">out of scope</span></h3>
+      <p>Real, backed by the historical 4,000-unit China deal and Roark's stated intent to support international growth, but outside a US-focused BEG engagement and requires cross-border operational staffing Consello can't deploy quickly.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Corporate org design beyond marketing <span class="conf-inline">out of scope</span></h3>
+      <p>The marketing reorg is well evidenced; a broader HQ restructuring recommendation isn't, and shouldn't be invented to round the list out to ten.</p>
+    </div>
+  </section>
+
+  <!-- WHAT CHANGED -->
+  <section id="changed">
+    <h2>What Changed Since the Original Thesis</h2>
+    <p class="section-intro">The prior framing: Sub Club as a frequency engine, the loyalty file as a first-party data asset, marketing as an accountable operating model.</p>
+
+    <div class="change-card">
+      <h3>Sub Club got tested, and broke on the franchisee side, not the customer side</h3>
+      <p>Corporate relaunched Sub Club in December 2025: buy 3 footlongs (or 6 six-inch), get a 4th free, stacked with a separate points system. Franchisees called it financial suicide on the internal comment board within weeks. Customers loved it and got angry when it was cut. The failure mode was P&amp;L design, not consumer appetite. That's a solvable problem, not a dead thesis.</p>
+    </div>
+
+    <div class="change-card">
+      <h3>Marketing as an accountable operating model is now literally happening</h3>
+      <p>Just not confirmed to involve Consello. Global CMO role eliminated, agency of record moved to Omnicom for US media and CRM, a creative review underway. If it isn't already known whether Consello has a seat in that process, that's the first call to make, not a slide.</p>
+    </div>
+
+    <div class="change-card">
+      <h3>The loyalty-file thesis holds; the constraint isn't data, it's trust</h3>
+      <p>Franchisees representing 5,000+ locations petitioned corporate in January 2026, saying corporate hadn't engaged NAASF "in years." Any data or loyalty recommendation that doesn't address that relationship gets rejected before it gets read.</p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section id="sources">
+    <h2>Sources</h2>
+    <p class="section-intro">Dated, last 12 months unless marked as historical context.</p>
+
+    <div class="source-group">
+      <div class="outlet">Restaurant Business Online</div>
+      <ul>
+        <li>"Subway names Jonathan Fitzpatrick CEO" — Jul 21, 2025</li>
+        <li>"Subway franchisees say the chain's new loyalty program is too aggressive" — Dec 1, 2025</li>
+        <li>"A Subway franchisee group is asking for changes to its latest offer" — Jan 26, 2026</li>
+        <li>"Subway is already making changes to its Sub Club loyalty program" — Feb 18, 2026</li>
+        <li>"Jersey Mike's had another strong year in 2025" — Apr 13, 2026</li>
+        <li>"Subway works to rebuild its business" — May 4, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">NRN / Nation's Restaurant News</div>
+      <ul>
+        <li>"Subway shakes up its marketing team" — May 16–20, 2026</li>
+        <li>"Subway names Jonathan Fitzpatrick CEO" — Jul 2025</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">QSR Web / Yahoo Finance</div>
+      <ul>
+        <li>"Subway had to close 729 more stores" — May 4, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Fox News / TheStreet / The Takeout</div>
+      <ul>
+        <li>Sub Club walk-back consumer reaction coverage — Feb 19–24, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Food Institute</div>
+      <ul>
+        <li>"Subway's new loyalty program 'financial suicide' per franchisee" — Dec 8, 2025</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Food Business News</div>
+      <ul>
+        <li>"Subway adds three new regional presidents, CMO" — 2025–2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Consumer Edge</div>
+      <ul>
+        <li>"A Sub Above: Consumer Edge Data Reveals Strength Ahead of Jersey Mike's IPO" — Apr 24, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">QSR Magazine</div>
+      <ul>
+        <li>"Making the Case for Why Jersey Mike's is Just Getting Started" — 2026</li>
+        <li>"Firehouse Subs is Quietly on the Cusp of a Major Growth Run" — Jun 24, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Motley Fool / AOL</div>
+      <ul>
+        <li>Jersey Mike's IPO filing coverage; Firehouse Subs (RBI segment) 2025 financials — Apr 22, 2026</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">NoBullEconomics</div>
+      <ul>
+        <li>"Subway 2026" restaurant research note — May 13, 2026. Single-source analyst commentary, flagged where used as inference rather than confirmed fact.</li>
+      </ul>
+    </div>
+
+    <p class="staleness">All sourcing falls within the last 12 months except where marked as historical context (2015 peak store count, 2005 original Sub Club program, Chidsey-era China deal).</p>
+  </section>
+
+</main>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('main > section');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top: 0, behavior:'instant'});
+    });
+  });
+
+  // Accordion toggles
+  document.querySelectorAll('.opp-head').forEach(head => {
+    head.addEventListener('click', () => {
+      head.parentElement.classList.toggle('expanded');
+    });
+  });
+
+  // Row click -> jump to opportunities tab and open the right accordion item
+  document.querySelectorAll('.rank-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const targetId = row.dataset.open;
+      tabs.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      document.querySelector('[data-tab="opportunities"]').classList.add('active');
+      document.getElementById('opportunities').classList.add('active');
+      document.querySelectorAll('.opp').forEach(o => o.classList.remove('expanded'));
+      const target = document.getElementById(targetId);
+      if(target){
+        target.classList.add('expanded');
+        setTimeout(() => target.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
