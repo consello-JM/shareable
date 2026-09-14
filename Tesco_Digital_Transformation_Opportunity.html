@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesco — Digital Transformation Opportunity | Consello</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000; --white:#FFFFFF; --terracotta:#A64A30; --terracotta-dark:#7C3621;
+    --apricot:#F6D1A3; --paper:#FAF8F5; --line:#E4DFD6; --grey:#6B655C; --font:'DM Sans', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:var(--font); color:var(--black); background:var(--white); line-height:1.5; -webkit-font-smoothing:antialiased;}
+  a{color:var(--terracotta-dark);}
+  header{padding:56px 40px 32px; max-width:1040px; margin:0 auto; border-bottom:1px solid var(--line);}
+  .wordmark{display:inline-flex; align-items:center; justify-content:center; width:40px;height:40px; background:var(--black); color:var(--white); font-weight:700; font-size:15px; margin-bottom:28px; letter-spacing:0.02em;}
+  h1{font-size:clamp(32px,5vw,48px); font-weight:700; margin:0 0 6px; letter-spacing:-0.01em;}
+  .subhead{font-size:17px; color:var(--grey); margin:0 0 20px; font-weight:500;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px 22px; font-size:13px; color:var(--grey);}
+  .meta-row strong{color:var(--black);}
+  .internal-flag{color:var(--terracotta-dark); font-weight:500;}
+  .pivot-banner{background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--terracotta); padding:16px 20px; margin-top:24px; font-size:14px; max-width:78ch;}
+  .pivot-banner strong{display:block; margin-bottom:4px; color:var(--terracotta-dark); font-size:12px; letter-spacing:0.02em;}
+  .tldr{max-width:1040px; margin:36px auto 0; padding:0 40px;}
+  .tldr-box{border-left:3px solid var(--terracotta); padding:4px 0 4px 24px;}
+  .tldr-box p{font-size:17px; margin:0 0 14px; max-width:78ch;}
+  .tldr-box p:last-child{margin-bottom:0;}
+  .headline-stat{display:flex; gap:40px; margin:28px 0 0; flex-wrap:wrap;}
+  .stat{min-width:180px;}
+  .stat .num{font-size:36px; font-weight:700; line-height:1; color:var(--terracotta-dark);}
+  .stat .lbl{font-size:13px; color:var(--grey); margin-top:6px; max-width:27ch;}
+  nav{position:sticky; top:0; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); z-index:50; margin-top:44px;}
+  .nav-inner{max-width:1040px; margin:0 auto; padding:14px 40px; display:flex; gap:8px; flex-wrap:wrap;}
+  .tab-btn{font-family:var(--font); font-size:14px; font-weight:500; padding:9px 18px; border-radius:9999px; border:1px solid var(--line); background:var(--white); color:var(--black); cursor:pointer; transition:background .15s ease, color .15s ease, border-color .15s ease;}
+  .tab-btn:hover{border-color:var(--terracotta);}
+  .tab-btn.active{background:var(--black); color:var(--white); border-color:var(--black);}
+  main{max-width:1040px; margin:0 auto; padding:48px 40px 100px;}
+  section{display:none;}
+  section.active{display:block;}
+  h2{font-size:26px; font-weight:700; margin:0 0 8px;}
+  .section-intro{color:var(--grey); font-size:15px; max-width:70ch; margin:0 0 32px;}
+  .rank-table{width:100%; border-collapse:collapse;}
+  .rank-table thead th{text-align:left; font-size:12px; font-weight:500; color:var(--grey); padding:0 14px 10px; border-bottom:1px solid var(--black);}
+  .rank-row{cursor:pointer; transition:background .12s ease;}
+  .rank-row:hover{background:var(--paper);}
+  .rank-row td{padding:16px 14px; border-bottom:1px solid var(--line); font-size:15px; vertical-align:middle;}
+  .rank-num{font-size:20px; font-weight:700; color:var(--terracotta-dark); width:34px;}
+  .rank-opp{font-weight:500;}
+  .rank-focus{color:var(--grey); font-size:13px;}
+  .conf-cell{width:150px;}
+  .conf-bar-track{background:var(--line); height:6px; border-radius:9999px; overflow:hidden; margin-bottom:5px;}
+  .conf-bar-fill{background:var(--terracotta); height:100%;}
+  .conf-pct{font-size:12px; color:var(--grey);}
+  .lens-cell{font-size:13px; color:var(--grey);}
+  .tag-note{font-size:12px; color:var(--grey); margin-top:18px;}
+  .opp{border-top:1px solid var(--line);}
+  .opp:last-child{border-bottom:1px solid var(--line);}
+  .opp-head{display:flex; align-items:center; gap:20px; padding:22px 4px; cursor:pointer; background:none; border:none; width:100%; text-align:left; font-family:var(--font);}
+  .opp-head:hover .opp-title{color:var(--terracotta-dark);}
+  .opp-num{font-size:22px; font-weight:700; color:var(--terracotta-dark); min-width:30px;}
+  .opp-headtext{flex:1;}
+  .opp-title{font-size:19px; font-weight:700; margin:0 0 4px; transition:color .12s ease;}
+  .opp-sub{font-size:13px; color:var(--grey);}
+  .opp-conf{display:flex; flex-direction:column; align-items:flex-end; min-width:110px; gap:6px;}
+  .opp-conf .conf-bar-track{width:90px;}
+  .chevron{width:12px; height:12px; border-right:2px solid var(--black); border-bottom:2px solid var(--black); transform:rotate(45deg); transition:transform .2s ease; margin-left:8px; flex-shrink:0;}
+  .opp.expanded .chevron{transform:rotate(-135deg);}
+  .opp-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .opp.expanded .opp-body{max-height:4000px;}
+  .opp-body-inner{padding:0 4px 36px 50px;}
+  .opp-body-inner h4{font-size:11px; letter-spacing:0.02em; color:var(--terracotta-dark); font-weight:700; margin:24px 0 8px;}
+  .opp-body-inner h4:first-child{margin-top:0;}
+  .opp-body-inner p{font-size:15px; margin:0 0 4px; max-width:72ch;}
+  .impact-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:6px;}
+  .impact-grid div{border-left:2px solid var(--line); padding-left:14px;}
+  .impact-grid .lbl{font-size:11px; font-weight:700; color:var(--grey); margin-bottom:4px;}
+  .impact-grid p{font-size:14px;}
+  ul.plain{margin:0; padding-left:18px;}
+  ul.plain li{font-size:15px; margin-bottom:6px; max-width:70ch;}
+  .risk-list{border-left:2px solid var(--terracotta); padding-left:16px; margin:0;}
+  .risk-list li{font-size:15px; margin-bottom:10px; max-width:68ch; list-style:none;}
+  .risk-list li::before{content:"—"; color:var(--terracotta); margin-right:8px;}
+  .flag-box{background:var(--paper); border:1px solid var(--line); padding:14px 16px; font-size:14px; margin:8px 0 0; max-width:70ch;}
+  .flag-box strong{display:block; margin-bottom:4px; font-size:13px;}
+  .plain-block{padding:22px 0; border-top:1px solid var(--line);}
+  .plain-block:last-child{border-bottom:1px solid var(--line);}
+  .plain-block h3{font-size:17px; font-weight:700; margin:0 0 8px;}
+  .plain-block .conf-inline{font-size:13px; color:var(--grey); font-weight:500; margin-left:10px;}
+  .plain-block p{font-size:15px; max-width:72ch; margin:0 0 8px;}
+  .change-card{padding:24px 0; border-top:1px solid var(--line);}
+  .change-card:last-of-type{border-bottom:1px solid var(--line);}
+  .change-card h3{font-size:16px; margin:0 0 8px;}
+  .change-card p{font-size:15px; max-width:72ch; margin:0; color:var(--black);}
+  .bio-card{display:flex; gap:20px; padding:24px; border:1px solid var(--line); background:var(--paper); margin-bottom:24px;}
+  .bio-avatar{width:56px; height:56px; border-radius:9999px; background:var(--terracotta); color:var(--white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; flex-shrink:0;}
+  .bio-text h3{margin:0 0 4px; font-size:18px;}
+  .bio-text .role{font-size:13px; color:var(--grey); margin-bottom:10px;}
+  .bio-text p{font-size:14px; margin:0 0 8px; max-width:64ch;}
+  .step-list{counter-reset:step; padding:0; margin:0; list-style:none;}
+  .step-list li{position:relative; padding:0 0 20px 40px; border-left:2px solid var(--line); margin-left:16px;}
+  .step-list li:last-child{border-left:2px solid transparent; padding-bottom:0;}
+  .step-list li::before{counter-increment:step; content:counter(step); position:absolute; left:-17px; top:-2px; width:32px; height:32px; border-radius:9999px; background:var(--terracotta); color:var(--white); font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center;}
+  .step-list h4{margin:0 0 4px; font-size:15px; font-weight:700;}
+  .step-list p{margin:0; font-size:14px; color:var(--black); max-width:64ch;}
+  .source-group{margin-bottom:22px;}
+  .source-group .outlet{font-weight:700; font-size:14px; margin-bottom:6px;}
+  .source-group ul{margin:0; padding-left:18px;}
+  .source-group li{font-size:14px; color:var(--grey); margin-bottom:4px;}
+  .staleness{font-size:13px; color:var(--grey); border-top:1px solid var(--line); padding-top:16px; margin-top:24px;}
+  @media (max-width:640px){
+    header, main, .tldr, .nav-inner{padding-left:20px; padding-right:20px;}
+    .impact-grid{grid-template-columns:1fr;}
+    .rank-table thead{display:none;}
+    .rank-table, .rank-table tbody, .rank-table tr, .rank-table td{display:block; width:100%;}
+    .rank-row{padding:14px 0; border-bottom:1px solid var(--line);}
+    .rank-row td{border:none; padding:4px 0;}
+    .opp-conf{align-items:flex-start;}
+    .bio-card{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">C</div>
+  <h1>Tesco</h1>
+  <p class="subhead">Digital Transformation Opportunity — Brand, Experience &amp; Growth</p>
+  <div class="meta-row">
+    <span><strong>Prepared from public sources</strong></span>
+    <span class="internal-flag">Internal only. Public company (LSE: TSCO) — not investment advice, no valuation or trading commentary.</span>
+    <span>September 11, 2026</span>
+  </div>
+  <div class="pivot-banner">
+    <strong>REVISED PER NICK'S FEEDBACK</strong>
+    The original pass led with Clubcard and retail media. Nick's read is right: Tesco owns that stack end-to-end through Dunnhumby and doesn't need outside loyalty strategy. This version leads with digital transformation instead, anchored to Natasha Adams' mandate as Chief Strategy &amp; Transformation Officer, where Janey's Walmart+ and Walmart Connect experience is a much sharper fit, and where Janey already has a direct relationship to build from.
+  </div>
+</header>
+
+<div class="tldr">
+  <div class="tldr-box">
+    <p>Tesco created a brand-new C-suite role in June 2025, Chief Strategy &amp; Transformation Officer, and gave it to Natasha Adams, a 20-plus year Tesco veteran whose path runs through Chief People Officer and Tesco Ireland &amp; NI CEO. Her own words on the job: getting the balance right between physical shopping and "transformation through the online and digital experience." That's a retail operator, not a digital or technology specialist, holding the mandate for exactly the kind of work Janey has actually built before at scale. That gap, not a lack of ambition inside Tesco, is the opening.</p>
+    <p>The evidence for urgency is fresh: an AI meal-planning assistant in large-scale employee trial since April 2026, a reversal of years-long strategy to finally list on Uber Eats and Deliveroo in July-August 2026, and Whoosh rapid delivery scaling hard. Tesco is visibly building the digital layer right now. The question is whether it has the specialist bench to build it well, fast, and coherently, or whether it's assembling parts without an integrated digital experience architecture.</p>
+  </div>
+  <div class="headline-stat">
+    <div class="stat">
+      <div class="num">Jun '25</div>
+      <div class="lbl">Natasha Adams appointed to Tesco's first-ever Chief Strategy &amp; Transformation Officer role</div>
+    </div>
+    <div class="stat">
+      <div class="num">4,000</div>
+      <div class="lbl">UK stores now live on Uber Eats after a 73-store trial, reversing years of holding out on aggregator apps</div>
+    </div>
+    <div class="stat">
+      <div class="num">£7.5B</div>
+      <div class="lbl">Tesco's online sales in FY26, up 11%, the base this transformation has to scale from</div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <button class="tab-btn active" data-tab="landing">Landing This</button>
+    <button class="tab-btn" data-tab="summary">Ranked Summary</button>
+    <button class="tab-btn" data-tab="opportunities">Opportunities</button>
+    <button class="tab-btn" data-tab="horizon">Horizon &amp; Context</button>
+    <button class="tab-btn" data-tab="sources">Sources</button>
+  </div>
+</nav>
+
+<main>
+
+  <section id="landing" class="active">
+    <h2>Landing This Account</h2>
+    <p class="section-intro">A useful, unrelated data point surfaced in this week's media pull: Tessa Clarke (Olio) spoke publicly on Sept 9 about what it actually took to land Tesco as a client, three and a half years, and a specific method worth applying here directly.</p>
+
+    <div class="bio-card">
+      <div class="bio-avatar">NA</div>
+      <div class="bio-text">
+        <h3>Natasha Adams</h3>
+        <div class="role">Chief Strategy &amp; Transformation Officer, Tesco PLC (since June 9, 2025)</div>
+        <p>Joined Tesco's executive team in 2018 as Chief People Officer. Led Tesco Ireland &amp; Northern Ireland as CEO for three years, delivering market share gains for 39 consecutive periods. Moved into a newly created group role in June 2025, the first time Tesco has had a dedicated strategy and transformation seat. Also a Non-Executive Director at Berkeley Group plc. In her own words: "Tesco hasn't had a dedicated Chief Strategy and Transformation Officer before. My role is to help the business transform and deliver for our customers into the future." Chris Griffith, Group Director of Strategy &amp; Investor Relations, reports to her on corporate strategy matters.</p>
+        <p><strong>Why this matters for the pitch:</strong> her background is people, operations, and country-level general management, not digital product or technology. She's the executive owner of the mandate, not necessarily the deepest technical voice in the room on it. That's precisely the gap Janey's Walmart+ and Walmart Connect track record fills.</p>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px; letter-spacing:0.02em; color:var(--terracotta-dark); font-weight:700; margin-bottom:16px;">THE OLIO / TESSA CLARKE METHOD, APPLIED HERE</h4>
+    <ol class="step-list">
+      <li>
+        <h4>Prove it small before going in big</h4>
+        <p>Clarke's advice: build a case study at small scale before approaching a corporate account of Tesco's size. Janey's direct Walmart+ and Walmart Connect track record already is that proof, it doesn't need to be built from scratch the way a newer firm would have to. Lead with that specificity, not a generic BEG capability pitch.</p>
+      </li>
+      <li>
+        <h4>Run the pincer, not just the top-down relationship</h4>
+        <p>Clarke describes working both ends at once, relationships built low in the organization while founders go straight to the top. Janey's prior conversation with Natasha Adams is the top-down half already in motion. The open task is identifying who sits underneath Adams on the digital and transformation side (Chris Griffith on strategy, whoever owns the AI assistant and marketplace initiatives operationally) to build the bottom-up half in parallel.</p>
+      </li>
+      <li>
+        <h4>Scope the proposal to the seniority of the room</h4>
+        <p>A Chief Strategy &amp; Transformation Officer wants a strategic partnership conversation, not a tactical workstream pitch. Frame the opening conversation around the digital transformation mandate itself, how Tesco builds the specialist capability it currently doesn't have in-house for this specific work, not around a single deliverable.</p>
+      </li>
+      <li>
+        <h4>Don't offer a free pilot</h4>
+        <p>Clarke's clients didn't take free pilots seriously enough to make them work. If this leads to a scoped engagement, price it from the start.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="summary">
+    <h2>Ranked Summary</h2>
+    <p class="section-intro">Nothing below 75% is scored. Click a row to open the full write-up. Two opportunities from the original pass, price investment durability and Tesco Finest premiumization, remain valid but are set aside here to keep focus on the digital transformation brief Nick asked for.</p>
+    <table class="rank-table">
+      <thead><tr><th></th><th>Opportunity</th><th>Focus Area</th><th>Confidence</th><th>Lens</th></tr></thead>
+      <tbody>
+        <tr class="rank-row" data-open="opp-1">
+          <td class="rank-num">1</td>
+          <td class="rank-opp">Digital transformation partnership, Natasha Adams' mandate</td>
+          <td class="rank-focus">Business Model Innovation / Org Design</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:93%"></div></div><span class="conf-pct">93%</span></td>
+          <td class="lens-cell">Janey Whiteside</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-2">
+          <td class="rank-num">2</td>
+          <td class="rank-opp">Aggregator marketplace strategy (Uber Eats / Deliveroo)</td>
+          <td class="rank-focus">Omnichannel &amp; Retail Transformation</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:90%"></div></div><span class="conf-pct">90%</span></td>
+          <td class="lens-cell">Janey Whiteside</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-3">
+          <td class="rank-num">3</td>
+          <td class="rank-opp">AI meal-planning assistant, trial to launch</td>
+          <td class="rank-focus">Loyalty, CRM &amp; Personalization</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:86%"></div></div><span class="conf-pct">86%</span></td>
+          <td class="lens-cell">Janey Whiteside</td>
+        </tr>
+        <tr class="rank-row" data-open="opp-4">
+          <td class="rank-num">4</td>
+          <td class="rank-opp">Whoosh / rapid-delivery network scale-up</td>
+          <td class="rank-focus">Omnichannel &amp; Retail Transformation</td>
+          <td class="conf-cell"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:80%"></div></div><span class="conf-pct">80%</span></td>
+          <td class="lens-cell">No clean partner-lens fit</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="tag-note">Central Europe divestiture speculation and the equal-pay litigation are tracked as context, not scored opportunities. See Horizon &amp; Context.</p>
+  </section>
+
+  <section id="opportunities">
+    <h2>The Four Opportunities</h2>
+    <p class="section-intro">All four sit inside Natasha Adams' stated remit. None require Consello to touch Clubcard or Dunnhumby's core data science, per Nick's read.</p>
+
+    <div class="opp" id="opp-1">
+      <button class="opp-head">
+        <span class="opp-num">1</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Digital Transformation Partnership</span>
+          <span class="opp-sub">Anchored to Natasha Adams' mandate — Janey Whiteside lens</span>
+        </span>
+        <span class="opp-conf"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:93%"></div></div><span class="conf-pct">93% confidence</span></span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>A direct partnership offer built around Natasha Adams' actual mandate, help Tesco design and sequence the digital experience architecture underneath the initiatives it's already launching (the AI assistant, the aggregator platforms, Whoosh, the Adobe personalization layer), rather than any one of those in isolation.</p>
+
+        <h4>Why now</h4>
+        <p>Tesco created this role for the first time in its history in June 2025 specifically because, in Adams' own words, nobody had owned this before. She describes her job as balancing physical and digital experience, and says explicitly the strategy has to be right for customers, not just technologically current. That's an executive naming the exact tension Janey's career has been built around solving.</p>
+
+        <div class="flag-box">
+          <strong>The sharpest point in this whole brief</strong>
+          Adams came up through Chief People Officer and country CEO roles. She is the accountable executive for digital transformation, not a digital-native operator herself. Several major digital initiatives are launching in parallel right now (AI assistant, marketplace aggregators, personalization platform, rapid delivery), each seemingly run somewhat independently. That's consistent with a strategy owner assembling capability from multiple internal and vendor sources rather than directing a single coherent digital experience architecture. Whether that reading is right is exactly the kind of thing the conversation with Adams should surface directly, not something to assert as fact going in.
+        </div>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>A single senior partner across these initiatives, rather than Tesco managing several vendor relationships (Adobe for personalization, separate teams for the AI assistant, aggregator integration work) independently, reduces the coordination burden on a newly created function still finding its footing.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>A coherent digital experience, rather than a collection of separate launches, is what customers actually notice. Right now Tesco is shipping features faster than it may be integrating them into one experience.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>Management has publicly named personalization, retail media, and digital capability as long-term growth drivers. A credible, resourced plan for how those cohere is exactly what turns that language into something investors can underwrite.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>A digital experience architecture assessment across the current initiative set, done with Adams' team, not for them from outside</li>
+          <li>A sequencing and prioritization framework for which digital bets get resourced first, using Janey's Walmart+ and Walmart Connect build experience directly</li>
+          <li>An operating model recommendation for how the Strategy &amp; Transformation function should be structured going forward given the scope of what it now owns</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>This is Consello's inference about a coordination gap based on the pattern of separate launches, not something Adams or Tesco has said publicly. It needs to be tested in conversation, not presented as a diagnosed problem.</li>
+          <li>Tesco's executive team has turned over meaningfully in the past 15 months (new UK CEO, this newly created role, an Ireland/NI and Booker CEO reshuffle as recently as August 2026). Any engagement needs a relationship that survives further changes, not one dependent solely on Adams personally.</li>
+          <li>Adams reports to Ken Murphy alongside a full executive committee; a Consello pitch needs enough internal advocacy to survive a room that includes several other senior voices with their own priorities.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-2">
+      <button class="opp-head">
+        <span class="opp-num">2</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Aggregator Marketplace Strategy</span>
+          <span class="opp-sub">Uber Eats / Deliveroo — Janey Whiteside lens</span>
+        </span>
+        <span class="opp-conf"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:90%"></div></div><span class="conf-pct">90% confidence</span></span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Help Tesco get the commercial and customer-experience design right on its brand-new decision to list on third-party delivery aggregators, a real strategic reversal, not a natural extension.</p>
+
+        <h4>Why now</h4>
+        <p>Tesco confirmed in July 2026 it would launch on both Uber Eats and Deliveroo, after standing alone among major UK supermarket competitors in not listing on aggregator apps. The Uber Eats rollout followed a 73-store trial and expanded to roughly 4,000 UK stores by late August 2026, offering baskets in as little as 20 minutes, with Clubcard Prices and Clubcard points carried through onto the aggregator platform.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>This is a genuine strategy reversal happening at speed, 73 stores to roughly 4,000 in a matter of weeks. That pace creates real execution risk if the customer experience, pricing consistency, and Clubcard integration aren't managed deliberately across such a fast scale-up.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>Aggregator apps are a different customer relationship than tesco.com or the Tesco app, Tesco doesn't own the interface or the data the way it does on its own channels. Getting the brand and pricing experience right there matters more, not less, because of that.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>This is incremental digital revenue with a real question mark: aggregator commissions compress margin per order relative to Tesco's own channels. Whether the volume gain is worth the margin trade is a live, unresolved question.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>Customer experience and brand consistency review across the aggregator rollout as it scales past its initial trial base</li>
+          <li>A margin and channel-mix model comparing aggregator orders to Tesco's own digital channels, to see whether this expansion is accretive at scale</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>No public data yet shows whether the 73-store trial actually performed well commercially, the expansion to 4,000 stores may be a strategic bet on the format broadly rather than proven trial economics. That distinction matters and isn't publicly resolved.</li>
+          <li>This move works against, not with, Tesco's own direct digital channel investment (£7.5B online sales, growing 11%). A recommendation here needs to address that tension directly rather than treat aggregators as pure incremental upside.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-3">
+      <button class="opp-head">
+        <span class="opp-num">3</span>
+        <span class="opp-headtext">
+          <span class="opp-title">AI Meal-Planning Assistant, Trial to Launch</span>
+          <span class="opp-sub">Loyalty, CRM &amp; Personalization — Janey Whiteside lens</span>
+        </span>
+        <span class="opp-conf"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:86%"></div></div><span class="conf-pct">86% confidence</span></span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Help design the customer experience and rollout plan for Tesco's AI shopping assistant as it moves from internal employee trial to full public launch.</p>
+
+        <h4>Why now</h4>
+        <p>Tesco launched a large-scale trial in April 2026, giving roughly 280,000 employees early access to an AI assistant linked to Clubcard purchase data that helps build shopping baskets and plan meals. The company is collecting employee feedback, including suggestions for what to name it, ahead of a public launch later in 2026.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>An employee-first trial at this scale is a smart, low-risk testing approach, but the jump from internal trial to 20M+ Clubcard-holder public launch is a much bigger design and reliability challenge than the current stage reflects.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>This is the most direct product expression of the Clubcard data asset turned into a genuinely useful customer-facing tool, not just a pricing mechanism. Getting the experience right here is a visible proof point for the whole digital transformation story.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>An AI product that visibly increases basket size or reduces waste is a concrete, demonstrable return on the data and technology investment the company has been building toward for years.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>Customer experience design input ahead of public launch, informed by what the employee trial surfaces</li>
+          <li>A go-to-market and naming/positioning plan for the public rollout</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>No public launch date exists yet beyond "later this year." Timing for any Consello involvement depends on a schedule Tesco hasn't disclosed.</li>
+          <li>AI tools that use purchase data to suggest products sit close to the same sensitivity Murphy's earlier comments about AI health-nudging raised. Positioning this as helpful rather than surveillant is a real design challenge, not a marketing afterthought.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="opp" id="opp-4">
+      <button class="opp-head">
+        <span class="opp-num">4</span>
+        <span class="opp-headtext">
+          <span class="opp-title">Whoosh / Rapid-Delivery Network Scale-Up</span>
+          <span class="opp-sub">Omnichannel &amp; Retail Transformation</span>
+        </span>
+        <span class="opp-conf"><div class="conf-bar-track"><div class="conf-bar-fill" style="width:80%"></div></div><span class="conf-pct">80% confidence</span></span>
+        <span class="chevron"></span>
+      </button>
+      <div class="opp-body"><div class="opp-body-inner">
+        <h4>What it is</h4>
+        <p>Build the customer experience and network case for continuing to scale Whoosh, Tesco's same-day rapid delivery service.</p>
+
+        <h4>Why now</h4>
+        <p>Tesco's own FY26 disclosure puts Whoosh growth at 51%, reaching roughly 1.5 million customers. A separate CEO interview in late 2025 cited 60% growth for the same service. Those two figures don't reconcile cleanly, likely different measurement periods or metrics, and should be treated as a range rather than a single confirmed number until clarified directly with Tesco.</p>
+
+        <h4>Impact</h4>
+        <div class="impact-grid">
+          <div><div class="lbl">INTERNAL</div><p>Whoosh now sits alongside two new aggregator options (Uber Eats, Deliveroo) offering an overlapping rapid-delivery promise. Tesco now has three parallel fast-delivery channels; whether that's deliberate redundancy or actual channel confusion for the customer is worth examining directly.</p></div>
+          <div><div class="lbl">EXTERNAL</div><p>Rapid delivery is where quick-commerce pure-plays compete hardest. Tesco's store density is a real structural advantage those operators don't have.</p></div>
+          <div><div class="lbl">INVESTOR</div><p>Whether Whoosh, Uber Eats, and Deliveroo cannibalize each other or expand the addressable rapid-delivery occasion overall isn't publicly known and materially changes the return on scaling any one of them further.</p></div>
+        </div>
+
+        <h4>Deliverables</h4>
+        <ul class="plain">
+          <li>A channel-overlap analysis across Whoosh and the two new aggregator listings before recommending further investment in any one of them specifically</li>
+        </ul>
+
+        <h4>Risks</h4>
+        <ul class="risk-list">
+          <li>The 51% vs. 60% growth-rate discrepancy needs to be resolved with Tesco directly before this gets sized into any pitch materials.</li>
+          <li>This is the opportunity most likely to be already well-resourced internally, three live fast-delivery initiatives suggest this isn't a capability gap the way Opportunity 1 is.</li>
+        </ul>
+      </div></div>
+    </div>
+
+  </section>
+
+  <section id="horizon">
+    <h2>Horizon &amp; Context</h2>
+    <p class="section-intro">Real factors shaping the environment this pitch lands in, not scored opportunities themselves.</p>
+
+    <div class="plain-block">
+      <h3>Central Europe divestiture speculation <span class="conf-inline">unconfirmed, context only</span></h3>
+      <p>Press reports since July 2026 suggest Tesco may be exploring a sale of its Czech Republic, Hungary, and Slovakia operations. Tesco has not commented publicly. If real, this would simplify the portfolio and could free management attention and capital for exactly the kind of UK digital investment this brief focuses on, a possible tailwind for the timing of a Consello conversation, not something to reference as confirmed fact.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Executive bench turnover <span class="conf-inline">context, relationship risk</span></h3>
+      <p>Three executive changes in fifteen months: a new UK CEO (Ashwin Prasad, June 2025), Natasha Adams' newly created role (June 2025), and an Ireland/NI and Booker CEO reshuffle (August 2026). None of this is unusual for a company this size, but it means any relationship built with one executive needs a second and third point of contact to survive the next reshuffle.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Equal pay litigation <span class="conf-inline">out of scope, real bandwidth risk</span></h3>
+      <p>Tesco faces an equal-pay claim from roughly 62,000 current and former store workers, with estimates of Tesco's potential exposure ranging from £1.7bn to £4bn depending on the source. This is a legal matter, not a BEG one, but a live, large legal exposure of this size is a genuine claim on senior management's attention and risk appetite for new initiatives.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Q1 FY27 sales deceleration <span class="conf-inline">context for urgency</span></h3>
+      <p>UK like-for-like sales growth slowed to 1.8% in the 13 weeks to May 30, 2026, down from 4.2% the prior quarter, which management attributed to Middle East conflict-driven consumer sentiment and tougher weather comparisons. A slowing core business is exactly the environment where the "longer-term growth drivers" (personalization, retail media, digital capability) management has publicly named become more urgent to prove out, which strengthens, not weakens, the case for this brief's focus.</p>
+    </div>
+
+    <div class="plain-block">
+      <h3>Price investment durability &amp; Tesco Finest premiumization <span class="conf-inline">valid, set aside for this brief</span></h3>
+      <p>Both opportunities identified in the original pass remain evidenced and real. They sit outside Natasha Adams' specific mandate and outside what Nick flagged as the sharper angle, available to revisit if the conversation broadens beyond digital transformation specifically.</p>
+    </div>
+  </section>
+
+  <section id="sources">
+    <h2>Sources</h2>
+    <p class="section-intro">Dated, last 12 months unless marked as historical context. Includes material from the IR team's September 2026 briefing note and media pull, used here only for operationally relevant facts, not for anything touching valuation or trading.</p>
+
+    <div class="source-group">
+      <div class="outlet">Natasha Adams background</div>
+      <ul>
+        <li>Institute of Directors Ireland, member profile</li>
+        <li>Irish Examiner, Asian Trader, Talking Retail, Grocery Trader — executive reshuffle coverage, May-June 2025</li>
+        <li>Retail News Ireland — official Tesco Ireland announcement</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">IR team briefing note (Sept 2026), business facts only</div>
+      <ul>
+        <li>Adobe-powered personalization platform live Q1 FY27; Whoosh 51% growth, ~1.5M customers; Tesco Media, 12,500+ campaigns FY26; online sales £7.5bn FY26 (+11%)</li>
+        <li>Q1 FY27 UK LFL sales 1.8%, vs. 4.2% prior quarter; equal pay litigation exposure estimates; Central Europe segment financials</li>
+      </ul>
+    </div>
+
+    <div class="source-group">
+      <div class="outlet">Media pull items (Sept 2026 IR briefing, business facts only)</div>
+      <ul>
+        <li>AI meal-planning assistant trial — Apr 9, 2026</li>
+        <li>Uber Eats rollout to ~4,000 stores — Aug 21, 2026, following 73-store trial</li>
+        <li>Uber Eats and Deliveroo listing announcement — Jul 21-22, 2026</li>
+        <li>Tesco Ireland &amp; NI / Booker CEO reshuffle — Aug 5, 2026</li>
+        <li>Tesco sales slowdown, Middle East sentiment impact — Jun 18, 2026</li>
+        <li>Equal pay litigation coverage — Jun 6, 2026</li>
+        <li>"Selling to Corporate Giants," Tessa Clarke on landing Tesco as a client — Sept 9, 2026</li>
+      </ul>
+    </div>
+
+    <p class="staleness">All sourcing falls within the last 12 months except historical leadership-history context (Adams joining Tesco's executive team in 2018).</p>
+  </section>
+
+</main>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('main > section');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top: 0, behavior:'instant'});
+    });
+  });
+  document.querySelectorAll('.opp-head').forEach(head => {
+    head.addEventListener('click', () => { head.parentElement.classList.toggle('expanded'); });
+  });
+  document.querySelectorAll('.rank-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const targetId = row.dataset.open;
+      tabs.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      document.querySelector('[data-tab="opportunities"]').classList.add('active');
+      document.getElementById('opportunities').classList.add('active');
+      document.querySelectorAll('.opp').forEach(o => o.classList.remove('expanded'));
+      const target = document.getElementById(targetId);
+      if(target){
+        target.classList.add('expanded');
+        setTimeout(() => target.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
