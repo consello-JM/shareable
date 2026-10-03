@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>lululemon Competitive Context | Internal Workshop Pre-Read</title>
+<style>
+:root{
+  --ink:#17191c;--muted:#69717b;--paper:#f5f4f1;--white:#fff;--red:#c51f3a;
+  --alo:#222;--vuori:#457f88;--green:#267a58;--amber:#b87818;--blue:#3f628f;
+  --line:#deddd8;--softred:#f7e8eb;--softteal:#eaf2f2;--softamber:#faf2e3;--softblue:#edf2f8;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit}.shell{max-width:1420px;margin:auto}
+nav{position:sticky;top:0;z-index:20;min-height:64px;display:flex;align-items:center;padding:0 32px;background:#f5f4f1ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav b{color:var(--red)}nav .links{margin-left:auto;display:flex;gap:17px;font-size:10px;overflow:auto;white-space:nowrap;padding:12px 0}nav a{text-decoration:none;color:var(--muted)}nav a:hover{color:var(--ink)}
+.hero{padding:70px 32px 44px;display:grid;grid-template-columns:1.4fr .6fr;gap:50px;border-bottom:1px solid var(--line)}
+.k{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+h1,h2,.quote{font-family:Georgia,serif}h1{font-size:56px;line-height:.98;letter-spacing:-.045em;margin:18px 0 20px}
+.lede{font-size:19px;line-height:1.5;color:#444b53}.aside{align-self:end;border-left:4px solid var(--red);padding-left:22px}.aside b{font:24px Georgia,serif}.aside p{font-size:13px;line-height:1.5;color:var(--muted)}
+section{padding:56px 32px;border-bottom:1px solid var(--line)}.head{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;margin-bottom:28px}.head h2{font-size:38px;line-height:1.03;margin:8px 0}.head p{align-self:end;color:var(--muted);font-size:14px;line-height:1.55}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}.card h3{font-size:18px;margin:8px 0 12px}.card p,.card li{font-size:13px;line-height:1.55;color:#4e555e}.card ul{padding-left:18px}
+.tag{font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.lulu{color:var(--red)}.alo{color:#222}.vuori{color:var(--vuori)}
+.call{background:var(--ink);color:#fff;border-radius:18px;padding:28px;display:grid;grid-template-columns:160px 1fr;gap:25px;margin:20px 0 30px}.call .n{font:52px Georgia,serif}.call p{font-size:18px;line-height:1.4;margin:0}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.metric b{font:34px Georgia,serif}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+.table{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px}table{border-collapse:collapse;width:100%;min-width:850px}th,td{padding:14px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:12px;line-height:1.48}th{font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);background:#fafafa}
+.quote{font-size:26px;line-height:1.3;background:#fff;border-left:5px solid var(--red);padding:30px;margin:22px 0}.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{border-radius:18px;padding:26px}.panel.red{background:var(--softred)}.panel.dark{background:#222;color:#fff}.panel.teal{background:var(--softteal)}.panel h3{font:28px Georgia,serif;margin:8px 0 15px}.chain{font-size:17px;font-weight:800;line-height:1.7}.panel p{font-size:13px;line-height:1.55;opacity:.84}
+.warn{color:var(--amber);font-weight:bold}.proof{font-size:10px;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px;margin-top:14px;line-height:1.5}
+.prov{background:#24272b;color:#fff;border-radius:18px;padding:28px;margin-top:16px}.prov h3{font:26px Georgia,serif;margin:0 0 10px}.prov p{color:#d7dadd;line-height:1.55}
+.system{border-radius:18px;padding:24px;min-height:255px}.system.red{background:var(--softred)}.system.black{background:#e9e9e9}.system.teal{background:var(--softteal)}.system h3{font:24px Georgia,serif;margin:8px 0 12px}.system .chain{font-size:14px}.system p{font-size:12px;line-height:1.55;color:#4e555e}
+.num{display:grid;grid-template-columns:48px 1fr;gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}.num strong:first-child{font:26px Georgia,serif;color:var(--red)}.num b{display:block;margin-bottom:6px}.num span{font-size:13px;color:var(--muted);line-height:1.5}
+.sourcegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.source{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.source b{display:block;margin-bottom:7px}.source p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}.source a{color:var(--blue)}
+.foot{padding:32px;font-size:10px;color:var(--muted);line-height:1.5}
+@media(max-width:950px){nav .links{display:none}.hero,.head,.grid4,.grid3,.grid2,.panels,.sourcegrid{grid-template-columns:1fr}h1{font-size:42px}.metrics{grid-template-columns:1fr 1fr}.call{grid-template-columns:1fr}}
+
+/* v3 evidence controls + scoreboard */
+.dial{display:flex;align-items:center;gap:5px;margin-left:14px;flex:0 0 auto}
+.dial span{font-size:10px;color:var(--muted);margin-right:2px}
+.dial button{font:inherit;font-size:10px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 9px;cursor:pointer}
+.dial button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip{display:inline-flex;font-size:9px;font-weight:800;border-radius:999px;padding:3px 7px;margin:0 2px}
+.chip.fact{background:var(--ink);color:#fff}.chip.estimate{background:var(--softamber);color:var(--amber)}.chip.synthesis{border:1px solid var(--amber);color:var(--amber)}
+[data-conf]{transition:opacity .18s ease}.dim{opacity:.16}
+.scoreboard{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--ink);margin-top:30px}
+.scoreboard div{padding:16px 14px 10px 0;border-right:1px solid var(--line)}
+.scoreboard div:last-child{border-right:0}.scoreboard strong{display:block;font:30px Georgia,serif;line-height:1}.scoreboard span{display:block;font-size:11px;color:var(--muted);line-height:1.4;margin-top:7px}.scoreboard em{font-style:normal;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.conf-list{border-top:2px solid var(--ink)}.conf{display:grid;grid-template-columns:.7fr 1.15fr 1.15fr;gap:22px;padding:18px 0;border-bottom:1px solid var(--line)}.conf h3{margin:0;font-size:15px}.conf p{margin:0;font-size:12px;line-height:1.5;color:#4e555e}
+.counter{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:1050px){.dial{display:none}.scoreboard{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.conf{grid-template-columns:1fr}.counter{grid-template-columns:1fr}}
+
+/* v5 readability + inline sourcing */
+.inline-source{display:block;margin-top:8px;font-size:10px;line-height:1.35;color:var(--muted);font-weight:400}
+.inline-source strong{font-weight:700;color:#4b5158}
+.mini-source{font-size:9.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+.bar-chart{display:grid;gap:10px;margin-top:14px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 58px;gap:10px;align-items:center}
+.bar-row .lbl{font-size:11px;color:#444b53}
+.bar-track{height:13px;background:#ebe9e4;border-radius:999px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:999px;background:var(--ink)}
+.bar-fill.red{background:var(--red)}.bar-fill.alo{background:#333}.bar-fill.vuori{background:var(--vuori)}.bar-fill.terra{background:#a76a36}
+.bar-row .val{font-size:11px;font-weight:700;text-align:right}
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.chart-title{font-size:13px;font-weight:800;margin:0 0 5px}.chart-sub{font-size:11px;color:var(--muted);margin:0 0 12px;line-height:1.4}
+.demand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.demand-card{border:1px solid var(--line);border-radius:20px;padding:24px;min-height:445px;background:#fff}
+.demand-card.lulu-card{background:var(--softred)}.demand-card.alo-card{background:#f0f0ef}.demand-card.vuori-card{background:var(--softteal)}
+.demand-card .emotion{font:23px Georgia,serif;line-height:1.15;margin:12px 0 20px}
+.demand-card .engine{font-size:15px;font-weight:900;letter-spacing:.01em;margin:8px 0 4px}
+.demand-card dl{margin:0}.demand-card dt{font-size:9px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted);font-weight:800;margin-top:15px}.demand-card dd{font-size:12px;line-height:1.5;margin:4px 0 0;color:#3e454d}
+.status{display:inline-flex;padding:3px 9px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap}
+.status.core{background:var(--ink);color:#fff}.status.present{background:#d8d8d6;color:#222}.status.selective{background:#efeeeb;color:#555;border:1px solid #d6d4cf}.status.none{background:#fff;color:#8a8a8a;border:1px solid #ddd}.status.partner{background:#fff4df;color:#9a6418;border:1px solid #ddc69f}
+.offer-table td:not(:first-child){text-align:center}
+.metric-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.metric-strip .m{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.metric-strip .m b{display:block;font:28px Georgia,serif;line-height:1}.metric-strip .m span{display:block;font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+.activation-card .hero-num{font:32px Georgia,serif;margin:6px 0 2px}.activation-card .hero-label{font-size:10px;color:var(--muted);margin-bottom:10px}
+.activation-card ul{margin:8px 0 0;padding-left:17px}.activation-card li{margin:5px 0}
+.visual-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:950px){.demand-grid,.metric-strip,.visual-row{grid-template-columns:1fr}.bar-row{grid-template-columns:120px 1fr 48px}}
+
+/* ---------- FINAL UX / DESIGN SYSTEM ---------- */
+:root{
+  --ink:#17191c;--muted:#68707a;--paper:#f4f3ef;--white:#ffffff;--red:#c51f3a;
+  --alo:#222222;--vuori:#477d84;--green:#267a58;--amber:#a86f1a;--blue:#48698f;
+  --line:#dfddd7;--line-strong:#c9c6be;--softred:#f8ebed;--softteal:#eaf2f2;
+  --softamber:#fbf3e5;--softblue:#edf2f8;--shadow:0 10px 30px rgba(23,25,28,.06);
+  --radius-lg:20px;--radius-md:14px;
+}
+html{scroll-padding-top:92px;background:var(--paper)}
+body{
+  background:var(--paper);
+  font-family:Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size:16px;line-height:1.55;letter-spacing:-.005em;
+}
+body.no-scroll{overflow:hidden}
+.app-shell.is-locked{visibility:hidden;height:100vh;overflow:hidden}
+.shell{max-width:1280px}
+nav{
+  min-height:68px;padding:0 28px;
+  border-bottom:1px solid rgba(223,221,215,.9);
+  box-shadow:0 2px 12px rgba(23,25,28,.025)
+}
+nav>div:first-child{font-size:13px;font-weight:750;letter-spacing:-.01em;white-space:nowrap}
+nav .links{gap:6px;margin-left:22px;padding:9px 0}
+nav .links a{
+  display:inline-flex;align-items:center;height:34px;padding:0 10px;border-radius:999px;
+  font-size:10.5px;font-weight:650;color:#6d737b;text-decoration:none;transition:.18s ease
+}
+nav .links a:hover{background:#fff;color:var(--ink)}
+nav .links a.active{background:var(--ink);color:#fff}
+.contents-button{
+  display:none;margin-left:auto;border:1px solid var(--line-strong);background:#fff;color:var(--ink);
+  border-radius:999px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer
+}
+
+.reading-progress{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:60;pointer-events:none}
+.reading-progress span{display:block;height:100%;width:0;background:var(--red);transition:width .08s linear}
+
+.hero{padding:74px 38px 46px;gap:58px}
+.hero h1{max-width:18ch;font-size:clamp(42px,5vw,64px);line-height:.98}
+.hero .lede{font-size:20px;max-width:68ch}
+.aside{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:0 16px 16px 0;padding:22px 24px;box-shadow:var(--shadow)}
+.reading-guide{
+  grid-column:1/-1;display:flex;gap:22px;flex-wrap:wrap;padding-top:4px;
+  color:var(--muted);font-size:11px
+}
+.reading-guide b{color:var(--ink)}
+
+section{padding:68px 38px}
+section:nth-of-type(even){background:rgba(255,255,255,.34)}
+.head{grid-template-columns:.78fr 1.22fr;gap:44px;margin-bottom:32px}
+.head h2{font-size:clamp(30px,3.2vw,42px);line-height:1.06;max-width:22ch}
+.head p{max-width:64ch;font-size:14.5px;line-height:1.6}
+.k{font-size:10px;letter-spacing:.14em}
+
+.card,.chart-card,.metric,.m,.demand-card,.system{
+  box-shadow:0 8px 22px rgba(23,25,28,.035);
+}
+.card{border-radius:var(--radius-lg);padding:24px}
+.card h3{font-size:17px;line-height:1.28}
+.card p,.card li{font-size:12.5px;line-height:1.62}
+.grid3,.grid2,.visual-row{gap:16px}
+
+.call{border-radius:22px;padding:30px 32px;margin:22px 0 32px;box-shadow:var(--shadow)}
+.call .n{font-size:56px}
+.call p{font-size:18px;max-width:70ch}
+
+.metric-strip,.metrics{gap:12px}
+.metric-strip .m,.metric{border-radius:16px;padding:19px}
+.metric-strip .m b,.metric b{font-size:31px}
+.metric-strip .m span,.metric span{line-height:1.45}
+
+.table{
+  border-radius:18px;box-shadow:0 8px 22px rgba(23,25,28,.025);position:relative;
+  background:linear-gradient(90deg,#fff 0,#fff 97%,rgba(245,244,241,.92) 100%)
+}
+.readable-table{font-size:12px}
+.readable-table th{
+  position:sticky;top:68px;z-index:2;background:#f8f7f4;color:#626972;
+  padding:12px 14px;border-bottom:1px solid var(--line-strong)
+}
+.readable-table td{padding:14px;line-height:1.5}
+.readable-table tbody tr:nth-child(even){background:#fbfaf8}
+.readable-table tbody tr:hover{background:#f6f4ef}
+
+.quote{
+  position:relative;padding:42px 32px 30px;margin:28px 0;border-left:0;border-top:4px solid var(--red);
+  border-radius:18px;font-size:25px;box-shadow:var(--shadow)
+}
+.quote-label{
+  position:absolute;top:15px;left:30px;font-family:Inter,ui-sans-serif,sans-serif;
+  font-size:9px;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:var(--red)
+}
+
+.demand-grid{gap:16px}
+.demand-card{padding:26px;border-radius:22px}
+.demand-card .emotion{font-size:24px;max-width:14ch}
+.demand-card dt{margin-top:17px}
+.demand-card dd{font-size:12.5px;line-height:1.58}
+
+.bar-track{height:11px}
+.bar-row{grid-template-columns:165px 1fr 62px}
+.chart-card{border-radius:18px;padding:22px}
+
+.inline-source{
+  margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+  font-size:9.5px;line-height:1.4
+}
+.proof{font-size:9.5px;line-height:1.5}
+
+.status{padding:4px 10px}
+.offer-table td:first-child{font-weight:650}
+
+.back-to-top{
+  position:fixed;right:22px;bottom:22px;width:42px;height:42px;border:1px solid var(--line-strong);
+  border-radius:50%;background:rgba(255,255,255,.94);box-shadow:var(--shadow);font-size:18px;
+  cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s ease;z-index:30
+}
+.back-to-top.show{opacity:1;pointer-events:auto;transform:none}
+
+/* TOC drawer */
+.toc-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(430px,92vw);z-index:80;background:#fff;
+  transform:translateX(102%);transition:transform .25s ease;box-shadow:-18px 0 42px rgba(23,25,28,.14)
+}
+.toc-drawer.open{transform:translateX(0)}
+.toc-inner{height:100%;display:flex;flex-direction:column}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line);font-weight:800}
+.toc-head button{border:0;background:none;font-size:28px;cursor:pointer;line-height:1}
+.toc-nav{display:block;overflow:auto;padding:12px 16px 28px}
+.toc-nav a{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px 10px;border-radius:10px;text-decoration:none;color:#3f454c;font-size:12px}
+.toc-nav a:hover,.toc-nav a.active{background:#f5f3ef;color:var(--ink)}
+.toc-num{color:var(--red);font-weight:800}
+.toc-scrim{position:fixed;inset:0;z-index:70;background:rgba(17,18,20,.38);backdrop-filter:blur(2px)}
+
+/* Password gate */
+.password-gate{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:
+    radial-gradient(circle at 18% 15%, rgba(197,31,58,.11), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgba(71,125,132,.10), transparent 28%),
+    #f4f3ef;
+}
+.password-gate.hidden{display:none}
+.gate-card{
+  width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;
+  padding:38px;box-shadow:0 24px 80px rgba(23,25,28,.12)
+}
+.gate-mark{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:22px}
+.gate-card h1{font-family:Georgia,serif;font-size:36px;line-height:1.02;margin:0 0 14px;letter-spacing:-.03em}
+.gate-card>p{font-size:14px;color:var(--muted);margin:0 0 26px;line-height:1.55}
+.gate-card label{display:block;font-size:11px;font-weight:800;margin-bottom:7px}
+.password-row{position:relative}
+.password-row input{
+  width:100%;height:48px;border:1px solid var(--line-strong);border-radius:12px;padding:0 74px 0 14px;
+  font:inherit;font-size:15px;outline:none;background:#fff
+}
+.password-row input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(23,25,28,.08)}
+.toggle-password{
+  position:absolute;right:8px;top:7px;height:34px;border:0;background:#f3f2ef;border-radius:8px;
+  padding:0 10px;font-size:10px;font-weight:750;cursor:pointer
+}
+.password-error{min-height:21px!important;margin:6px 0 5px!important;color:#a32638!important;font-size:11px!important}
+.gate-submit{
+  width:100%;height:48px;border:0;border-radius:12px;background:var(--ink);color:#fff;
+  font-size:13px;font-weight:800;cursor:pointer;transition:.18s ease
+}
+.gate-submit:hover{background:#2a2d31}
+.gate-note{margin-top:18px;text-align:center;font-size:10px;color:#92979e;text-transform:uppercase;letter-spacing:.11em}
+
+@media(max-width:1180px){
+  nav .links{display:none}
+  .contents-button{display:inline-flex}
+  .dial{display:none}
+}
+@media(max-width:900px){
+  .hero{padding:52px 24px 34px}
+  section{padding:52px 24px}
+  .head{gap:16px}
+  .bar-row{grid-template-columns:130px 1fr 52px}
+  .readable-table th{top:68px}
+}
+@media(max-width:600px){
+  body{font-size:15px}
+  nav{padding:0 16px}
+  .hero h1{font-size:39px}
+  .hero .lede{font-size:17px}
+  .call{padding:24px}
+  .call .n{font-size:46px}
+  section{padding:44px 18px}
+  .head h2{font-size:30px}
+  .quote{font-size:21px;padding:40px 22px 24px}
+  .scoreboard{grid-template-columns:1fr 1fr}
+  .gate-card{padding:28px 22px}
+  .gate-card h1{font-size:31px}
+}
+</style>
+</head>
+<body><div aria-labelledby="gateTitle" class="password-gate" id="passwordGate">
+<div class="gate-card">
+<div class="gate-mark">lululemon × competitive context</div>
+<h1 id="gateTitle">Internal workshop pre-read</h1>
+<p>Enter the password to access this competitive-context artifact.</p>
+<form autocomplete="off" id="passwordForm">
+<label for="passwordInput">Password</label>
+<div class="password-row">
+<input aria-describedby="passwordError" autocomplete="current-password" id="passwordInput" inputmode="text" type="password"/>
+<button aria-label="Show password" class="toggle-password" id="togglePassword" type="button">Show</button>
+</div>
+<p aria-live="polite" class="password-error" id="passwordError" role="alert"></p>
+<button class="gate-submit" type="submit">Open pre-read</button>
+</form>
+<div class="gate-note">Internal use only</div>
+</div>
+</div>
+
+
+<div class="app-shell is-locked" id="appShell"><div aria-hidden="true" class="reading-progress"><span id="readingProgressBar"></span></div><nav><div><b>lululemon</b> × competitive context</div><button aria-controls="tocDrawer" aria-expanded="false" class="contents-button" id="contentsButton" type="button">Contents</button><div class="links"><a href="#exec">Bottom line</a><a href="#market">Market</a><a href="#product">Newness</a><a href="#architecture">Architecture</a><a href="#narrative">Narrative</a><a href="#gtm">GTM</a><a href="#offer">Offer</a><a href="#activation">Activation</a><a href="#digital">Digital</a><a href="#member">Membership</a><a href="#creator">Creators</a><a href="#value">Value</a><a href="#assortment">Assortment</a><a href="#nike">Nike</a></div><div aria-label="Evidence filter" class="dial" role="group"><span>Show</span><button aria-pressed="false" data-level="1" type="button">Facts</button><button aria-pressed="false" data-level="2" type="button">+ Estimates</button><button aria-pressed="true" data-level="3" type="button">All</button></div></nav><main class="shell">
+<header class="hero">
+<div><div class="k">Internal workshop pre-read · October 2026</div><h1>Same category. Three different ways to make people want the product.</h1>
+<div class="lede">lululemon still leads on product authority, technical credibility and scale. <b>Alo is stronger at making newness feel desirable; Vuori is stronger at making premium active life feel simple and local.</b> The context-setting question is how the category has changed—and what that means for the competitive environment.</div></div>
+<aside class="aside"><b>The short version</b><p>lululemon does not appear to have a reach, assortment-breadth or absolute-price problem. Its challenge is converting genuine product authority into visible newness, desire and full-price demand as premium activewear expands beyond pure performance.</p><p>Evidence lens: <span class="chip fact">Fact</span> <span class="chip estimate">Estimate</span> <span class="chip synthesis">Synthesis</span></p></aside>
+<div class="scoreboard">
+<div data-conf="fact"><strong>–12%</strong><span>Americas comparable sales, Q2 FY26</span><em>Fact</em></div>
+<div data-conf="fact"><strong>–5% to –7%</strong><span>FY26 revenue outlook</span><em>Fact</em></div>
+<div data-conf="fact"><strong>~–20%</strong><span>Approx. Q2 legging sales decline reported from earnings commentary</span><em>Fact</em></div>
+<div data-conf="estimate"><strong>2.2–2.8×</strong><span>lululemon web-traffic scale vs. Alo across two providers</span><em>Estimate</em></div>
+<div data-conf="estimate"><strong>+24%</strong><span>Alo premium on the representative 4-item women’s basket</span><em>Estimate</em></div>
+</div><div class="reading-guide">
+<span><b>Fact</b> = directly sourced</span>
+<span><b>Estimate</b> = modeled / comparable</span>
+<span><b>Synthesis</b> = cross-source strategic read</span>
+</div></header>
+<section id="exec"><div class="head"><div><div class="k">01 · Executive answer</div><h2>The premium-value equation has expanded</h2></div><p>Performance and quality still matter. But they no longer operate alone. Style, novelty, identity, social proof, access and experience increasingly shape what consumers perceive as worth paying for.</p></div>
+<div class="call"><div class="n">70%</div><div><p>of lululemon guests in the internal research had <b>not noticed the latest product lines.</b> The issue is not simply whether product exists—it is whether it’s being perceived that way.</p></div></div>
+<div class="grid3"><div class="card"><div class="tag lulu">lululemon</div><h3>Product proves the brand</h3><p>Historic pull comes from fit, comfort, quality, technical credibility and stores. A product miss can challenge the reason the premium exists.</p></div>
+<div class="card"><div class="tag alo">Alo</div><h3>The brand elevates the product</h3><p>Style, trend relevance, newness and “proud to wear” create desire beyond technical performance. Cultural meaning helps individual misses remain compartmentalized.</p></div>
+<div class="card"><div class="tag vuori">Vuori</div><h3>Comfort anchors the brand</h3><p>Strong permission around soft performance and everyday wear. <span class="warn">⚠ 85%:</span> lifestyle expansion risks outrunning consumer permission when it feels less distinctively Vuori.</p></div></div>
+<div class="quote"><span class="quote-label">Key takeaway</span>Alo has not beaten lululemon at lululemon’s historic game. It has helped change what counts as winning.</div>
+</section>
+<section id="market"><div class="head"><div><div class="k">02 · Market context</div><h2>The customer did not simply change—the addressable market broadened</h2></div><p>More use cases now sit inside “active”: performance, daily wear, identity, multi-sport participation and wellness lifestyle. The strategic answer is not to choose between performance and lifestyle; it is to serve more moments without surrendering technical credibility.</p></div>
+<div class="metric-strip">
+<div class="m"><b>$1.14T</b><span>Global physical activity economy, 2024<br/><strong>Global Wellness Institute</strong></span></div>
+<div class="m"><b>$406.5B</b><span>Sports apparel and footwear, 2024<br/><strong>Global Wellness Institute</strong></span></div>
+<div class="m"><b>6%</b><span>Sporting-goods forecast annual growth, 2024–29<br/><strong>McKinsey / WFSGI</strong></span></div>
+<div class="m"><b>51%</b><span>Active consumers who say fitness is a lifestyle<br/><strong>McKinsey / WFSGI</strong></span></div>
+</div>
+<div class="visual-row">
+<div class="chart-card">
+<p class="chart-title">Participation: fitness grew; sport held roughly flat</p>
+<p class="chart-sub">Share of population participating</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">Sport / active rec., 2019</span><div class="bar-track"><div class="bar-fill" style="width:85.3%"></div></div><span class="val">34.1%</span></div>
+<div class="bar-row"><span class="lbl">Sport / active rec., 2024</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="val">34.4%</span></div>
+<div class="bar-row"><span class="lbl">Fitness, 2019</span><div class="bar-track"><div class="bar-fill terra" style="width:12.5%"></div></div><span class="val">5.0%</span></div>
+<div class="bar-row"><span class="lbl">Fitness, 2024</span><div class="bar-track"><div class="bar-fill terra" style="width:17%"></div></div><span class="val">6.8%</span></div>
+</div>
+<span class="inline-source"><strong>Source:</strong> Global Wellness Institute, Global Wellness Economy Monitor 2025.</span>
+</div>
+<div class="chart-card">
+<p class="chart-title">Use cases expanded among active consumers</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">Fitness = lifestyle, Gen Z/Millennials</span><div class="bar-track"><div class="bar-fill red" style="width:59%"></div></div><span class="val">59%</span></div>
+<div class="bar-row"><span class="lbl">Routine combines several sports</span><div class="bar-track"><div class="bar-fill red" style="width:50%"></div></div><span class="val">50%</span></div>
+<div class="bar-row"><span class="lbl">Started a new sport in prior year</span><div class="bar-track"><div class="bar-fill red" style="width:41%"></div></div><span class="val">41%</span></div>
+<div class="bar-row"><span class="lbl">Social media influenced new sport</span><div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div><span class="val">27%</span></div>
+</div>
+<span class="inline-source"><strong>Source:</strong> McKinsey / WFSGI, Sporting Goods 2025.</span>
+</div>
+</div>
+</section>
+<section id="product"><div class="head"><div><div class="k">03 · Product + newness</div><h2>Everyone is moving beyond leggings. Consumers are not rewarding the moves equally.</h2></div><p>Unpaid social shows a common direction—relaxed bottoms, dresses and skirts, coordinated looks, lifestyle versatility and color stories—but different consumer interpretations.</p></div>
+<div class="metrics"><div class="metric"><b>79%</b><span>lululemon · fit &amp; comfort</span></div><div class="metric"><b>77%</b><span>lululemon · good quality</span></div><div class="metric"><b>64%</b><span>Alo · style / design</span></div><div class="metric"><b>44%</b><span>Alo · trendy</span></div></div>
+<div class="table"><table aria-label="Everyone is moving beyond leggings. Consumers are not rewarding the moves equally." class="readable-table"><tr><th>Newness</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Consumer interpretation</th></tr>
+<tr><td><b>Relaxed / wide bottoms</b></td><td>Relaxed technical silhouettes</td><td>Trousers, flowy, fashion-led bottoms</td><td>Track + casual lifestyle</td><td>Alo: “want it.” Lulu: “is it better/different?” Vuori: “why this premium?”</td></tr>
+<tr><td><b>Dresses / skirts</b></td><td>Flow Y, tennis/racquet</td><td>Mini/maxi, skirts, occasion silhouettes</td><td>Lower signal</td><td>Alo has broad permission; Lulu works when lifestyle extension retains utility.</td></tr>
+<tr><td><b>Core innovation</b></td><td>High expectation; Align No Line polarized</td><td>Less central to excitement</td><td>Core performance franchises remain equity</td><td>Technical difference ≠ automatic consumer improvement.</td></tr>
+<tr><td><b>Color</b></td><td>Product / franchise → new color</td><td><b>New color → collection / multiple categories</b></td><td>Assortment → seasonal / tonal color</td><td>Alo most clearly turns color itself into the launch.</td></tr>
+<tr><td><b>Total look</b></td><td>Opportunity to amplify</td><td>Bags, shoes, coordinated outfits</td><td>Less central</td><td>Alo increasingly sells the look, not only the item.</td></tr></table></div>
+<div class="proof">Basis: 90-day Reddit/unpaid social read; official sites used for factual product verification. Social themes are directional unless corroborated quantitatively.</div>
+</section>
+<section id="architecture"><div class="head"><div><div class="k">04 · Product architecture</div><h2>lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture.</h2></div><p>The deepest new finding from the product-architecture work is the distinction between an <b>authored store</b> and a <b>generated store</b>. Alo, Vuori and Athleta curate browse structures. lululemon can generate pages from intersecting product attributes—powerful for search and expert shoppers, but materially more complex for orientation.</p></div>
+<div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table"><tr><th>Dimension</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Athleta</th></tr>
+<tr><td><b>Architecture</b></td><td>Two-facet generator</td><td>Curated nav; 6 shelves / gender</td><td>Flat curated list</td><td>Shallow tree; 2 levels</td></tr>
+<tr><td><b>Top-level nodes</b></td><td>20</td><td>4</td><td>5</td><td>10</td></tr>
+<tr><td><b>Navigable browse pages</b></td><td>Thousands, generated</td><td>~78</td><td>247</td><td>~45–55</td></tr>
+<tr><td><b>Franchises as browse axis</b></td><td>70+</td><td>0</td><td>~47</td><td>Not exposed / unverified</td></tr>
+<tr><td><b>Fabric names as browse axis</b></td><td>~35</td><td>5</td><td>~8</td><td>Not exposed / unverified</td></tr>
+<tr><td><b>Activities</b></td><td>~15</td><td>6</td><td>13</td><td>~6</td></tr>
+<tr><td><b>Independent attribute families</b></td><td><b>18</b></td><td>7</td><td>7</td><td>6</td></tr></table></div>
+<div class="visual-row arch-visual" style="margin:14px 0">
+<div class="chart-card">
+<p class="chart-title">Independent attribute families</p>
+<p class="chart-sub">A proxy for how many dimensions the shopper can navigate</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">lululemon</span><div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div><span class="val">18</span></div>
+<div class="bar-row"><span class="lbl">Alo</span><div class="bar-track"><div class="bar-fill alo" style="width:39%"></div></div><span class="val">7</span></div>
+<div class="bar-row"><span class="lbl">Vuori</span><div class="bar-track"><div class="bar-fill vuori" style="width:39%"></div></div><span class="val">7</span></div>
+<div class="bar-row"><span class="lbl">Athleta</span><div class="bar-track"><div class="bar-fill terra" style="width:33%"></div></div><span class="val">6</span></div>
+</div>
+</div>
+<div class="chart-card">
+<p class="chart-title">Top-level navigation nodes</p>
+<p class="chart-sub">Visible front-door complexity in the architecture readout</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">lululemon</span><div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div><span class="val">20</span></div>
+<div class="bar-row"><span class="lbl">Alo</span><div class="bar-track"><div class="bar-fill alo" style="width:20%"></div></div><span class="val">4</span></div>
+<div class="bar-row"><span class="lbl">Vuori</span><div class="bar-track"><div class="bar-fill vuori" style="width:25%"></div></div><span class="val">5</span></div>
+<div class="bar-row"><span class="lbl">Athleta</span><div class="bar-track"><div class="bar-fill terra" style="width:50%"></div></div><span class="val">10</span></div>
+</div>
+<span class="inline-source"><strong>Public competitor basis:</strong> current Alo, Vuori and Athleta U.S. navigation. lululemon source intentionally not shown.</span>
+</div>
+</div>
+<div class="grid3" style="margin-top:14px">
+<div class="card"><h3>Search acquisition strength</h3><p>Generated intersections create effectively unlimited doors into the store. A shopper searching a highly specific phrase can land directly on a matching assortment.</p></div>
+<div class="card"><h3>Translation-layer signal</h3><p>lululemon offers a leggings quiz, guide, inline fabric definitions, 1:1 product-expert video chat and hemming. Those tools are useful—and also reveal how much translation the product system requires.</p></div>
+<div class="card"><h3><span class="warn">⚠ 85%</span> · Customer implication</h3><p>The architecture is exceptionally powerful for a fluent returning guest. The pressure test is whether a newer guest learns the brand’s language—or simply completes one transaction.</p></div></div>
+<div class="quote"><span class="quote-label">Key takeaway</span>Our competitors sell leggings. We built a quiz to help customers buy ours.</div>
+<div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table"><tr><th>Same purchase: women’s leggings</th><th>lululemon</th><th>Alo</th></tr>
+<tr><td><b>Front door</b></td><td>20 top-level entries; 15 are promotional / campaign constructs</td><td>4 primary doors: Women, Men, Accessories, Shoes</td></tr>
+<tr><td><b>Ways to narrow bottoms</b></td><td>10 filters</td><td>6 filters</td></tr>
+<tr><td><b>Named fabrics</b></td><td>~35 sitewide</td><td>5</td></tr>
+<tr><td><b>Decision help</b></td><td>Quiz, guide, inline definitions, expert video chat, hemming</td><td>Much lighter translation layer</td></tr></table></div>
+</section>
+<section data-conf="synthesis" id="narrative"><div class="head"><div><div class="k">05 · Brand narrative</div><h2>Reality and narrative are diverging</h2></div><p>lululemon’s product experience remains stronger than the external narrative can imply. Alo’s cultural meaning is stronger than its experienced product-quality advantage alone would predict.</p></div>
+<div class="panels"><div class="panel red"><div class="tag lulu">lululemon</div><h3>Functional authority</h3><div class="chain">PRODUCT → PERFORMANCE → TRUST → PREMIUM</div><p>Lulu materially outperforms Alo on fit/comfort and quality among Lulu guests, while internal tracking shows pressure around trend-setting and stylishness in important cohorts.</p></div>
+<div class="panel dark"><div class="tag">ALO</div><h3>Cultural desirability</h3><div class="chain">NEWNESS → STYLE → SOCIAL VALIDATION → DESIRE</div><p>Positive conversation is fed by aesthetic and outfit-inspiration content. The advantage is not proof of superior technical product; it is being culturally rewarding to wear.</p></div></div>
+<div class="grid3" style="margin-top:14px"><div class="card"><h3>Public vs. private</h3><p>Public status forces earnings, stock, governance and regulatory news into Lulu’s narrative. <span class="warn">⚠ 85%: amplifier, not root cause.</span></p></div>
+<div class="card"><h3>Maturity vs. age</h3><p>Lulu (1998) and Alo (2007) are only nine years apart. <span class="warn">⚠ 85%:</span> incumbent vs. challenger and momentum matter more than simple brand age.</p></div>
+<div class="card"><h3>PFAS</h3><p>Internal research indicates limited awareness and limited stated future-purchase impact. Serious reputation issue; not supported as the primary commercial cause.</p></div></div>
+<div class="card" style="margin-top:14px"><h3>A broader brand, product + competitive problem</h3><p>A crowded “sea of sameness,” icons carrying the business, newness under-delivering, promotional intensity eroding full-price realization, and increased competition impacting the price-to-value perception with customers.</p></div>
+</section>
+<section data-conf="synthesis" id="gtm"><div class="head"><div><div class="k">06 · Go-to-market system</div><h2>Three demand systems, each pulling a different version of the premium customer</h2></div><p>Inferred from what each brand sells, where it shows up, who represents it, how its site steers shopping and what its loyalty program rewards. These are observed propositions; none publishes its internal segmentation.</p></div>
+<div class="demand-grid" data-conf="synthesis">
+<article class="demand-card lulu-card">
+<div class="tag lulu">lululemon</div>
+<div class="engine lulu">PROVE → ACTIVATE → SERVE</div>
+<div class="emotion">“I trust this to work.”</div>
+<dl>
+<dt>Target</dt><dd>The serious mover: multi-activity, expects fit, fabric and technical proof.</dd>
+<dt>How it creates demand</dt><dd>Technical franchises, athletes and trainers as product testers, owned races and sport sponsorships.</dd>
+<dt>How it keeps customers</dt><dd>Service and utility: hemming, early access, personal shopper at the top tier.</dd>
+<dt>Asset to protect</dt><dd>Technical authority. It can carry desire if the newness feels consequential.</dd>
+</dl>
+</article>
+<article class="demand-card alo-card">
+<div class="tag alo">Alo</div>
+<div class="engine">DESIRE → SOCIALIZE → ACCESS</div>
+<div class="emotion">“I want to be part of this.”</div>
+<dl>
+<dt>Target</dt><dd>The style-led wellness insider: wellness as a signal of taste and status.</dd>
+<dt>How it creates demand</dt><dd>Color drops, matching looks, supermodels and creators, luxury resort and fashion-week moments.</dd>
+<dt>How it keeps customers</dt><dd>Status and access: visible tiers, gifts, priority drops, a free wellness content club.</dd>
+<dt>Lesson for lululemon</dt><dd>Demand can start before the shopper has a functional need.</dd>
+</dl>
+<span class="inline-source"><strong>Public basis:</strong> Alo current U.S. site + Access / Wellness Club; Vogue Business / WWD activation coverage.</span>
+</article>
+<article class="demand-card vuori-card">
+<div class="tag vuori">Vuori</div>
+<div class="engine vuori">TRUST → LOCALIZE → SCALE</div>
+<div class="emotion">“This fits how I live.”</div>
+<dl>
+<dt>Target</dt><dd>The effortless active-life consumer: comfort, versatility, understated premium. Strong men’s base, growing women’s.</dd>
+<dt>How it creates demand</dt><dd>Named comfort fabrics, in-store community classes, mainstream actors and athletes, store rollout.</dd>
+<dt>How it keeps customers</dt><dd>Community and recommendation: referral, birthday rewards, a 40%-off pro program.</dd>
+<dt>Lesson for lululemon</dt><dd>Simple product stories and local relevance can scale a premium lifestyle brand.</dd>
+</dl>
+<span class="inline-source"><strong>Public basis:</strong> Vuori current U.S. site + V1 / ACTV; Vogue (Dec. 2025); Retail Dive / BoF expansion coverage.</span>
+</article>
+</div>
+</section><section id="offer">
+<div class="head">
+<div><div class="k">07 · Offer beyond apparel</div><h2>The category is becoming an ecosystem—not just an apparel assortment</h2></div>
+<p>Each brand is using adjacency differently. lululemon deepens around movement; Alo stretches furthest into the lifestyle and luxury wallet; Vuori remains most product-centric.</p>
+</div>
+<div class="table">
+<table aria-label="The category is becoming an ecosystem—not just an apparel assortment" class="offer-table readable-table">
+<tr><th>Current U.S. offer</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
+<tr><td><b>Technical / performance apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr>
+<tr><td><b>Lifestyle apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr>
+<tr><td><b>Tailored / occasion apparel</b></td><td><span class="status present">Present</span></td><td><span class="status core">Core</span></td><td><span class="status present">Present</span></td></tr>
+<tr><td><b>Denim</b></td><td><span class="status none">Not core</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr>
+<tr><td><b>Footwear</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
+<tr><td><b>Functional bags / accessories</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td></tr>
+<tr><td><b>Luxury / fashion accessories</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
+<tr><td><b>Fitness / yoga equipment</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status selective">Selective</span></td></tr>
+<tr><td><b>Beauty / body / supplements</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
+<tr><td><b>Digital fitness / wellness</b></td><td><span class="status partner">Partner</span></td><td><span class="status core">Core</span></td><td><span class="status selective">Limited</span></td></tr>
+<tr><td><b>Resale / circular</b></td><td><span class="status core">Like New</span></td><td><span class="status none">Not core</span></td><td><span class="status none">Not core</span></td></tr>
+<tr><td><b>Wholesale capability</b></td><td><span class="status selective">Selective</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr>
+</table>
+</div>
+<div class="grid3" style="margin-top:14px">
+<div class="card"><div class="tag lulu">lululemon</div><h3>Deepens around movement</h3><p>Footwear, equipment, app utility, Peloton content and Like New extend engagement while staying relatively close to movement and product performance.</p></div>
+<div class="card"><div class="tag alo">Alo</div><h3>Expands the lifestyle wallet</h3><p>Apparel sits beside shoes, luxury bags, beauty/body, supplements and digital wellness. The highest price points also function as brand-halo signals.</p><span class="inline-source"><strong>Sources:</strong> Alo current U.S. commerce/navigation; Retail Dive luxury-bag coverage.</span></div>
+<div class="card"><div class="tag vuori">Vuori</div><h3>Stays closer to product</h3><p>Apparel, denim, swim and accessories lead; community/content support the proposition more than a broad adjacent-product ecosystem.</p><span class="inline-source"><strong>Sources:</strong> Vuori current U.S. commerce/navigation; Retail Dive category-extension coverage.</span></div>
+</div>
+</section>
+<section id="activation"><div class="head"><div><div class="k">08 · Demand creation + experience</div><h2>lululemon already has experiential muscle. The question is what each experience is designed to create.</h2></div><p>The competitive lesson is not “do more events.” Venue, talent and access reveal the job each brand wants experience to do.</p></div>
+<div class="grid3">
+<div class="card activation-card">
+<div class="tag lulu">lululemon · prove + convene</div>
+<div class="hero-num">~10K</div><div class="hero-label">SeaWheeze runners</div>
+<ul><li>24 countries; 70%+ traveled</li><li>~50% running first half-marathon</li><li>Summer Series: 50K spots across 70 cities</li><li>Studio Yet LA: 2,300+ attendees</li><li>Indian Wells: 500K+ tournament attendees</li></ul>
+</div>
+<div class="card activation-card">
+<div class="tag alo">Alo · create cultural heat</div>
+<div class="hero-num">50M+</div><div class="hero-label">cumulative TikTok views reported across three yacht creators</div>
+<ul><li>72m Alo Voyage yacht, Cannes → Monaco</li><li>Saint-Tropez + Bodrum resort takeovers</li><li>London wellness center for influencers / VIPs</li><li>NYFW wellness adjacency</li></ul>
+<span class="inline-source"><strong>Sources:</strong> Vogue / Vogue Business; WWD.</span>
+</div>
+<div class="card activation-card">
+<div class="tag vuori">Vuori · localize + convert</div>
+<div class="hero-num">30</div><div class="hero-label">ACTV events in a Sep. 19–20 calendar snapshot</div>
+<ul><li>Typical event: class → shopping → refreshments</li><li>Partners include CorePower, F45, Pure Barre, Pvolve and local studios</li><li>Stores operate as repeatable neighborhood community nodes</li></ul>
+<span class="inline-source"><strong>Sources:</strong> Vuori ACTV events calendar; Retail Dive / BoF / FashionNetwork on store expansion.</span>
+</div>
+</div>
+</section>
+<section data-conf="synthesis" id="digital"><div class="head"><div><div class="k">09 · Digital storefront + route to market</div><h2>The site is a business-model diagram in disguise</h2></div><p>Navigation reveals whether a brand primarily helps customers fulfill a known need or creates a new want. Distribution reveals where each brand is willing to borrow reach without giving up control.</p></div>
+<div class="grid3"><div class="card"><div class="tag lulu">lululemon</div><h3>Product + activity led</h3><p>Activity · franchise · fit/fabric · color · new/seasonal edit. Deep utility helps a returning guest find the exact technical product fast.</p></div>
+<div class="card"><div class="tag alo">Alo</div><h3>Editorial + look led</h3><p>New · celebrity edit · color · matching looks · travel/occasion · wellness. Aspiration sits beside category shopping.</p><span class="inline-source"><strong>Source:</strong> Alo current U.S. navigation / merchandising.</span></div>
+<div class="card"><div class="tag vuori">Vuori</div><h3>Collection + lifestyle led</h3><p>New · DreamKnit / BlissBlend · ambassador picks · events · Journal. Simpler journey anchored in named materials and community.</p><span class="inline-source"><strong>Source:</strong> Vuori current U.S. navigation / collections.</span></div></div>
+<div class="table" style="margin-top:14px"><table aria-label="The site is a business-model diagram in disguise" class="readable-table"><tr><th>Route to market</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
+<tr><td><b>Model</b></td><td>Owned core + controlled B2B</td><td>Owned ecosystem + limited third party</td><td>Owned DTC + visible selective wholesale</td></tr>
+<tr><td><b>How it works</b></td><td>825 company-operated stores in Q2 FY26. Owned stores/e-commerce central; Strategic Sales serves studios, sport specialty, resorts, clubs and pro shops.</td><td>Owned retail/e-commerce carry the cultural world; selective third-party retail exists but is less central to the public story.</td><td>Owned stores/e-commerce remain hub; REI/Nordstrom add visible reach; ACTV localizes around stores.</td></tr>
+<tr><td><b>Implication</b></td><td>Borrow distribution selectively without surrendering technical brand control.</td><td>Distribution protects aspiration and cultural theater.</td><td>Partners add reach while stores localize the relationship.</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> Alo current Nordstrom presence + owned commerce; Vuori wholesale terms + current REI/Nordstrom assortments + ACTV.</span>
+</section>
+<section id="member"><div class="head"><div><div class="k">10 · Loyalty + membership</div><h2>Membership is becoming part of the brand proposition—not just a CRM layer</h2></div><p>The programs reward different behaviors and reinforce different reasons to stay close to the brand.</p></div>
+<div class="grid3">
+<div class="card"><div class="tag lulu">lululemon · service + utility</div><h3>Collective → Plus → Pinnacle</h3><p>Collective $0–499.99 · Plus $500–999.99 · Pinnacle $1,000+.<br/>Early product access, hemming, flexible returns/exchanges, experiences + Peloton; higher tiers add exclusives, Personal Shopper, first restock access and customization.</p><p><b>Opportunity:</b> make the program change frequency, cross-category adoption and full-price behavior.</p></div>
+<div class="card"><div class="tag alo">Alo · status + access</div><h3>VIP → A-List → All Access</h3><p>Points-based progression with early/priority drop access, gifts, shipping, events/classes and priority service. Wellness Club extends the ecosystem with 4,000+ classes.</p><p><b>Competitive lesson:</b> loyalty itself can heighten anticipation and insider status.</p><span class="inline-source"><strong>Sources:</strong> Alo Access + Alo Wellness Club current official pages.</span></div>
+<div class="card"><div class="tag vuori">Vuori · community + recommendation</div><h3>Birthday + referral + V1</h3><p>No broad consumer points ladder surfaced. Birthday rewards and referral mechanics sit alongside V1: a qualified pro/community program with 40% off, events and product feedback/testing.</p><p><b>Competitive lesson:</b> local/pro networks can reinforce trial and advocacy.</p><span class="inline-source"><strong>Sources:</strong> Vuori Birthday Rewards, Refer-a-Friend + V1 Community current official pages.</span></div></div>
+</section>
+<section data-conf="synthesis" id="creator"><div class="head"><div><div class="k">11 · Creator + ambassador architecture</div><h2>Every brand has icons, experts and community. The weighting is the strategy.</h2></div><p>The competitive distinction is not whether a brand “uses influencers.” All three operate across global icon, domain credibility and local/community layers.</p></div>
+<div class="table"><table aria-label="Every brand has icons, experts and community. The weighting is the strategy." class="readable-table"><tr><th>Tier</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
+<tr><td><b>Global icon / mass reach</b></td><td>Lewis Hamilton</td><td>Bella Hadid; Kendall &amp; Kylie Jenner</td><td>Tom Holland; Kaia Gerber</td></tr>
+<tr><td><b>Domain credibility</b></td><td>Frances Tiafoe; Min Woo Lee; trainers as product proof</td><td>Creator/comedy wellness voices + instructor ecosystem</td><td>Jack Draper; Kirsty Godso</td></tr>
+<tr><td><b>High-frequency / local</b></td><td>Megan Roup / Sculpt Society; ambassador/community network</td><td>Wellness Club instructors; sanctuary classes; high-frequency creators</td><td>Livvy Dunne; Arch Manning; trainers + ACTV communities</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> WWD / Yahoo Shopping / SCMP for Alo creator ecosystem; Highsnobiety / FashionNetwork / WWD / Athletech News for Vuori talent.</span>
+<div class="grid2" style="margin-top:14px"><div class="card"><h3>Alo’s current creator controversy is strategically relevant</h3><p>Recent TikTok/IP-enforcement reports matter because they collide directly with the creator-led discovery engine that helps Alo generate cultural heat. The lesson is not to attack Alo; it is to recognize creators as demand infrastructure.</p></div>
+<div class="card"><h3>What lululemon can learn</h3><p>Make permissions clear, protect authentic fan content, create a human escalation path, and measure creators by <b>product discovery + cultural transmission</b>—not impressions alone.</p></div></div>
+</section>
+<section id="value"><div class="head"><div><div class="k">12 · Price, value + reach</div><h2>Price and awareness do not point to one simple fix</h2></div><p>Alo can ask more for representative hero products, while lululemon still operates at materially greater digital scale. The strategic pressure is to make product/value superiority visible enough to translate those assets into full-price demand.</p></div>
+<div class="table" data-conf="estimate"><table aria-label="Price and awareness do not point to one simple fix" class="readable-table"><tr><th>Representative full-price hero item</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
+<tr><td>Core high-rise legging</td><td>$98</td><td>$134</td><td>$110</td></tr>
+<tr><td>Sports bra</td><td>$58</td><td>$78</td><td>$68</td></tr>
+<tr><td>Hero hoodie</td><td>$128</td><td>$148</td><td>$110</td></tr>
+<tr><td>Jogger / sweatpant</td><td>$118</td><td>$138</td><td>$110</td></tr>
+<tr><td><b>4-item basket</b></td><td><b>$402</b></td><td><b>$498</b></td><td><b>$398</b></td></tr></table></div>
+<div class="visual-row">
+<div class="chart-card">
+<p class="chart-title">Representative 4-item women’s basket</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">lululemon</span><div class="bar-track"><div class="bar-fill red" style="width:81%"></div></div><span class="val">$402</span></div>
+<div class="bar-row"><span class="lbl">Alo</span><div class="bar-track"><div class="bar-fill alo" style="width:100%"></div></div><span class="val">$498</span></div>
+<div class="bar-row"><span class="lbl">Vuori</span><div class="bar-track"><div class="bar-fill vuori" style="width:80%"></div></div><span class="val">$398</span></div>
+</div>
+<span class="inline-source"><strong>Competitor sources:</strong> current Alo + Vuori official U.S. product pages. Basket match = ~85% comparable.</span>
+</div>
+<div class="chart-card">
+<p class="chart-title">Modeled web-traffic scale</p>
+<p class="chart-sub">Relative scale; absolute provider estimates differ</p>
+<div class="bar-chart">
+<div class="bar-row"><span class="lbl">lululemon</span><div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div><span class="val">1.0×</span></div>
+<div class="bar-row"><span class="lbl">Alo</span><div class="bar-track"><div class="bar-fill alo" style="width:40%"></div></div><span class="val">~0.36–0.45×</span></div>
+<div class="bar-row"><span class="lbl">Vuori</span><div class="bar-track"><div class="bar-fill vuori" style="width:21%"></div></div><span class="val">~0.21×</span></div>
+</div>
+<span class="inline-source"><strong>Sources:</strong> Semrush Traffic Analytics + Similarweb, mid-2026. Modeled / directional.</span>
+</div>
+</div>
+</section>
+<section id="assortment"><div class="head"><div><div class="k">13 · Current assortment snapshot</div><h2>SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop</h2></div><p>A current public-site snapshot shows four materially different assortment systems. Counts are live product-card counts where exposed and should be treated as directional assortment surface area—not normalized unique SKU counts.</p></div>
+<div class="table" data-conf="fact"><table aria-label="SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop" class="readable-table"><tr><th>Brand</th><th>Visible assortment breadth</th><th>Primary taxonomy</th><th>Representative full-price bands</th><th>What it signals</th></tr>
+<tr><td><b>lululemon</b></td><td>Women’s pants 246<br/>Leggings 91<br/>Shirts 236<br/>Dresses 21</td><td>Category → activity → franchise/collection → fabric → feature → climate</td><td>Leggings ~$88–148<br/>Shirts ~$48–98<br/>Pants ~$98–168<br/>Dresses ~$88–168</td><td>Deep functional architecture. The opportunity is making breadth feel like meaningful newness rather than complexity.</td></tr>
+<tr><td><b>Alo</b></td><td>Leggings 283<br/>Tops 379<br/>Shorts 239<br/>Skirts 96</td><td>Category + activity + fabric + length + color + “Just Dropped” recency</td><td>Core leggings ~$128–155<br/>Core shorts ~$78–98<br/>Atelier can extend $300+</td><td>Large visible style/color surface area; recency itself becomes a shopping dimension.</td></tr>
+<tr><td><b>Vuori</b></td><td>Public collection pages do not consistently expose a total item count</td><td>Type → activity → fabric → fit → support → length</td><td>Leggings ~$98–118<br/>Joggers/wide-leg ~$98–128<br/>Tops/bras ~$54–88<br/>Denim ~$198</td><td>Clear fabric-led ladder; expansion increasingly stretches into lifestyle.</td></tr>
+<tr><td><b>Athleta</b></td><td>All bottoms 269<br/>Leggings 75<br/>All tops 392<br/>Dresses 22</td><td>Category → activity → fit/size → price; franchise families support navigation</td><td>Leggings ~$79–119<br/>Tops ~$39–119<br/>Bottoms ~$55–149<br/>Dresses ~$79–149</td><td>Broad mass-premium coverage with lower opening price and stronger promotional visibility.</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> current Alo, Vuori and Athleta U.S. collection/navigation pages. Counts reflect visible product cards / site structure and are not normalized unique-SKU counts.</span>
+<div class="grid3" style="margin-top:14px"><div class="card"><h3>Do not confuse product cards with unique SKUs</h3><p>Sites handle colors, inseams and repeated styles differently. Use counts to understand assortment surface area, not exact inventory.</p></div><div class="card"><h3>lululemon has the deepest functional taxonomy</h3><p>Activity, franchise, fabric, feature and fit create powerful utility—but can make newness read as an extension of the existing system.</p></div><div class="card"><h3>Alo makes recency part of the taxonomy</h3><p>“Just dropped,” color shops and broad style visibility turn browsing itself into a newness loop.</p></div></div>
+</section>
+<section id="nike"><div class="head"><div><div class="k">14 · Nike as competitor + CEO reference frame</div><h2>Nike matters twice: as a market competitor and as the operating reference the new CEO knows best</h2></div><p>Heidi O’Neill spent nearly thirty years at Nike. The useful lesson is not to imitate Nike’s language—it is to understand which structural moves sit behind the language, then be explicit about where lululemon should diverge.</p></div>
+<div class="table"><table aria-label="Nike matters twice: as a market competitor and as the operating reference the new CEO knows best" class="readable-table"><tr><th>Nike move</th><th>What changed</th><th>Lesson for lululemon</th></tr>
+<tr><td><b>Sport Offense</b></td><td>Reorganized around sport rather than men’s / women’s / kids; sport businesses own revenue, margin and share.</td><td>Operating principles matter when accountability and decision rights sit behind them—not when they remain cultural language.</td></tr>
+<tr><td><b>Wholesale repair</b></td><td>Rebuilding DICK’S / JD relationships after DTC over-rotation; wholesale grew while Nike Direct declined in the cited period.</td><td>Reach and demand signal can be strategically worth more than maximizing margin per unit.</td></tr>
+<tr><td><b>Full-price reset</b></td><td>Nike cited a 15-point improvement in full-price realization while pulling back digital promotion and cutting wholesale supply.</td><td>A turnaround can require accepting near-term revenue pressure to repair pricing and channel behavior.</td></tr></table></div><span class="inline-source"><strong>Public sources:</strong> Nike public reporting and trade coverage of Sport Offense, wholesale reset and full-price realization.</span>
+</section>
+<footer class="foot"><b>Internal workshop context.</b> This is a context-setting synthesis, not a substitute for first-party funnel, sales, margin, inventory or customer-level analysis. Public assortment and site architecture can change over time.</footer>
+</main><script>
+document.querySelectorAll('.dial button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.dial button').forEach(b=>b.setAttribute('aria-pressed','false'));
+    btn.setAttribute('aria-pressed','true');
+    const level=Number(btn.dataset.level);
+    document.querySelectorAll('[data-conf]').forEach(el=>{
+      const map={fact:1,estimate:2,synthesis:3};
+      const v=map[el.dataset.conf]||1;
+      el.classList.toggle('dim',v>level);
+    });
+  });
+});
+</script><aside aria-label="Contents" class="toc-drawer" id="tocDrawer"><div class="toc-inner"><div class="toc-head"><span>Contents</span><button aria-label="Close contents" id="tocClose" type="button">×</button></div><nav class="toc-nav"><a data-section="exec" href="#exec"><span class="toc-num">01</span><span>The premium-value equation has expanded</span></a><a data-section="market" href="#market"><span class="toc-num">02</span><span>The customer did not simply change—the addressable market broadened</span></a><a data-section="product" href="#product"><span class="toc-num">03</span><span>Everyone is moving beyond leggings. Consumers are not rewarding the moves equally.</span></a><a data-section="architecture" href="#architecture"><span class="toc-num">04</span><span>lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture.</span></a><a data-section="narrative" href="#narrative"><span class="toc-num">05</span><span>Reality and narrative are diverging</span></a><a data-section="gtm" href="#gtm"><span class="toc-num">06</span><span>Three demand systems, each pulling a different version of the premium customer</span></a><a data-section="offer" href="#offer"><span class="toc-num">07</span><span>The category is becoming an ecosystem—not just an apparel assortment</span></a><a data-section="activation" href="#activation"><span class="toc-num">08</span><span>lululemon already has experiential muscle. The question is what each experience is designed to create.</span></a><a data-section="digital" href="#digital"><span class="toc-num">09</span><span>The site is a business-model diagram in disguise</span></a><a data-section="member" href="#member"><span class="toc-num">10</span><span>Membership is becoming part of the brand proposition—not just a CRM layer</span></a><a data-section="creator" href="#creator"><span class="toc-num">11</span><span>Every brand has icons, experts and community. The weighting is the strategy.</span></a><a data-section="value" href="#value"><span class="toc-num">12</span><span>Price and awareness do not point to one simple fix</span></a><a data-section="assortment" href="#assortment"><span class="toc-num">13</span><span>SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop</span></a><a data-section="nike" href="#nike"><span class="toc-num">14</span><span>Nike matters twice: as a market competitor and as the operating reference the new CEO knows best</span></a></nav></div></aside><div class="toc-scrim" hidden="" id="tocScrim"></div><button aria-label="Back to top" class="back-to-top" id="backToTop" type="button">↑</button><script>
+(function(){
+  const PASSWORD = "movement";
+  const gate = document.getElementById("passwordGate");
+  const app = document.getElementById("appShell");
+  const form = document.getElementById("passwordForm");
+  const input = document.getElementById("passwordInput");
+  const error = document.getElementById("passwordError");
+  const toggle = document.getElementById("togglePassword");
+
+  function unlock(){
+    gate.classList.add("hidden");
+    app.classList.remove("is-locked");
+    document.body.classList.remove("no-scroll");
+    sessionStorage.setItem("lululemon_preread_unlocked","1");
+    setTimeout(()=>window.dispatchEvent(new Event("scroll")),0);
+  }
+
+  document.body.classList.add("no-scroll");
+  if(sessionStorage.getItem("lululemon_preread_unlocked")==="1"){
+    unlock();
+  } else {
+    setTimeout(()=>input && input.focus(), 80);
+  }
+
+  form && form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if((input.value||"") === PASSWORD){
+      error.textContent = "";
+      unlock();
+    } else {
+      error.textContent = "Incorrect password.";
+      input.select();
+    }
+  });
+
+  toggle && toggle.addEventListener("click", function(){
+    const showing = input.type === "text";
+    input.type = showing ? "password" : "text";
+    toggle.textContent = showing ? "Show" : "Hide";
+    toggle.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+    input.focus();
+  });
+
+  // Reading progress + back to top
+  const progress = document.getElementById("readingProgressBar");
+  const back = document.getElementById("backToTop");
+  function onScroll(){
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    if(progress) progress.style.width = (h > 0 ? Math.min(100,(y/h)*100) : 0) + "%";
+    if(back) back.classList.toggle("show", y > 700);
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+  back && back.addEventListener("click", ()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+  // TOC drawer
+  const drawer = document.getElementById("tocDrawer");
+  const scrim = document.getElementById("tocScrim");
+  const openBtn = document.getElementById("contentsButton");
+  const closeBtn = document.getElementById("tocClose");
+
+  function openDrawer(){
+    drawer && drawer.classList.add("open");
+    if(scrim){scrim.hidden=false}
+    openBtn && openBtn.setAttribute("aria-expanded","true");
+    document.body.classList.add("no-scroll");
+  }
+  function closeDrawer(){
+    drawer && drawer.classList.remove("open");
+    if(scrim){scrim.hidden=true}
+    openBtn && openBtn.setAttribute("aria-expanded","false");
+    if(gate.classList.contains("hidden")) document.body.classList.remove("no-scroll");
+  }
+  openBtn && openBtn.addEventListener("click", openDrawer);
+  closeBtn && closeBtn.addEventListener("click", closeDrawer);
+  scrim && scrim.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeDrawer(); });
+  document.querySelectorAll(".toc-nav a").forEach(a=>a.addEventListener("click", closeDrawer));
+
+  // Active-section navigation
+  const links = [...document.querySelectorAll('nav .links a[href^="#"], .toc-nav a[href^="#"]')];
+  const sectionEls = [...document.querySelectorAll("section[id]")];
+  if("IntersectionObserver" in window){
+    const io = new IntersectionObserver(entries=>{
+      const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(!visible) return;
+      const id = visible.target.id;
+      links.forEach(a=>a.classList.toggle("active", a.getAttribute("href")==="#"+id));
+    }, {rootMargin:"-18% 0px -68% 0px", threshold:[0,.15,.35,.6]});
+    sectionEls.forEach(s=>io.observe(s));
+  }
+
+  // Existing confidence filter, if present
+  document.querySelectorAll('.dial button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.dial button').forEach(b=>b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+      const level=Number(btn.dataset.level);
+      document.querySelectorAll('[data-conf]').forEach(el=>{
+        const map={fact:1,estimate:2,synthesis:3};
+        const v=map[el.dataset.conf]||1;
+        el.classList.toggle('dim',v>level);
+      });
+    });
+  });
+})();
+</script></div></body></html>
