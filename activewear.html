@@ -277,6 +277,38 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
   .gate-card{padding:28px 22px}
   .gate-card h1{font-size:31px}
 }
+
+/* ---------- TABLE ORDER / SCROLL FIX ---------- */
+.readable-table th{
+  position:static !important;
+  top:auto !important;
+  z-index:auto !important;
+}
+.table{
+  overflow-x:auto;
+  overflow-y:visible;
+}
+.readable-table thead th{
+  background:#f8f7f4;
+  border-bottom:1px solid var(--line-strong);
+}
+.readable-table thead tr{
+  display:table-row;
+}
+.readable-table tbody tr{
+  display:table-row;
+}
+/* Keep multi-line cells together visually */
+.readable-table td{
+  vertical-align:top;
+}
+
+.table-label{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin:18px 0 8px;padding:0 2px;
+}
+.table-label b{font-size:12px;color:var(--ink)}
+.table-label span{font-size:10px;color:var(--muted)}
 </style>
 </head>
 <body><div aria-labelledby="gateTitle" class="password-gate" id="passwordGate">
@@ -296,8 +328,6 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 <div class="gate-note">Internal use only</div>
 </div>
 </div>
-
-
 <div class="app-shell is-locked" id="appShell"><div aria-hidden="true" class="reading-progress"><span id="readingProgressBar"></span></div><nav><div><b>lululemon</b> × competitive context</div><button aria-controls="tocDrawer" aria-expanded="false" class="contents-button" id="contentsButton" type="button">Contents</button><div class="links"><a href="#exec">Bottom line</a><a href="#market">Market</a><a href="#product">Newness</a><a href="#architecture">Architecture</a><a href="#narrative">Narrative</a><a href="#gtm">GTM</a><a href="#offer">Offer</a><a href="#activation">Activation</a><a href="#digital">Digital</a><a href="#member">Membership</a><a href="#creator">Creators</a><a href="#value">Value</a><a href="#assortment">Assortment</a><a href="#nike">Nike</a></div><div aria-label="Evidence filter" class="dial" role="group"><span>Show</span><button aria-pressed="false" data-level="1" type="button">Facts</button><button aria-pressed="false" data-level="2" type="button">+ Estimates</button><button aria-pressed="true" data-level="3" type="button">All</button></div></nav><main class="shell">
 <header class="hero">
 <div><div class="k">Internal workshop pre-read · October 2026</div><h1>Same category. Three different ways to make people want the product.</h1>
@@ -354,23 +384,23 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 </section>
 <section id="product"><div class="head"><div><div class="k">03 · Product + newness</div><h2>Everyone is moving beyond leggings. Consumers are not rewarding the moves equally.</h2></div><p>Unpaid social shows a common direction—relaxed bottoms, dresses and skirts, coordinated looks, lifestyle versatility and color stories—but different consumer interpretations.</p></div>
 <div class="metrics"><div class="metric"><b>79%</b><span>lululemon · fit &amp; comfort</span></div><div class="metric"><b>77%</b><span>lululemon · good quality</span></div><div class="metric"><b>64%</b><span>Alo · style / design</span></div><div class="metric"><b>44%</b><span>Alo · trendy</span></div></div>
-<div class="table"><table aria-label="Everyone is moving beyond leggings. Consumers are not rewarding the moves equally." class="readable-table"><tr><th>Newness</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Consumer interpretation</th></tr>
-<tr><td><b>Relaxed / wide bottoms</b></td><td>Relaxed technical silhouettes</td><td>Trousers, flowy, fashion-led bottoms</td><td>Track + casual lifestyle</td><td>Alo: “want it.” Lulu: “is it better/different?” Vuori: “why this premium?”</td></tr>
-<tr><td><b>Dresses / skirts</b></td><td>Flow Y, tennis/racquet</td><td>Mini/maxi, skirts, occasion silhouettes</td><td>Lower signal</td><td>Alo has broad permission; Lulu works when lifestyle extension retains utility.</td></tr>
-<tr><td><b>Core innovation</b></td><td>High expectation; Align No Line polarized</td><td>Less central to excitement</td><td>Core performance franchises remain equity</td><td>Technical difference ≠ automatic consumer improvement.</td></tr>
-<tr><td><b>Color</b></td><td>Product / franchise → new color</td><td><b>New color → collection / multiple categories</b></td><td>Assortment → seasonal / tonal color</td><td>Alo most clearly turns color itself into the launch.</td></tr>
-<tr><td><b>Total look</b></td><td>Opportunity to amplify</td><td>Bags, shoes, coordinated outfits</td><td>Less central</td><td>Alo increasingly sells the look, not only the item.</td></tr></table></div>
+<div class="table"><table aria-label="Everyone is moving beyond leggings. Consumers are not rewarding the moves equally." class="readable-table">
+
+
+
+
+<thead><tr><th>Newness</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Consumer interpretation</th></tr></thead><tbody><tr><td><b>Relaxed / wide bottoms</b></td><td>Relaxed technical silhouettes</td><td>Trousers, flowy, fashion-led bottoms</td><td>Track + casual lifestyle</td><td>Alo: “want it.” Lulu: “is it better/different?” Vuori: “why this premium?”</td></tr><tr><td><b>Dresses / skirts</b></td><td>Flow Y, tennis/racquet</td><td>Mini/maxi, skirts, occasion silhouettes</td><td>Lower signal</td><td>Alo has broad permission; Lulu works when lifestyle extension retains utility.</td></tr><tr><td><b>Core innovation</b></td><td>High expectation; Align No Line polarized</td><td>Less central to excitement</td><td>Core performance franchises remain equity</td><td>Technical difference ≠ automatic consumer improvement.</td></tr><tr><td><b>Color</b></td><td>Product / franchise → new color</td><td><b>New color → collection / multiple categories</b></td><td>Assortment → seasonal / tonal color</td><td>Alo most clearly turns color itself into the launch.</td></tr><tr><td><b>Total look</b></td><td>Opportunity to amplify</td><td>Bags, shoes, coordinated outfits</td><td>Less central</td><td>Alo increasingly sells the look, not only the item.</td></tr></tbody></table></div>
 <div class="proof">Basis: 90-day Reddit/unpaid social read; official sites used for factual product verification. Social themes are directional unless corroborated quantitatively.</div>
 </section>
 <section id="architecture"><div class="head"><div><div class="k">04 · Product architecture</div><h2>lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture.</h2></div><p>The deepest new finding from the product-architecture work is the distinction between an <b>authored store</b> and a <b>generated store</b>. Alo, Vuori and Athleta curate browse structures. lululemon can generate pages from intersecting product attributes—powerful for search and expert shoppers, but materially more complex for orientation.</p></div>
-<div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table"><tr><th>Dimension</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Athleta</th></tr>
-<tr><td><b>Architecture</b></td><td>Two-facet generator</td><td>Curated nav; 6 shelves / gender</td><td>Flat curated list</td><td>Shallow tree; 2 levels</td></tr>
-<tr><td><b>Top-level nodes</b></td><td>20</td><td>4</td><td>5</td><td>10</td></tr>
-<tr><td><b>Navigable browse pages</b></td><td>Thousands, generated</td><td>~78</td><td>247</td><td>~45–55</td></tr>
-<tr><td><b>Franchises as browse axis</b></td><td>70+</td><td>0</td><td>~47</td><td>Not exposed / unverified</td></tr>
-<tr><td><b>Fabric names as browse axis</b></td><td>~35</td><td>5</td><td>~8</td><td>Not exposed / unverified</td></tr>
-<tr><td><b>Activities</b></td><td>~15</td><td>6</td><td>13</td><td>~6</td></tr>
-<tr><td><b>Independent attribute families</b></td><td><b>18</b></td><td>7</td><td>7</td><td>6</td></tr></table></div>
+<div class="table-label"><b>Architecture comparison</b><span>How each brand organizes the product catalog</span></div><div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table">
+
+
+
+
+
+
+<thead><tr><th>Dimension</th><th>lululemon</th><th>Alo</th><th>Vuori</th><th>Athleta</th></tr></thead><tbody><tr><td><b>Architecture</b></td><td>Two-facet generator</td><td>Curated nav; 6 shelves / gender</td><td>Flat curated list</td><td>Shallow tree; 2 levels</td></tr><tr><td><b>Top-level nodes</b></td><td>20</td><td>4</td><td>5</td><td>10</td></tr><tr><td><b>Navigable browse pages</b></td><td>Thousands, generated</td><td>~78</td><td>247</td><td>~45–55</td></tr><tr><td><b>Franchises as browse axis</b></td><td>70+</td><td>0</td><td>~47</td><td>Not exposed / unverified</td></tr><tr><td><b>Fabric names as browse axis</b></td><td>~35</td><td>5</td><td>~8</td><td>Not exposed / unverified</td></tr><tr><td><b>Activities</b></td><td>~15</td><td>6</td><td>13</td><td>~6</td></tr><tr><td><b>Independent attribute families</b></td><td><b>18</b></td><td>7</td><td>7</td><td>6</td></tr></tbody></table></div>
 <div class="visual-row arch-visual" style="margin:14px 0">
 <div class="chart-card">
 <p class="chart-title">Independent attribute families</p>
@@ -399,11 +429,11 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 <div class="card"><h3>Translation-layer signal</h3><p>lululemon offers a leggings quiz, guide, inline fabric definitions, 1:1 product-expert video chat and hemming. Those tools are useful—and also reveal how much translation the product system requires.</p></div>
 <div class="card"><h3><span class="warn">⚠ 85%</span> · Customer implication</h3><p>The architecture is exceptionally powerful for a fluent returning guest. The pressure test is whether a newer guest learns the brand’s language—or simply completes one transaction.</p></div></div>
 <div class="quote"><span class="quote-label">Key takeaway</span>Our competitors sell leggings. We built a quiz to help customers buy ours.</div>
-<div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table"><tr><th>Same purchase: women’s leggings</th><th>lululemon</th><th>Alo</th></tr>
-<tr><td><b>Front door</b></td><td>20 top-level entries; 15 are promotional / campaign constructs</td><td>4 primary doors: Women, Men, Accessories, Shoes</td></tr>
-<tr><td><b>Ways to narrow bottoms</b></td><td>10 filters</td><td>6 filters</td></tr>
-<tr><td><b>Named fabrics</b></td><td>~35 sitewide</td><td>5</td></tr>
-<tr><td><b>Decision help</b></td><td>Quiz, guide, inline definitions, expert video chat, hemming</td><td>Much lighter translation layer</td></tr></table></div>
+<div class="table" data-conf="fact"><table aria-label="lululemon does not simply have “more taxonomy.” It has a fundamentally different architecture." class="readable-table">
+
+
+
+<thead><tr><th>Same purchase: women’s leggings</th><th>lululemon</th><th>Alo</th></tr></thead><tbody><tr><td><b>Front door</b></td><td>20 top-level entries; 15 are promotional / campaign constructs</td><td>4 primary doors: Women, Men, Accessories, Shoes</td></tr><tr><td><b>Ways to narrow bottoms</b></td><td>10 filters</td><td>6 filters</td></tr><tr><td><b>Named fabrics</b></td><td>~35 sitewide</td><td>5</td></tr><tr><td><b>Decision help</b></td><td>Quiz, guide, inline definitions, expert video chat, hemming</td><td>Much lighter translation layer</td></tr></tbody></table></div>
 </section>
 <section data-conf="synthesis" id="narrative"><div class="head"><div><div class="k">05 · Brand narrative</div><h2>Reality and narrative are diverging</h2></div><p>lululemon’s product experience remains stronger than the external narrative can imply. Alo’s cultural meaning is stronger than its experienced product-quality advantage alone would predict.</p></div>
 <div class="panels"><div class="panel red"><div class="tag lulu">lululemon</div><h3>Functional authority</h3><div class="chain">PRODUCT → PERFORMANCE → TRUST → PREMIUM</div><p>Lulu materially outperforms Alo on fit/comfort and quality among Lulu guests, while internal tracking shows pressure around trend-setting and stylishness in important cohorts.</p></div>
@@ -458,20 +488,20 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 </div>
 <div class="table">
 <table aria-label="The category is becoming an ecosystem—not just an apparel assortment" class="offer-table readable-table">
-<tr><th>Current U.S. offer</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
-<tr><td><b>Technical / performance apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr>
-<tr><td><b>Lifestyle apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr>
-<tr><td><b>Tailored / occasion apparel</b></td><td><span class="status present">Present</span></td><td><span class="status core">Core</span></td><td><span class="status present">Present</span></td></tr>
-<tr><td><b>Denim</b></td><td><span class="status none">Not core</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr>
-<tr><td><b>Footwear</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
-<tr><td><b>Functional bags / accessories</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td></tr>
-<tr><td><b>Luxury / fashion accessories</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
-<tr><td><b>Fitness / yoga equipment</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status selective">Selective</span></td></tr>
-<tr><td><b>Beauty / body / supplements</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr>
-<tr><td><b>Digital fitness / wellness</b></td><td><span class="status partner">Partner</span></td><td><span class="status core">Core</span></td><td><span class="status selective">Limited</span></td></tr>
-<tr><td><b>Resale / circular</b></td><td><span class="status core">Like New</span></td><td><span class="status none">Not core</span></td><td><span class="status none">Not core</span></td></tr>
-<tr><td><b>Wholesale capability</b></td><td><span class="status selective">Selective</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<thead><tr><th>Current U.S. offer</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr></thead><tbody><tr><td><b>Technical / performance apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr><tr><td><b>Lifestyle apparel</b></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td><td><span class="status core">Core</span></td></tr><tr><td><b>Tailored / occasion apparel</b></td><td><span class="status present">Present</span></td><td><span class="status core">Core</span></td><td><span class="status present">Present</span></td></tr><tr><td><b>Denim</b></td><td><span class="status none">Not core</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr><tr><td><b>Footwear</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr><tr><td><b>Functional bags / accessories</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td></tr><tr><td><b>Luxury / fashion accessories</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr><tr><td><b>Fitness / yoga equipment</b></td><td><span class="status present">Present</span></td><td><span class="status present">Present</span></td><td><span class="status selective">Selective</span></td></tr><tr><td><b>Beauty / body / supplements</b></td><td><span class="status none">Not core</span></td><td><span class="status present">Present</span></td><td><span class="status none">Not core</span></td></tr><tr><td><b>Digital fitness / wellness</b></td><td><span class="status partner">Partner</span></td><td><span class="status core">Core</span></td><td><span class="status selective">Limited</span></td></tr><tr><td><b>Resale / circular</b></td><td><span class="status core">Like New</span></td><td><span class="status none">Not core</span></td><td><span class="status none">Not core</span></td></tr><tr><td><b>Wholesale capability</b></td><td><span class="status selective">Selective</span></td><td><span class="status selective">Selective</span></td><td><span class="status present">Present</span></td></tr></tbody></table>
 </div>
 <div class="grid3" style="margin-top:14px">
 <div class="card"><div class="tag lulu">lululemon</div><h3>Deepens around movement</h3><p>Footwear, equipment, app utility, Peloton content and Like New extend engagement while staying relatively close to movement and product performance.</p></div>
@@ -504,10 +534,10 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 <div class="grid3"><div class="card"><div class="tag lulu">lululemon</div><h3>Product + activity led</h3><p>Activity · franchise · fit/fabric · color · new/seasonal edit. Deep utility helps a returning guest find the exact technical product fast.</p></div>
 <div class="card"><div class="tag alo">Alo</div><h3>Editorial + look led</h3><p>New · celebrity edit · color · matching looks · travel/occasion · wellness. Aspiration sits beside category shopping.</p><span class="inline-source"><strong>Source:</strong> Alo current U.S. navigation / merchandising.</span></div>
 <div class="card"><div class="tag vuori">Vuori</div><h3>Collection + lifestyle led</h3><p>New · DreamKnit / BlissBlend · ambassador picks · events · Journal. Simpler journey anchored in named materials and community.</p><span class="inline-source"><strong>Source:</strong> Vuori current U.S. navigation / collections.</span></div></div>
-<div class="table" style="margin-top:14px"><table aria-label="The site is a business-model diagram in disguise" class="readable-table"><tr><th>Route to market</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
-<tr><td><b>Model</b></td><td>Owned core + controlled B2B</td><td>Owned ecosystem + limited third party</td><td>Owned DTC + visible selective wholesale</td></tr>
-<tr><td><b>How it works</b></td><td>825 company-operated stores in Q2 FY26. Owned stores/e-commerce central; Strategic Sales serves studios, sport specialty, resorts, clubs and pro shops.</td><td>Owned retail/e-commerce carry the cultural world; selective third-party retail exists but is less central to the public story.</td><td>Owned stores/e-commerce remain hub; REI/Nordstrom add visible reach; ACTV localizes around stores.</td></tr>
-<tr><td><b>Implication</b></td><td>Borrow distribution selectively without surrendering technical brand control.</td><td>Distribution protects aspiration and cultural theater.</td><td>Partners add reach while stores localize the relationship.</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> Alo current Nordstrom presence + owned commerce; Vuori wholesale terms + current REI/Nordstrom assortments + ACTV.</span>
+<div class="table" style="margin-top:14px"><table aria-label="The site is a business-model diagram in disguise" class="readable-table">
+
+
+<thead><tr><th>Route to market</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr></thead><tbody><tr><td><b>Model</b></td><td>Owned core + controlled B2B</td><td>Owned ecosystem + limited third party</td><td>Owned DTC + visible selective wholesale</td></tr><tr><td><b>How it works</b></td><td>825 company-operated stores in Q2 FY26. Owned stores/e-commerce central; Strategic Sales serves studios, sport specialty, resorts, clubs and pro shops.</td><td>Owned retail/e-commerce carry the cultural world; selective third-party retail exists but is less central to the public story.</td><td>Owned stores/e-commerce remain hub; REI/Nordstrom add visible reach; ACTV localizes around stores.</td></tr><tr><td><b>Implication</b></td><td>Borrow distribution selectively without surrendering technical brand control.</td><td>Distribution protects aspiration and cultural theater.</td><td>Partners add reach while stores localize the relationship.</td></tr></tbody></table></div><span class="inline-source"><strong>Public competitor sources:</strong> Alo current Nordstrom presence + owned commerce; Vuori wholesale terms + current REI/Nordstrom assortments + ACTV.</span>
 </section>
 <section id="member"><div class="head"><div><div class="k">10 · Loyalty + membership</div><h2>Membership is becoming part of the brand proposition—not just a CRM layer</h2></div><p>The programs reward different behaviors and reinforce different reasons to stay close to the brand.</p></div>
 <div class="grid3">
@@ -516,20 +546,20 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 <div class="card"><div class="tag vuori">Vuori · community + recommendation</div><h3>Birthday + referral + V1</h3><p>No broad consumer points ladder surfaced. Birthday rewards and referral mechanics sit alongside V1: a qualified pro/community program with 40% off, events and product feedback/testing.</p><p><b>Competitive lesson:</b> local/pro networks can reinforce trial and advocacy.</p><span class="inline-source"><strong>Sources:</strong> Vuori Birthday Rewards, Refer-a-Friend + V1 Community current official pages.</span></div></div>
 </section>
 <section data-conf="synthesis" id="creator"><div class="head"><div><div class="k">11 · Creator + ambassador architecture</div><h2>Every brand has icons, experts and community. The weighting is the strategy.</h2></div><p>The competitive distinction is not whether a brand “uses influencers.” All three operate across global icon, domain credibility and local/community layers.</p></div>
-<div class="table"><table aria-label="Every brand has icons, experts and community. The weighting is the strategy." class="readable-table"><tr><th>Tier</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
-<tr><td><b>Global icon / mass reach</b></td><td>Lewis Hamilton</td><td>Bella Hadid; Kendall &amp; Kylie Jenner</td><td>Tom Holland; Kaia Gerber</td></tr>
-<tr><td><b>Domain credibility</b></td><td>Frances Tiafoe; Min Woo Lee; trainers as product proof</td><td>Creator/comedy wellness voices + instructor ecosystem</td><td>Jack Draper; Kirsty Godso</td></tr>
-<tr><td><b>High-frequency / local</b></td><td>Megan Roup / Sculpt Society; ambassador/community network</td><td>Wellness Club instructors; sanctuary classes; high-frequency creators</td><td>Livvy Dunne; Arch Manning; trainers + ACTV communities</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> WWD / Yahoo Shopping / SCMP for Alo creator ecosystem; Highsnobiety / FashionNetwork / WWD / Athletech News for Vuori talent.</span>
+<div class="table"><table aria-label="Every brand has icons, experts and community. The weighting is the strategy." class="readable-table">
+
+
+<thead><tr><th>Tier</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr></thead><tbody><tr><td><b>Global icon / mass reach</b></td><td>Lewis Hamilton</td><td>Bella Hadid; Kendall &amp; Kylie Jenner</td><td>Tom Holland; Kaia Gerber</td></tr><tr><td><b>Domain credibility</b></td><td>Frances Tiafoe; Min Woo Lee; trainers as product proof</td><td>Creator/comedy wellness voices + instructor ecosystem</td><td>Jack Draper; Kirsty Godso</td></tr><tr><td><b>High-frequency / local</b></td><td>Megan Roup / Sculpt Society; ambassador/community network</td><td>Wellness Club instructors; sanctuary classes; high-frequency creators</td><td>Livvy Dunne; Arch Manning; trainers + ACTV communities</td></tr></tbody></table></div><span class="inline-source"><strong>Public competitor sources:</strong> WWD / Yahoo Shopping / SCMP for Alo creator ecosystem; Highsnobiety / FashionNetwork / WWD / Athletech News for Vuori talent.</span>
 <div class="grid2" style="margin-top:14px"><div class="card"><h3>Alo’s current creator controversy is strategically relevant</h3><p>Recent TikTok/IP-enforcement reports matter because they collide directly with the creator-led discovery engine that helps Alo generate cultural heat. The lesson is not to attack Alo; it is to recognize creators as demand infrastructure.</p></div>
 <div class="card"><h3>What lululemon can learn</h3><p>Make permissions clear, protect authentic fan content, create a human escalation path, and measure creators by <b>product discovery + cultural transmission</b>—not impressions alone.</p></div></div>
 </section>
 <section id="value"><div class="head"><div><div class="k">12 · Price, value + reach</div><h2>Price and awareness do not point to one simple fix</h2></div><p>Alo can ask more for representative hero products, while lululemon still operates at materially greater digital scale. The strategic pressure is to make product/value superiority visible enough to translate those assets into full-price demand.</p></div>
-<div class="table" data-conf="estimate"><table aria-label="Price and awareness do not point to one simple fix" class="readable-table"><tr><th>Representative full-price hero item</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr>
-<tr><td>Core high-rise legging</td><td>$98</td><td>$134</td><td>$110</td></tr>
-<tr><td>Sports bra</td><td>$58</td><td>$78</td><td>$68</td></tr>
-<tr><td>Hero hoodie</td><td>$128</td><td>$148</td><td>$110</td></tr>
-<tr><td>Jogger / sweatpant</td><td>$118</td><td>$138</td><td>$110</td></tr>
-<tr><td><b>4-item basket</b></td><td><b>$402</b></td><td><b>$498</b></td><td><b>$398</b></td></tr></table></div>
+<div class="table" data-conf="estimate"><table aria-label="Price and awareness do not point to one simple fix" class="readable-table">
+
+
+
+
+<thead><tr><th>Representative full-price hero item</th><th>lululemon</th><th>Alo</th><th>Vuori</th></tr></thead><tbody><tr><td>Core high-rise legging</td><td>$98</td><td>$134</td><td>$110</td></tr><tr><td>Sports bra</td><td>$58</td><td>$78</td><td>$68</td></tr><tr><td>Hero hoodie</td><td>$128</td><td>$148</td><td>$110</td></tr><tr><td>Jogger / sweatpant</td><td>$118</td><td>$138</td><td>$110</td></tr><tr><td><b>4-item basket</b></td><td><b>$402</b></td><td><b>$498</b></td><td><b>$398</b></td></tr></tbody></table></div>
 <div class="visual-row">
 <div class="chart-card">
 <p class="chart-title">Representative 4-item women’s basket</p>
@@ -553,18 +583,18 @@ section:nth-of-type(even){background:rgba(255,255,255,.34)}
 </div>
 </section>
 <section id="assortment"><div class="head"><div><div class="k">13 · Current assortment snapshot</div><h2>SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop</h2></div><p>A current public-site snapshot shows four materially different assortment systems. Counts are live product-card counts where exposed and should be treated as directional assortment surface area—not normalized unique SKU counts.</p></div>
-<div class="table" data-conf="fact"><table aria-label="SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop" class="readable-table"><tr><th>Brand</th><th>Visible assortment breadth</th><th>Primary taxonomy</th><th>Representative full-price bands</th><th>What it signals</th></tr>
-<tr><td><b>lululemon</b></td><td>Women’s pants 246<br/>Leggings 91<br/>Shirts 236<br/>Dresses 21</td><td>Category → activity → franchise/collection → fabric → feature → climate</td><td>Leggings ~$88–148<br/>Shirts ~$48–98<br/>Pants ~$98–168<br/>Dresses ~$88–168</td><td>Deep functional architecture. The opportunity is making breadth feel like meaningful newness rather than complexity.</td></tr>
-<tr><td><b>Alo</b></td><td>Leggings 283<br/>Tops 379<br/>Shorts 239<br/>Skirts 96</td><td>Category + activity + fabric + length + color + “Just Dropped” recency</td><td>Core leggings ~$128–155<br/>Core shorts ~$78–98<br/>Atelier can extend $300+</td><td>Large visible style/color surface area; recency itself becomes a shopping dimension.</td></tr>
-<tr><td><b>Vuori</b></td><td>Public collection pages do not consistently expose a total item count</td><td>Type → activity → fabric → fit → support → length</td><td>Leggings ~$98–118<br/>Joggers/wide-leg ~$98–128<br/>Tops/bras ~$54–88<br/>Denim ~$198</td><td>Clear fabric-led ladder; expansion increasingly stretches into lifestyle.</td></tr>
-<tr><td><b>Athleta</b></td><td>All bottoms 269<br/>Leggings 75<br/>All tops 392<br/>Dresses 22</td><td>Category → activity → fit/size → price; franchise families support navigation</td><td>Leggings ~$79–119<br/>Tops ~$39–119<br/>Bottoms ~$55–149<br/>Dresses ~$79–149</td><td>Broad mass-premium coverage with lower opening price and stronger promotional visibility.</td></tr></table></div><span class="inline-source"><strong>Public competitor sources:</strong> current Alo, Vuori and Athleta U.S. collection/navigation pages. Counts reflect visible product cards / site structure and are not normalized unique-SKU counts.</span>
+<div class="table-label"><b>Current assortment snapshot</b><span>Visible public-site breadth, taxonomy and representative price bands</span></div><div class="table" data-conf="fact"><table aria-label="SKU breadth is only part of the story—the taxonomy tells you how each brand wants the customer to shop" class="readable-table">
+
+
+
+<thead><tr><th>Brand</th><th>Visible assortment breadth</th><th>Primary taxonomy</th><th>Representative full-price bands</th><th>What it signals</th></tr></thead><tbody><tr><td><b>lululemon</b></td><td>Women’s pants 246<br/>Leggings 91<br/>Shirts 236<br/>Dresses 21</td><td>Category → activity → franchise/collection → fabric → feature → climate</td><td>Leggings ~$88–148<br/>Shirts ~$48–98<br/>Pants ~$98–168<br/>Dresses ~$88–168</td><td>Deep functional architecture. The opportunity is making breadth feel like meaningful newness rather than complexity.</td></tr><tr><td><b>Alo</b></td><td>Leggings 283<br/>Tops 379<br/>Shorts 239<br/>Skirts 96</td><td>Category + activity + fabric + length + color + “Just Dropped” recency</td><td>Core leggings ~$128–155<br/>Core shorts ~$78–98<br/>Atelier can extend $300+</td><td>Large visible style/color surface area; recency itself becomes a shopping dimension.</td></tr><tr><td><b>Vuori</b></td><td>Public collection pages do not consistently expose a total item count</td><td>Type → activity → fabric → fit → support → length</td><td>Leggings ~$98–118<br/>Joggers/wide-leg ~$98–128<br/>Tops/bras ~$54–88<br/>Denim ~$198</td><td>Clear fabric-led ladder; expansion increasingly stretches into lifestyle.</td></tr><tr><td><b>Athleta</b></td><td>All bottoms 269<br/>Leggings 75<br/>All tops 392<br/>Dresses 22</td><td>Category → activity → fit/size → price; franchise families support navigation</td><td>Leggings ~$79–119<br/>Tops ~$39–119<br/>Bottoms ~$55–149<br/>Dresses ~$79–149</td><td>Broad mass-premium coverage with lower opening price and stronger promotional visibility.</td></tr></tbody></table></div><span class="inline-source"><strong>Public competitor sources:</strong> current Alo, Vuori and Athleta U.S. collection/navigation pages. Counts reflect visible product cards / site structure and are not normalized unique-SKU counts.</span>
 <div class="grid3" style="margin-top:14px"><div class="card"><h3>Do not confuse product cards with unique SKUs</h3><p>Sites handle colors, inseams and repeated styles differently. Use counts to understand assortment surface area, not exact inventory.</p></div><div class="card"><h3>lululemon has the deepest functional taxonomy</h3><p>Activity, franchise, fabric, feature and fit create powerful utility—but can make newness read as an extension of the existing system.</p></div><div class="card"><h3>Alo makes recency part of the taxonomy</h3><p>“Just dropped,” color shops and broad style visibility turn browsing itself into a newness loop.</p></div></div>
 </section>
 <section id="nike"><div class="head"><div><div class="k">14 · Nike as competitor + CEO reference frame</div><h2>Nike matters twice: as a market competitor and as the operating reference the new CEO knows best</h2></div><p>Heidi O’Neill spent nearly thirty years at Nike. The useful lesson is not to imitate Nike’s language—it is to understand which structural moves sit behind the language, then be explicit about where lululemon should diverge.</p></div>
-<div class="table"><table aria-label="Nike matters twice: as a market competitor and as the operating reference the new CEO knows best" class="readable-table"><tr><th>Nike move</th><th>What changed</th><th>Lesson for lululemon</th></tr>
-<tr><td><b>Sport Offense</b></td><td>Reorganized around sport rather than men’s / women’s / kids; sport businesses own revenue, margin and share.</td><td>Operating principles matter when accountability and decision rights sit behind them—not when they remain cultural language.</td></tr>
-<tr><td><b>Wholesale repair</b></td><td>Rebuilding DICK’S / JD relationships after DTC over-rotation; wholesale grew while Nike Direct declined in the cited period.</td><td>Reach and demand signal can be strategically worth more than maximizing margin per unit.</td></tr>
-<tr><td><b>Full-price reset</b></td><td>Nike cited a 15-point improvement in full-price realization while pulling back digital promotion and cutting wholesale supply.</td><td>A turnaround can require accepting near-term revenue pressure to repair pricing and channel behavior.</td></tr></table></div><span class="inline-source"><strong>Public sources:</strong> Nike public reporting and trade coverage of Sport Offense, wholesale reset and full-price realization.</span>
+<div class="table"><table aria-label="Nike matters twice: as a market competitor and as the operating reference the new CEO knows best" class="readable-table">
+
+
+<thead><tr><th>Nike move</th><th>What changed</th><th>Lesson for lululemon</th></tr></thead><tbody><tr><td><b>Sport Offense</b></td><td>Reorganized around sport rather than men’s / women’s / kids; sport businesses own revenue, margin and share.</td><td>Operating principles matter when accountability and decision rights sit behind them—not when they remain cultural language.</td></tr><tr><td><b>Wholesale repair</b></td><td>Rebuilding DICK’S / JD relationships after DTC over-rotation; wholesale grew while Nike Direct declined in the cited period.</td><td>Reach and demand signal can be strategically worth more than maximizing margin per unit.</td></tr><tr><td><b>Full-price reset</b></td><td>Nike cited a 15-point improvement in full-price realization while pulling back digital promotion and cutting wholesale supply.</td><td>A turnaround can require accepting near-term revenue pressure to repair pricing and channel behavior.</td></tr></tbody></table></div><span class="inline-source"><strong>Public sources:</strong> Nike public reporting and trade coverage of Sport Offense, wholesale reset and full-price realization.</span>
 </section>
 <footer class="foot"><b>Internal workshop context.</b> This is a context-setting synthesis, not a substitute for first-party funnel, sales, margin, inventory or customer-level analysis. Public assortment and site architecture can change over time.</footer>
 </main><script>
