@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hyatt | Growth Opportunity Analysis | Consello BEG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --ink:#000000; --paper:#FFFFFF; --terra:#A64A30; --apricot:#F6D1A3;
+  --muted:#5B5B5B; --rule:#E4E0DB; --soft:#FBF4EC;
+  --font:'DM Sans', Arial, Helvetica, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--terra)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--terra);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+header.top{padding:36px 0 28px;border-bottom:1px solid var(--rule)}
+.brandrow{display:flex;gap:20px;align-items:flex-start}
+.logo{width:64px;height:64px;flex:0 0 64px;display:block}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 10px;font-weight:700}
+.sub{color:var(--muted);font-size:15px;margin:0}
+.note{margin-top:18px;font-size:13.5px;color:var(--ink);background:var(--soft);border-left:3px solid var(--terra);padding:10px 14px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
+nav.toc .wrap{display:flex;gap:18px;overflow-x:auto;padding-top:12px;padding-bottom:12px;scrollbar-width:none}
+nav.toc a{color:var(--ink);text-decoration:none;font-weight:500;font-size:14px;white-space:nowrap}
+nav.toc a:hover{color:var(--terra)}
+section{padding:44px 0 8px}
+h2{font-size:28px;letter-spacing:-0.015em;line-height:1.15;margin:0 0 6px}
+h2 + .lede{color:var(--muted);margin:0 0 22px;max-width:70ch}
+h3{font-size:20px;line-height:1.25;margin:0 0 8px;letter-spacing:-0.01em}
+h4{font-size:15px;margin:18px 0 6px;font-weight:700}
+p{margin:0 0 12px;max-width:74ch}
+ul{margin:0 0 12px;padding-left:20px;max-width:72ch}
+li{margin-bottom:6px}
+.tldr{font-size:19px;line-height:1.5;border-left:4px solid var(--terra);padding:4px 0 4px 20px;max-width:none}
+.tldr p{max-width:72ch}
+.tag{display:inline-block;font-size:12px;font-weight:500;padding:1px 8px;border-radius:9999px;border:1px solid var(--ink);margin-right:6px;vertical-align:1px;white-space:nowrap}
+.tag.f{background:var(--ink);color:var(--paper)}
+.tag.i{border-color:var(--terra);color:var(--terra)}
+.tag.h{background:var(--apricot);border-color:var(--apricot)}
+.tag.e{border-style:dashed}
+.math{border:1px solid var(--ink);padding:16px 18px;margin:16px 0;max-width:74ch}
+.math table{border-collapse:collapse;width:100%;font-size:14.5px}
+.math td{padding:5px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.math td:last-child{text-align:right;font-weight:700;padding-left:16px;white-space:nowrap}
+.math tr:last-child td{border-bottom:0}
+/* exec summary slides */
+.slides{display:grid;gap:22px}
+.slide{border:1px solid var(--ink);aspect-ratio:16/9;padding:clamp(16px,3.2vw,34px);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.slide .sl-title{font-size:clamp(17px,2.6vw,28px);font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0 0 clamp(14px,3.5vw,40px);max-width:30ch}
+.slide .foot{position:absolute;bottom:10px;left:clamp(16px,3.2vw,34px);font-size:10px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}
+.stat b{display:block;font-size:clamp(24px,5vw,54px);letter-spacing:-0.02em;line-height:1}
+.stat span{font-size:clamp(10px,1.3vw,13px);color:var(--muted);display:block;margin-top:6px}
+.slide .so{font-size:clamp(12px,1.9vw,19px);border-top:2px solid var(--terra);padding-top:12px;margin:auto 0 18px;max-width:none}
+.moves{list-style:none;padding:0;margin:0 0 18px;max-width:none;display:grid;gap:clamp(6px,1.6vw,16px)}
+.moves li{display:grid;grid-template-columns:36px 1fr;font-size:clamp(12px,2.1vw,21px);margin:0;align-items:baseline}
+.moves li b{color:var(--terra)}
+@media (max-width:640px){.slide{aspect-ratio:auto}.stats{grid-template-columns:repeat(2,1fr)}}
+/* ranking */
+.rank-scroll{overflow-x:auto}
+table.rank{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+table.rank th{text-align:left;font-weight:500;color:var(--muted);font-size:12.5px;padding:8px 8px;border-bottom:2px solid var(--ink)}
+table.rank td{padding:12px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.rank td.n{font-weight:700;font-size:18px;width:34px}
+table.rank td.num{text-align:center;font-weight:700;width:52px}
+table.rank .opp{font-weight:700}
+table.rank .opp small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px}
+.cbar{position:relative;height:16px;background:#F3F1EE;width:170px;margin-top:3px}
+.cbar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.cbar i.hz{background:var(--terra)}
+.cbar .t{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--apricot);z-index:1}
+.cval{font-weight:700;font-size:13px}
+.legend{font-size:12.5px;color:var(--muted);margin-top:10px}
+tr.horizon td{background:#FFFBF6}
+/* deep dives */
+details.dd{border-top:2px solid var(--ink);padding:20px 0 6px;margin-top:26px}
+details.dd>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:start}
+details.dd>summary::-webkit-details-marker{display:none}
+.dd-n{font-size:38px;font-weight:700;line-height:.9;color:var(--terra)}
+.dd-h{font-size:22px;font-weight:700;line-height:1.2;letter-spacing:-0.01em}
+.dd-h small{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-top:6px;letter-spacing:0}
+.dd-s{font-size:12.5px;text-align:right;white-space:nowrap;color:var(--muted)}
+.dd-s b{color:var(--ink);font-size:15px}
+.voice{font-size:19px;line-height:1.45;margin:18px 0 6px 64px;padding-left:16px;border-left:2px solid var(--apricot);max-width:62ch}
+.voice cite{display:block;font-style:normal;font-size:13px;color:var(--muted);margin-top:6px}
+.dd-body{margin-left:64px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px 32px}
+.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:6px 0 10px}
+.impact div{border-top:1px solid var(--ink);padding-top:8px;font-size:14.5px}
+.impact div b{display:block;font-size:13px;color:var(--terra);margin-bottom:4px}
+.bullets{background:var(--soft);padding:12px 16px;margin:14px 0}
+.bullets ul{margin:0}
+.conf{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:10px;margin-top:14px}
+@media (max-width:720px){
+  .voice,.dd-body{margin-left:0}
+  .two,.impact{grid-template-columns:1fr}
+  details.dd>summary{grid-template-columns:40px 1fr}
+  .dd-s{grid-column:2;text-align:left}
+}
+/* secondary list */
+.sec{border-top:1px solid var(--ink);padding:18px 0 6px;display:grid;grid-template-columns:52px 1fr;gap:12px}
+.sec .n{font-size:26px;font-weight:700;color:var(--terra);line-height:1}
+.sec h3 small{font-weight:500;color:var(--muted);font-size:13.5px;display:block;margin-top:4px}
+/* white space */
+.ws{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ws > div{border-top:3px solid var(--ink);padding-top:12px}
+.ws > div:last-child{border-top-color:var(--terra)}
+.ws ul{padding-left:18px;font-size:14.5px}
+@media (max-width:760px){.ws{grid-template-columns:1fr}}
+.counter{border:1px solid var(--terra);padding:18px 20px;margin:18px 0}
+ol.src{font-size:13.5px;padding-left:22px;max-width:none}
+ol.src li{margin-bottom:7px}
+.final{font-size:22px;font-weight:700;line-height:1.35;letter-spacing:-0.01em;border-top:4px solid var(--terra);padding:22px 0 60px;margin-top:36px;max-width:60ch}
+.final span{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-bottom:8px;letter-spacing:0}
+.cmp th[data-k]{cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+/* teardown */
+.sub-h{border-top:2px solid var(--ink);padding-top:18px;margin-top:34px}
+.pills{margin:6px 0 12px}
+.pills button{font:inherit;font-size:13.5px;font-weight:500;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:9999px;padding:5px 14px;margin:0 6px 8px 0;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+table.cards{border-collapse:collapse;width:100%;min-width:780px;font-size:13.5px}
+table.cards th{text-align:left;font-weight:500;color:var(--muted);font-size:12.5px;padding:8px;border-bottom:2px solid var(--ink)}
+table.cards td{padding:9px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.cards tr.prog td{font-weight:700;padding-top:16px;border-bottom:1px solid var(--ink)}
+table.cards tr.hy td{background:var(--soft)}
+table.cards tr.gap td{color:var(--terra);font-style:italic}
+table.cards tr[hidden]{display:none}
+.scorer{display:grid;grid-template-columns:260px 1fr;gap:28px;margin-top:12px}
+.weights label{display:block;font-size:13.5px;font-weight:500;margin-bottom:12px}
+.weights input{width:100%;accent-color:var(--terra)}
+.weights output{font-weight:700;float:right}
+.plist{list-style:none;padding:0;margin:0;max-width:none}
+.plist li{display:grid;grid-template-columns:1fr 46px;gap:4px 12px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.plist .pn{font-weight:700;font-size:14.5px}
+.plist .ps{font-weight:700;text-align:right}
+.plist .pb{grid-column:1 / -1;height:8px;background:#F3F1EE;position:relative}
+.plist .pb i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.plist li:first-child .pb i{background:var(--terra)}
+.plist .pd{grid-column:1 / -1;font-size:13px;color:var(--muted)}
+@media (max-width:720px){.scorer{grid-template-columns:1fr}}
+.mixbar{display:flex;height:48px;border:1px solid var(--ink);margin:10px 0 6px}
+.mixbar button{border:0;padding:0;cursor:pointer;min-width:6px;font:inherit;font-size:12.5px;font-weight:700;color:var(--paper);overflow:hidden;white-space:nowrap}
+.mixbar button:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.mixbar .m{background:var(--ink)}.mixbar .f{background:var(--terra)}.mixbar .o{background:var(--apricot);color:var(--ink)}.mixbar .j{background:#BDB6AE;color:var(--ink)}.mixbar .x{background:#E4E0DB;color:var(--ink)}
+.mixlist{list-style:none;padding:0;max-width:none;margin:10px 0}
+.mixlist li{padding:10px 12px;border-left:4px solid var(--rule);margin-bottom:6px;font-size:14px}
+.mixlist li.on{border-left-color:var(--terra);background:var(--soft)}
+.mixlist b{display:block;font-size:15px}
+.sw{display:inline-block;width:10px;height:10px;margin-right:6px;border:1px solid var(--ink);vertical-align:0}
+@media print{nav.toc{display:none}details.dd{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <img class="logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD8/wCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAr2T4D/s3eO/j1rFx/YPkaZodm4jvNavFYxRsRny0UcySYIO0YABGSMjPjg61+wPhXRrf4K/8E82OkILe80zwlPqkkiDBa7e2aZ3J7nzG49gB2oA/ODxz4R+A/hPxdeeENP8AHHi7Wbuyma1uNct9NtxZ+ap2t5cRl3yICCN24ZwcZGCZviF+z7cfD79njQ/inN4w0vWbbXdUNnYJpYLxSW/lu4mMjYZXJjIMRUFeQ2GBA8XYlmyTkmuxPxA8V6r8HbD4R4jutHg1g6raRiNmnWd4/KMaHP3DuJ2gfeJOeaAONor668RfsmeHPgx+zdJ8TvjPquqXesSNFDa+G9Gmjt1E8v3Ypbh0fJUBmbaoA2kAtwab4A/ZX8H/AB8/Z/ufHXwm1fU9F8R2U8lpdaDrM6XVvJMihgsc6ojIHV1ILKQDkHpuoA+R6K+kv2cP2ePDHxn8XeI/Avie88SeHfEmiRPLM8YheJSsoiMbRMoYOrHn5scHpWZ4v+EHw/8AgT8UT4V+MWoa14gmkm8yOHwxNHbGGyJIS4laVHzI2GIgXGAuS/zCgDwCivr39o39jWx+G3wxHxQ+GniG91rw0ixSXVtfhTPBFIQEmV0Ch0yygjaCMg8jOLP7M/7Fdh8WvhnB8RfHXiLUNP0i8kkWxsdKVBPMkblGkaRwwUFlYBQpJxnIyKAPjmivafDvhL4N/Ej4vWvgfSLnxD4C+13y2dlfa3cx6hHNl9oSVVjiMMjdsFl3EKcA7xfm/Zu1XxB+2TrXwR8BXUtxb6bdMsupahg/Z7dFQvNLsAB5cAADklR3zQB4PV3SI9Jl1qCPXLq8tdPYkTTWUCzyoMHBVGdA3OOCwr6h+IvwU+Bfwl+Pfhb4R69deLtan1NIDqmuwXsFqtiZ3McZjg8l8gY3sGY/KRg5rnP2mP2U9a+Aj2uvafqra54UvZvs8d48QjmtpsFhHKo4OQrbXHB2kEA4yAdJ8Zv2JtS+FvwOuPibpfjyHX7G0WGW5tZdONpIsUrqgZT5jhiC65HHGTnjFZX7P37KWk/tAeBtR1nSPiHeaLe6ZIkF3a3ejLLH5jKWHlyLPllwOpUH2r7d/an/AOUeXin/ALBlh/6UW9eRf8E2v+ScePP+wlbf+iWoA+B/Hvg7Uvh98TNc8FavJDLe6ReSWcssBJSQqcBlzzgjBGeea52vpv4ifCTxR8af+CifjjwX4WSNJX1WWe6u5s+VaQKEDSvjnGSAAOSWA75C/Gr4UfBD4AePtE8C6z/wl3i/UZrdLvV721vobBbaJ2KgQxeTJmTCs+HbGNozzkAHzHRX1N+0J+x/cfC/wDB8SvAOvz+JfB0iRSTNcRhbm0STHlyMV+WSM7lG4BSCwyMcj5ZoAUda/YzVr6H4h/8ABPHUL7SHE39qeBpGjVOf3n2Mgp9Q6lceor8cq+q/2XP2vH+DujP4D8c6dc6v4OlkaSBrYB57BnPzhUYgPExJJXIIJYjOSKAPlQ8V7D+zJoD6l+014I1S7sjLpNn4gsY7idsbI5pHYwKc92ePj6VN4++Hvwlu/F17rHw1+MfhtfDdxK00Njq9vfW95ZKTnyigt2EgXOAynJAGRXO6p410zwxo2leG/hvd3e2w1KPWLnXZohDLe3sWRCyR8mOGIM+xWJZjI7NjIVQD7s/4KPSTD9nnwvGCRE3iFSw7Ei2mx/M1i/8ABNd5T4A8exsT5K6haMo7bjE+f0C1x3xH/aQ+Gf7S/wCy1/whvi7VYvBXje0nhvoGvYJZLC4uIwVbbLErsiujuMMBtJHLAZqD4M/H34V/sw/s5aho2m6zF428c6ndPeyW2lxSrZwNsCRRvPIiblULk7ATliBx81AHsXwct7C1/wCCpXxrj04IIm02CRwnTzG+zNJ+O8sT7k18yft+/wDJ383/AGBrT+T1rfss/HXwX4G+L3jD4p/FjxsF1TxFHIktrBp9xNKZGnWUyEqmxU4ICgkjjgYrif2u/H3gL4qfGaPx54F8UpqVvNZw2UlnJZXFvNEYw3zkugUqcjoc+3egD7w+Lf8AyjT1T/sTrb/0TFXzF+yd+11pfws8H2nw0+J1nd2/h8SPNpWswws/2ZJHLOkiAZaPeXIdckEkEEdOw1X9qz4NeOv2LJPhrqHiC88PeILnQItKkS706eaGOVERS2+JWyhKZB64PI7V4T4t8YfBDxl+zN8OPh9da5e2Xi/w/a3UR12OxkezhDTswhmGBIyOMOHRWKHqDuYAA+xPiV+y18Gf2g9Nb4jfDvXbbSNavf38et6HIstrdS9d00SnG/PVlKvnrk1zX7G/hPxf4Y/aE+Mdn8UJ2vPGkJ08T3sj+YbmJ/OYSo+BuRwsZ6A8AEAgivJv2UviJ8Nf2d7DxPqXjT4w6VqMeppCLbRNCgvLrc6FiZW3QoquQQo56ZyRgVycn7Zmo2X7at/8YNI0Sb/hHby2j0mbR5nCyzWaYwxYZVZg2XHUDJXJBJoA6P8AausPh5H+29qOueLPHt9YS2v9nyvptnoklzJsSGNsLIZEQlsE57Z9jVj9pj9snwD8YvgjqHgDwv4W1+GW5uIJlvtSEMap5cgc4RHYkkAjqOtcz+0rrHwc+PvjOx+JPgb4maXompSWSWup6P4jtbq2kBjzskV44pEY7W2kA/wggnJrxPUJvA8fh7TPh9o+uWrRyXv2/VvFV1ZSiMuIykcUEaoZvJUM5JKgu7jKqEBIB+mP7U//ACjy8U/9gyw/9KLevIv+CbX/ACTjx5/2Erb/ANEtT/jL+098BviN+y/rXwz0jx5Lbahe2dvbxXN1o92IQ0UkbnO1CQCIyOhxkV57+x98cvhB8Dvh9rtp4z8a7r3WLqO4W2stMupfICIyYdvLAJOc/Lke9AHv/wCzrbacf2zP2ibshDqC6tZxqT94RESk49iyrn6CvjL9uZ5W/bc8UK+dq29iqf7v2SM/zJroV/aQ0r4Z/tta/wDFnwRq8fijw14lmc6jp6QTWsqwsVIH71APNUruUjIPIJG6n/tFar8Hvj58WtI+IfhL4n6VoMd1aRWms2mvWlzDcWpjJxKqpG6y/Idu1W6oOcHIAPtW0it9Q/4JrQR64FaF/h0pmMnYDTs5+owD+Ffj0etfa/7Rn7XfhPWPgtF8GPg0t7Lo5tItPu9ZuYjButo1VRDCjfN8wUBmYDjIAOcj4n70AFFFFABk+tFFFABRknrRRQAUUUUAFFFFABk+tFFFABk+tFFFABRRRQAUZPrRRQAUUUUAf//Z" width="64" height="64" alt="Consello">
+      <div>
+        <h1>Hyatt growth opportunity analysis</h1>
+        <p class="sub">Brand, Experience &amp; Growth practice | Prepared November 17, 2026 | Sources current through Hyatt’s Q3 2026 earnings (October 29, 2026) and announcements through November 17, 2026, including the Delta launch</p>
+      </div>
+    </div>
+    <p class="note">Internal working document. Impact, Feasibility and Confidence scores are quality control for the Consello team and come out before anything goes to Hyatt. All inputs are public; no client-confidential material is used. Labels used throughout: <span class="tag f">Fact</span> sourced and dated, <span class="tag i">Inference</span> reasoned from facts, <span class="tag h">Hypothesis</span> to test, <span class="tag e">Estimate</span> derived math.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#tldr">TL;DR</a><a href="#decision">The real decision</a><a href="#exec">Executive summary</a><a href="#ranked">Top 10</a><a href="#deep">Top 5 in depth</a><a href="#next">6 to 10</a><a href="#market">Customers, marketing, distribution</a><a href="#teardown">Cards, partners, property mix</a><a href="#whitespace">White space</a><a href="#risks">Counterargument and risks</a><a href="#access">Access</a><a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="tldr">
+  <h2>TL;DR</h2>
+  <div class="tldr">
+    <p>Hyatt’s commercial engine now runs through World of Hyatt: more than 72 million members, up 19% in a year, staying in roughly half of occupied rooms, with a card and partner-fee line Hyatt told investors will roughly double to about $105 million of EBITDA in 2027.</p>
+    <p>Three loyalty decisions land inside the same six months: the premium and international Chase cards, the Delta dual-earn launch, and the 2027 phase of the award-chart reset. The priority should be to design them as one premium-household proposition, because each one either funds or taxes the same elite base that a 1,500-hotel footprint depends on.</p>
+  </div>
+</section>
+
+<section id="decision">
+  <h2>The real decision</h2>
+  <p class="lede">How much member generosity should Hyatt convert into fee EBITDA before its footprint is big enough to hold members on convenience alone?</p>
+  <p><span class="tag f">Fact</span> Hyatt runs about 1,500 hotels vs. roughly 7,000 to 10,000 at Marriott, Hilton and IHG, and claims more than 40% more loyalty members per hotel than its nearest rival (Investor Day, May 28, 2026, via The Wise Marketer). <span class="tag f">Fact</span> In May 2026 Hyatt raised standard award prices 17% to 38% and peak prices 33% to 67%, and its loyalty head signaled larger hotel moves into the top tiers in 2027.</p>
+  <p><span class="tag i">Inference</span> Generosity has done the work for Hyatt that network breadth does for Marriott. Monetizing it harder is rational while members grow 17% to 19% a year. It gets riskier if elite share of wallet softens before the pipeline closes the footprint gap.</p>
+  <div class="math">
+    <table>
+      <tr><td>Card and third-party loyalty EBITDA target, 2027 (Investor Day)</td><td>~$105M</td></tr>
+      <tr><td>Implied 2025 base (“doubling”)</td><td>~$52M <span class="tag e">Estimate</span></td></tr>
+      <tr><td>Share of 2026 Adjusted EBITDA guidance midpoint ($1.185B, Q3 2026)</td><td>~9% <span class="tag e">Estimate</span></td></tr>
+      <tr><td>Footprint in 2029 at 6% to 8% annual rooms growth (Investor Day range), applied to ~1,500 hotels</td><td>~1,790 to 1,890 <span class="tag e">Estimate</span></td></tr>
+      <tr><td>That footprint as a share of the 7,000 to 10,000 range at Marriott, Hilton and IHG</td><td>~18% to 27% <span class="tag e">Estimate</span></td></tr>
+    </table>
+  </div>
+  <p><span class="tag i">Inference</span> Even at the top of its growth range, Hyatt stays a fraction of the size of its rivals through the end of the decade. The program’s value proposition has to keep doing the footprint’s job for at least that long. Every opportunity below is ranked with that constraint in mind.</p>
+</section>
+
+<section id="exec">
+  <h2>Executive summary</h2>
+  <p class="lede">Two slides, drop-in ready. Scores are omitted.</p>
+  <div class="slides">
+    <div class="slide" aria-label="Slide 1">
+      <p class="sl-title">Hyatt’s growth now compounds through its members</p>
+      <div class="stats">
+        <div class="stat"><b>72M+</b><span>World of Hyatt members, up 19% year over year (Q3 2026)</span></div>
+        <div class="stat"><b>~50%</b><span>Share of occupied rooms from members (Q1 2026)</span></div>
+        <div class="stat"><b>~$105M</b><span>2027 card and partner-fee EBITDA target, about double 2025</span></div>
+        <div class="stat"><b>158K</b><span>Rooms in pipeline, a record, up 12% (Q3 2026)</span></div>
+      </div>
+      <p class="so">Next six months: a premium card, a new airline partner and a second award-chart phase all hit the same elite members at once.</p>
+      <span class="foot">Sources: Hyatt Q1 and Q3 2026 earnings calls; Hyatt Investor Day, May 28, 2026.</span>
+    </div>
+    <div class="slide" aria-label="Slide 2">
+      <p class="sl-title">Five moves to turn member scale into premium household share</p>
+      <ol class="moves">
+        <li><b>1</b><span>Launch the premium card as the elite on-ramp abroad</span></li>
+        <li><b>2</b><span>Open Delta phase 2 to cardholders and non-elites in 2027</span></li>
+        <li><b>3</b><span>Give every brand one job guests and AI agents repeat</span></li>
+        <li><b>4</b><span>Open each Essentials hotel with members already staying there</span></li>
+        <li><b>5</b><span>Shift elite value toward recognition before the 2027 chart phase</span></li>
+      </ol>
+      <span class="foot">Consello Brand, Experience &amp; Growth | Draft for discussion</span>
+    </div>
+  </div>
+</section>
+
+<section id="ranked">
+  <h2>Top 10, ranked by confidence</h2>
+  <p class="lede">Confidence reflects evidence strength from the last 12 months, separate from strategic appeal. Bars mark the publish lines at 75 (floor), 80 (publish with note) and 90 (publish as is). Items 9 and 10 are horizon ideas and carry no financial sizing.</p>
+  <div class="rank-scroll">
+  <table class="rank">
+    <thead><tr><th>#</th><th>Opportunity</th><th>BEG focus area</th><th>Lead lens</th><th>Impact</th><th>Feas.</th><th>Confidence</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td class="opp">Premium and international co-brand cards<small>Card as the elite on-ramp where the footprint is thin</small></td><td>Profitability &amp; Monetization; Loyalty, CRM &amp; Personalization</td><td>Janey Whiteside, Karen Schmidt, Stacey Wilson</td><td class="num">9</td><td class="num">8</td><td><span class="cval">92%</span><div class="cbar"><i style="width:80%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">2</td><td class="opp">Delta phase 2 as a household acquisition channel<small>Launched November 17 for elites; widen it in 2027</small></td><td>Business Model Innovation (partnerships); Loyalty</td><td>Stacey Wilson, Eric Bader, Jon Mandell</td><td class="num">9</td><td class="num">8</td><td><span class="cval">90%</span><div class="cbar"><i style="width:75%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">3</td><td class="opp">Brand clarity for guests, owners and AI agents<small>Support the new Chief Creative Officer’s mandate across 30+ brands</small></td><td>Brand &amp; Marketing Transformation</td><td>Mindy Grossman, Jon Mandell, Wendy Clark</td><td class="num">8</td><td class="num">7</td><td><span class="cval">86%</span><div class="cbar"><i style="width:65%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">4</td><td class="opp">Essentials new-market activation<small>Open with the members who were already staying there</small></td><td>Growth &amp; Go-to-Market; Customer Lifecycle</td><td>Jon Mandell, Karen Schmidt, Janey Whiteside</td><td class="num">7</td><td class="num">8</td><td><span class="cval">85%</span><div class="cbar"><i style="width:62.5%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">5</td><td class="opp">Elite value rebalancing before the 2027 award-chart phase<small>Pay elites in recognition as points get more expensive</small></td><td>Loyalty, CRM &amp; Personalization; Customer Lifecycle</td><td>Jon Mandell, Janey Whiteside</td><td class="num">8</td><td class="num">8</td><td><span class="cval">84%</span><div class="cbar"><i style="width:60%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">6</td><td class="opp">Inclusive Collection commercial reset and Unlimited Vacation Club<small>Move all-inclusive demand toward members and paid membership</small></td><td>Loyalty (subscription &amp; membership); Profitability</td><td>Jon Mandell, Janey Whiteside, Stacey Wilson</td><td class="num">7</td><td class="num">7</td><td><span class="cval">81%</span><div class="cbar"><i style="width:52.5%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">7</td><td class="opp">Corporate, group and small-business growth<small>Capture the 2027 corporate group upswing directly</small></td><td>Growth &amp; Go-to-Market (sales &amp; marketing alignment)</td><td>Josh McKay, Stacey Wilson</td><td class="num">7</td><td class="num">7</td><td><span class="cval">80%</span><div class="cbar"><i style="width:50%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr><td class="n">8</td><td class="opp">Agent-ready commercial offer<small>Make member value legible to AI booking agents</small></td><td>Omnichannel (distributed &amp; conversational commerce)</td><td>Janey Whiteside, Eric Bader</td><td class="num">8</td><td class="num">5</td><td><span class="cval">80%</span><div class="cbar"><i style="width:50%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr class="horizon"><td class="n">9</td><td class="opp">Mr &amp; Mrs Smith as Europe’s member on-ramp<small>Horizon idea</small></td><td>Strategic Partnerships; Market Expansion</td><td>Janey Whiteside</td><td class="num">6</td><td class="num">6</td><td><span class="cval">77%</span><div class="cbar"><i class="hz" style="width:42.5%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+      <tr class="horizon"><td class="n">10</td><td class="opp">Sponsorships held to member and card targets<small>Horizon idea</small></td><td>Marketing Investment Optimization</td><td>Wendy Clark, Paul Gunning</td><td class="num">5</td><td class="num">8</td><td><span class="cval">76%</span><div class="cbar"><i class="hz" style="width:40%"></i><span class="t" style="left:37.5%"></span><span class="t" style="left:50%"></span><span class="t" style="left:75%"></span></div></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="legend">Cut below the 75 floor: owner pushback on loyalty economics (about 70). It sits in the watch list under risks.</p>
+  <h4>Eight BEG capabilities this list draws on, in order of weight</h4>
+  <p>Loyalty, CRM &amp; Personalization (items 1, 2, 5, 6); Profitability &amp; Monetization, specifically co-brand and fintech monetization (1, 6); Business Model Innovation, specifically strategic partnerships (2, 9); Brand &amp; Marketing Transformation (3, 10); Growth &amp; Go-to-Market (4, 7); Customer Experience &amp; Lifecycle (4, 5); Omnichannel and conversational commerce (8); Org Design &amp; Operating Models as an enabler, used only where Hyatt has already created or combined roles (3, 6, 8).</p>
+</section>
+
+<section id="deep">
+  <h2>Top 5 in depth</h2>
+  <p class="lede">Each talking point is written in the voice of the partner whose track record matches it. Everything below the talking point is for the team.</p>
+
+  <!-- 1 -->
+  <details class="dd" open>
+    <summary><span class="dd-n">1</span><span class="dd-h">Make the card the elite on-ramp where Hyatt’s footprint is thin<small>Premium Chase card and international co-brands (Germany and Spain first; UK, Japan, Mexico under study)</small></span><span class="dd-s">Confidence <b>92%</b><br>Impact 9 | Feasibility 8</span></summary>
+    <p class="voice">“A traveler in Madrid or Tokyo can become a Hyatt household through the card years before you have a hotel on every corner there. Design it for that job.”<cite>Janey Whiteside lens</cite></p>
+    <div class="dd-body">
+      <div class="two">
+        <div><h4>What it is</h4><p>Set the value proposition, benefit economics and launch plan for the premium card Hyatt and Chase have announced, then sequence the international co-brands by where card economics and member density actually line up.</p></div>
+        <div><h4>Why Hyatt needs it</h4><p>The card line is Hyatt’s fastest-growing high-margin earnings stream, and Hyatt told investors the doubling to about $105 million in 2027 excludes any international card.</p></div>
+      </div>
+      <h4>Potential impact</h4>
+      <div class="impact">
+        <div><b>Investor</b>About 9% of 2026 Adjusted EBITDA from one line, with international cards as upside not yet in the target <span class="tag e">Estimate</span></div>
+        <div><b>Internal</b>A way to create elites that does not depend on how many hotels a member can reach</div>
+        <div><b>Customer</b>A reason for non-US members to concentrate everyday spend, and a route to status for travelers who cannot stay 60 nights</div>
+      </div>
+      <h4>Proof points</h4>
+      <ul>
+        <li><span class="tag f">Fact</span> Hyatt cardholders spend 28% more than holders of comparable co-brand cards and stay 221% more nights a year than members without the card (Investor Day, May 28, 2026, via The Wise Marketer).</li>
+        <li><span class="tag f">Fact</span> At Investor Day Hyatt said it expects “more than double the EBITDA contribution from our credit card programs” in 2027, and named Germany and Spain as targets with the UK, Japan and Mexico under review (View from the Wing, May 2026).</li>
+        <li><span class="tag f">Fact</span> Marriott expects co-branded card fees to rise in the high-30% range for 2026 (CFO Jen Mason, Q3 2026 call, via Skift, November 2, 2026).</li>
+        <li><span class="tag i">Inference</span> EU and UK caps on consumer credit interchange shrink the revenue pool a co-brand can share. Germany and Spain cards will work better as member-acquisition tools than as profit lines. Japan and Mexico have no equivalent cap. <span class="tag h">Hypothesis</span> If Hyatt sequenced Europe first for issuer availability, the European cards need a business case built on member acquisition and elite creation, judged on those metrics.</li>
+        <li><span class="tag f">Fact</span> A new Hyatt card was announced with the Chase expansion in November 2025 and has not launched as of November 17, 2026; the latest change to the $95 card was a new welcome offer on November 5, 2026 (Frequent Miler). <span class="tag h">Hypothesis</span> Part of the delay is channel conflict: Chase already sells Explorist status to Sapphire Reserve holders who spend $75,000 a year, so a premium Hyatt card competes with Chase’s own flagship for the same customer.</li>
+        <li><span class="tag f">Fact</span> Chase moved Ultimate Rewards transfers to Hyatt to 4:3 (new applicants from June 15, all cardholders from October 1, 2026), and Bilt follows on January 1, 2027 (The Points Guy; One Mile at a Time). <span class="tag i">Inference</span> The co-brand is now the cheapest way to earn Hyatt points, which strengthens the case for a premium tier. Full comparison in the <a href="#teardown">card teardown</a>.</li>
+      </ul>
+      <h4>Example deliverables</h4>
+      <ul>
+        <li>Premium card value proposition and benefit economics: which benefits Hyatt funds, which Chase funds, and the cost of each to owners.</li>
+        <li>International market sequencing scorecard: member density, Hyatt pipeline, issuer landscape and interchange regime by country.</li>
+        <li>Launch acquisition plan across hyatt.com, the app, on-property moments and the Delta and Aeroplan linkages.</li>
+      </ul>
+      <h4>Case studies</h4>
+      <ul>
+        <li>Internal: Janey Whiteside led the relaunch of the American Express Platinum card and built Walmart+.</li>
+        <li>External: Marriott runs a dual-issuer model with Chase and American Express, giving it two issuers funding the same program.</li>
+        <li>External: Hilton’s Aspire and Marriott’s Brilliant set the premium hotel-card benchmark Hyatt’s new card will be compared against.</li>
+      </ul>
+      <h4>BEG area and rationale</h4>
+      <p>Profitability &amp; Monetization (fintech monetization) with Loyalty, CRM &amp; Personalization. Chosen because Hyatt has quantified the target, named the markets and has a launch pending, which puts the work in design and launch, the stage where operators add the most.</p>
+      <h4>Partner lens</h4>
+      <p>Janey Whiteside relaunched an iconic premium card and built a paid membership that turns benefits into recurring revenue. Karen Schmidt advised PayPal, Capital One and Citi on acquisition and retention after a decade at American Express. Stacey Wilson ran product and P&amp;L for American Express corporate cards, led the Corporate Card’s first full value-proposition refresh in a generation, and oversaw corporate Membership Rewards.</p>
+      <h4>Risks</h4>
+      <ul>
+        <li>Chase controls underwriting and marketing spend. Hyatt shapes the benefits and little else.</li>
+        <li>A premium fee arriving months after a devaluation reads to elites as paying more for less.</li>
+        <li>Richer card benefits redeemed on property raise owners’ loyalty costs at a moment when Marriott owners are already asking for a larger share of card income.</li>
+      </ul>
+      <p><b>Timing:</b> Now. The premium card is pending and international cards follow.</p>
+      <div class="bullets"><b>Slide-ready</b><ul><li>Premium card turns everyday spend into Hyatt status abroad</li><li>Card line targets about $105M EBITDA in 2027</li><li>Sequence Europe for acquisition, Japan and Mexico for economics</li></ul></div>
+      <p class="conf">Confidence 92%: executive targets, named markets and an announced product within 12 months, plus a competitor financial signal. Main open item: premium card launch status.</p>
+    </div>
+  </details>
+
+  <!-- 2 -->
+  <details class="dd" open>
+    <summary><span class="dd-n">2</span><span class="dd-h">Widen Delta from an elite reward into household acquisition<small>Launched November 17, 2026 for elites only; phase 2 design for 2027</small></span><span class="dd-s">Confidence <b>90%</b><br>Impact 9 | Feasibility 8</span></summary>
+    <p class="voice">“Dual-earn pays people for trips they already take. The return comes from moving a Delta frequent flyer’s next 20 nights to Hyatt, and that needs an offer built to move them.”<cite>Stacey Wilson and Jon Mandell lens</cite></p>
+    <div class="dd-body">
+      <div class="two">
+        <div><h4>What it is</h4><p>Design phase 2 of the Delta relationship, which both companies say adds milestone rewards in 2027: extend earning and status paths beyond existing elites, aim offers at Delta hubs where members stay outside Hyatt, and score it on incremental nights.</p></div>
+        <div><h4>Why Hyatt needs it</h4><p>The launch terms reward travelers who are already elites in both programs. Hyatt replaced a seven-year American Airlines relationship with this one, so it needs the deal to win new households.</p></div>
+      </div>
+      <h4>Potential impact</h4>
+      <div class="impact">
+        <div><b>Investor</b>A concrete partnership story with metrics at the Q4 call in early 2027</div>
+        <div><b>Internal</b>The same out-of-system stay research that placed Essentials hotels can point Delta offers at hub cities where members already travel</div>
+        <div><b>Customer</b>Two premium programs that recognize the same traveler on both legs of a trip</div>
+      </div>
+      <h4>Proof points</h4>
+      <ul>
+        <li><span class="tag f">Fact</span> The partnership went live November 17, 2026. Delta Medallions earn one mile per $1 at participating Hyatt hotels; linked Hyatt elites earn bonus points only on Comfort, Premium Select, First and Delta One fares (Hyatt release, November 17, 2026).</li>
+        <li><span class="tag f">Fact</span> Hyatt members can choose Gold Medallion at 100 nights or Platinum Medallion at 150 nights as a Milestone Reward, and travelers without Medallion status earn no SkyMiles on Hyatt stays (LoyaltyLobby, November 17, 2026).</li>
+        <li><span class="tag f">Fact</span> Launch offers are 1,000 miles and 1,000 points for linking and one extra tier-qualifying night on a first Hyatt stay through December 31, 2026, with more milestone rewards promised for 2027 (Delta News Hub; Hyatt release).</li>
+        <li><span class="tag f">Fact</span> On the Q3 2026 call the CEO said the customer bases overlap heavily and that cross-use has large room to grow in both directions.</li>
+        <li><span class="tag f">Fact</span> Hyatt’s July 2026 Aeroplan deal added status fast-tracks: Discoverist in 4 nights instead of 10 and Explorist in 10 instead of 30 for eligible Aeroplan members (NerdWallet, July 2026).</li>
+        <li><span class="tag i">Inference</span> The launch terms confirm an elite-retention design. The 100- and 150-night milestones reach only Hyatt’s most frequent guests, and premium-cabin-only earning leaves out most Delta flyers. Acquisition needs status challenges, card-linked earning and first-stay offers, the mechanics Hyatt already built for Aeroplan.</li>
+        <li><span class="tag f">Fact</span> Hyatt’s only bank transfer partners are Chase Ultimate Rewards and Bilt; American Express points do not transfer to Hyatt (The Points Party, July 2026). <span class="tag i">Inference</span> Delta’s co-brand card sits with American Express, so a Delta household’s everyday card spend builds a currency that cannot buy a Hyatt night. Phase 2 has to work around that seam, and Stacey Wilson’s American Express background covers the issuer side of it.</li>
+      </ul>
+      <h4>Example deliverables</h4>
+      <ul>
+        <li>Offer architecture and economics: who funds earn, status matches and challenges, and the expected cost per incremental night.</li>
+        <li>Hub-by-hub target map: Delta hubs crossed with Hyatt supply and members’ out-of-system stays.</li>
+        <li>Launch scorecard for the first 90 days: linked accounts, incremental Hyatt nights from Medallions, Delta flights from Hyatt elites.</li>
+      </ul>
+      <h4>Case studies</h4>
+      <ul>
+        <li>Internal precedent at Hyatt: the Aeroplan collaboration (July 2026) pairs card linkage with status challenges.</li>
+        <li>External: the American Airlines partnership lost member value after 2025 changes before it ended (Travel on Points, September 2026).</li>
+        <li>External: Marriott Bonvoy partners with both United and Air Canada (NerdWallet, July 2026).</li>
+      </ul>
+      <h4>BEG area and rationale</h4>
+      <p>Business Model Innovation (strategic partnerships) with Loyalty. Chosen because the partnership exists but its member offer is still unannounced, so design choices are still open.</p>
+      <h4>Partner lens</h4>
+      <p>Stacey Wilson managed Delta as a client of LoyaltyEdge, American Express’s white-label loyalty platform, and helped launch Plenti, the first US coalition loyalty program. Eric Bader built United’s Kinective Media business on airline customer data. Jon Mandell restructured membership and retention economics at WW and Cooper’s Hawk.</p>
+      <h4>Risks</h4>
+      <ul>
+        <li>Delta controls its own member communications and may limit how hard Hyatt can market to SkyMiles members.</li>
+        <li>The Amex and Chase split may block card-linked features that made Aeroplan work.</li>
+        <li>An elite-only design produces strong headline enrollment and weak incremental nights.</li>
+      </ul>
+      <p><b>Timing:</b> Now. Phase 1 is live and phase 2 benefits are being set for 2027.</p>
+      <div class="bullets"><b>Slide-ready</b><ul><li>Phase 1 rewards elites who already fly Delta and stay Hyatt</li><li>Phase 2 should open earning to cardholders and non-elites</li><li>Status challenges turn Medallions into Hyatt elites fast</li></ul></div>
+      <p class="conf">Confidence 90%: launch terms published November 17, 2026, CEO commentary within 30 days and a stated 2027 phase. Open item: how far Delta will let phase 2 reach beyond elites.</p>
+    </div>
+  </details>
+
+  <!-- 3 -->
+  <details class="dd" open>
+    <summary><span class="dd-n">3</span><span class="dd-h">Give every Hyatt brand one job a guest, an owner and an AI agent all describe the same way<small>Brand architecture and consumer navigation in support of the new Chief Creative Officer</small></span><span class="dd-s">Confidence <b>86%</b><br>Impact 8 | Feasibility 7</span></summary>
+    <p class="voice">“More than thirty brands is a strength only if each one owns a moment in someone’s life. The test is whether a traveler can tell them apart in one line each.”<cite>Mindy Grossman lens</cite></p>
+    <div class="dd-body">
+      <div class="two">
+        <div><h4>What it is</h4><p>Define each brand’s role by stay occasion, traveler and price point, flag the overlaps, and carry that clarity into how hyatt.com, the app and AI agents present the portfolio.</p></div>
+        <div><h4>Why Hyatt needs it</h4><p>Hyatt’s rate-led growth depends on brands that command a premium, and its CEO has tied brand sharpness directly to whether AI agents surface Hyatt at all.</p></div>
+      </div>
+      <h4>Potential impact</h4>
+      <div class="impact">
+        <div><b>Investor</b>Protects the rate premium: average rate drove nearly 80% of Q3 2026 RevPAR growth</div>
+        <div><b>Internal</b>Clear briefs for owners and developers deciding which flag to sign</div>
+        <div><b>Customer</b>Faster choice for members moving across five portfolios</div>
+      </div>
+      <h4>Proof points</h4>
+      <ul>
+        <li><span class="tag f">Fact</span> On September 30, 2026 Hyatt named Amar Lalvani its first Chief Creative Officer, reporting to the CEO, to sharpen what each brand stands for across design, experience and culture (Hyatt newsroom).</li>
+        <li><span class="tag f">Fact</span> On the Q3 2026 call the CEO said Hyatt is focused on making its brands “sharper, more defined, more findable and more precise” as agentic booking grows.</li>
+        <li><span class="tag f">Fact</span> Hyatt’s portfolio boilerplate lists more than 30 brands across Luxury, Lifestyle, Inclusive Collection, Classics and Essentials (Hyatt newsroom, September 30, 2026).</li>
+        <li><span class="tag f">Fact</span> Hyatt created a VP Marketing &amp; Loyalty role for Europe, Africa and Middle East in 2026 with a mandate to differentiate each brand (Hospitality ON, July 16, 2026).</li>
+        <li><span class="tag f">Fact</span> VML, Hyatt’s creative agency on “Be More Here,” describes its starting point as a brand muddled by sub-brands and inconsistent messaging (VML case study, agency source). <span class="tag i">Inference</span> Hyatt answered by leading marketing with World of Hyatt as the master platform, which strengthened the program and left individual brands less defined.</li>
+        <li><span class="tag i">Inference</span> Portfolio growth came largely by acquisition (Apple Leisure Group, Standard International, Playa), so brands were assembled faster than they were positioned against each other, most visibly inside the nine-brand Inclusive Collection.</li>
+      </ul>
+      <h4>Example deliverables</h4>
+      <ul>
+        <li>Brand role map by stay occasion and traveler, with overlap and gap flags.</li>
+        <li>Consumer navigation recommendations for hyatt.com and the app, built around trip intent.</li>
+        <li>A one-page “agent brief” standard per brand: what it is, who it suits, what a member gets there.</li>
+      </ul>
+      <h4>Case studies</h4>
+      <ul>
+        <li>Internal: Mindy Grossman broadened Nike’s consumer definition and repositioned WW from a weight-loss brand to a wellness platform.</li>
+        <li>Internal: Wendy Clark led brand and marketing at Coca-Cola North America and AT&amp;T before running DDB and Dentsu International.</li>
+        <li>Internal: Jon Mandell led customer and portfolio growth across 1-800-Flowers’ multi-brand portfolio.</li>
+        <li>External: Marriott and Hilton both flagged AI platforms as a risk to direct bookings in 2026 filings (Skift, February 2026), and Marriott is working with Google on AI Mode booking.</li>
+      </ul>
+      <h4>BEG area and rationale</h4>
+      <p>Brand &amp; Marketing Transformation. Chosen because leadership created a new enterprise role for exactly this in the last two months, which is the clearest appetite signal in the set.</p>
+      <h4>Partner lens</h4>
+      <p>Mindy Grossman reframes brands around who the consumer wants to become. Jon Mandell connects each brand to the member relationship across a multi-brand portfolio. Wendy Clark holds brand and marketing work to commercial results.</p>
+      <h4>Risks</h4>
+      <ul>
+        <li>This is Lalvani’s mandate. Consello wins only as capacity behind his agenda.</li>
+        <li>Owners resist positioning changes that imply capital spend.</li>
+        <li>Brand consolidation inside acquired portfolios is politically hard and may be off the table.</li>
+      </ul>
+      <p><b>Timing:</b> Now. The role is new and the agenda is being set.</p>
+      <div class="bullets"><b>Slide-ready</b><ul><li>Thirty-plus brands each need one clear job</li><li>Sharper brands win both guests and AI agents</li><li>Start where acquired portfolios overlap most</li></ul></div>
+      <p class="conf">Confidence 86%: leadership appointment and CEO quote within 60 days. Assumption flagged: that the Inclusive Collection carries the most overlap; this needs guest research to confirm.</p>
+    </div>
+  </details>
+
+  <!-- 4 -->
+  <details class="dd" open>
+    <summary><span class="dd-n">4</span><span class="dd-h">Open every Essentials hotel with the members who were already staying in that town<small>Market-entry playbook for Hyatt Studios, Hyatt Select and Unscripted by Hyatt</small></span><span class="dd-s">Confidence <b>85%</b><br>Impact 7 | Feasibility 8</span></summary>
+    <p class="voice">“You already know who these hotels are for. Your research found members sleeping under someone else’s flag in these towns. Opening day should feel like a homecoming for them.”<cite>Jon Mandell lens</cite></p>
+    <div class="dd-body">
+      <div class="two">
+        <div><h4>What it is</h4><p>A repeatable activation plan from 90 days before opening to 180 days after: target the members whose out-of-system stays justified the market, with pre-opening offers, local corporate accounts and status earning tuned to frequent road travelers.</p></div>
+        <div><h4>Why Hyatt needs it</h4><p>More than half of US Essentials signings are in markets new to Hyatt, so each opening starts with no local brand awareness and a known list of members to win back.</p></div>
+      </div>
+      <h4>Potential impact</h4>
+      <div class="impact">
+        <div><b>Investor</b>Faster ramp supports the 6% to 8% rooms-growth algorithm and owner returns</div>
+        <div><b>Internal</b>Turns the member research into a revenue plan per hotel</div>
+        <div><b>Customer</b>Members keep earning in towns where Hyatt was absent</div>
+      </div>
+      <h4>Proof points</h4>
+      <ul>
+        <li><span class="tag f">Fact</span> On the Q3 2026 call the CEO said Hyatt studied where members stayed outside the system, that close to 70% of openings in the new brands are in markets that research identified, and that the upper-midscale pipeline exceeds 150 hotels.</li>
+        <li><span class="tag f">Fact</span> Business transient RevPAR grew about 1% in Q3 2026 and accelerated to more than 4% in September, with select-service RevPAR up 6.8%.</li>
+        <li><span class="tag f">Fact</span> The CEO acknowledged that a $100 rate hotel earns a smaller fee than a $200 one, and that pipeline fees per key are still above today’s average.</li>
+        <li><span class="tag i">Inference</span> The value of these brands is network retention more than fee per key, so success should be measured in member nights recaptured, alongside RevPAR index.</li>
+      </ul>
+      <h4>Example deliverables</h4>
+      <ul>
+        <li>Market activation template with timeline, owners and budget per opening.</li>
+        <li>Member recapture offers built from out-of-system stay patterns.</li>
+        <li>Local B2B account plan for each new market.</li>
+      </ul>
+      <h4>Case studies</h4>
+      <ul>
+        <li>Internal: Jon Mandell ran cross-brand growth across 1-800-Flowers’ multi-brand portfolio.</li>
+        <li>Internal: Janey Whiteside designed Walmart+ around habitual, frequent use.</li>
+        <li>External: conversions were more than 40% of Marriott’s openings through September 2026 and 37% of Hilton’s, so new-market competition in midscale is intense (Travel Daily News; Hotel Management, Q3 2026).</li>
+      </ul>
+      <h4>BEG area and rationale</h4>
+      <p>Growth &amp; Go-to-Market (market expansion) with Customer Lifecycle (onboarding). Chosen because the strategy is set and the execution gap sits in commercial activation, which Consello can staff tomorrow.</p>
+      <h4>Partner lens</h4>
+      <p>Jon Mandell builds lifecycle and recapture programs that turn existing customers into repeat revenue. Karen Schmidt translates segment-level demand signals into commercial plays. Janey Whiteside built Walmart+ to make frequent use a habit.</p>
+      <h4>Risks</h4>
+      <ul>
+        <li>Members loyal to a competitor for status reasons may not switch for a midscale stay.</li>
+        <li>Activation spend falls on franchisees with thinner margins.</li>
+        <li>Too much push behind midscale can blur the premium story investors pay for.</li>
+      </ul>
+      <p><b>Timing:</b> Now. Fourteen upper-midscale hotels opened in Q3 alone.</p>
+      <div class="bullets"><b>Slide-ready</b><ul><li>Each new Essentials hotel opens with a known member list</li><li>Measure recaptured member nights alongside RevPAR index</li><li>Pair every opening with local corporate accounts</li></ul></div>
+      <p class="conf">Confidence 85%: direct CEO commentary on strategy and results within 30 days. Assumption flagged: activation is under-resourced today; this is inferred and needs a conversation to confirm.</p>
+    </div>
+  </details>
+
+  <!-- 5 -->
+  <details class="dd" open>
+    <summary><span class="dd-n">5</span><span class="dd-h">Shift elite value toward recognition before the 2027 award-chart phase<small>Measure who changed behavior after May 2026, then rebalance benefits</small></span><span class="dd-s">Confidence <b>84%</b><br>Impact 8 | Feasibility 8</span></summary>
+    <p class="voice">“Before more hotels move up in 2027, know exactly which elites changed behavior after May. Then pay them first in the things only a hotel can give.”<cite>Jon Mandell and Janey Whiteside lens</cite></p>
+    <div class="dd-body">
+      <div class="two">
+        <div><h4>What it is</h4><p>Track elite stay share by tier and region before and after the May 2026 change, then move value toward benefits with low marginal cost and high meaning: upgrades, Guest of Honor, FIND experiences and sports access.</p></div>
+        <div><h4>Why Hyatt needs it</h4><p>Hyatt has said a larger phase of hotel moves comes in 2027, and its most frequent members are the ones most exposed to higher aspirational award prices.</p></div>
+      </div>
+      <h4>Potential impact</h4>
+      <div class="impact">
+        <div><b>Investor</b>Lower points liability without losing the member engagement the fee story relies on</div>
+        <div><b>Internal</b>Evidence to calibrate 2027 moves hotel by hotel</div>
+        <div><b>Customer</b>Value elites feel on property, where points inflation does not reach</div>
+      </div>
+      <h4>Proof points</h4>
+      <ul>
+        <li><span class="tag f">Fact</span> On May 20, 2026 World of Hyatt moved to a five-level award structure; 112 hotels moved up and 24 down; Category 8 peak nights rose to 75,000 points from 45,000 (The Wise Marketer, June 12, 2026).</li>
+        <li><span class="tag f">Fact</span> Hyatt’s February 25, 2026 announcement said 2026 moves would be limited, with broader adoption in following years (Hyatt newsroom).</li>
+        <li><span class="tag f">Fact</span> Members with more than 100 qualifying stays a year rose nearly 40% since 2022 (Q3 2026 call).</li>
+        <li><span class="tag f">Fact</span> Hilton cut Gold to 25 nights from 40 and Diamond to 50 from 60 in late 2025 <span class="tag e">older than 12 months, context only</span>.</li>
+        <li><span class="tag i">Inference</span> Enthusiast-press criticism over-represents points maximizers, so it is a poor read on the elite base. Hyatt’s own stay data is the only valid test, and the result could vindicate the change.</li>
+      </ul>
+      <h4>Example deliverables</h4>
+      <ul>
+        <li>Elite cohort tracker: stay share, redemption mix and out-of-system signals, pre and post May 2026 <span class="tag e">requires Hyatt data</span>.</li>
+        <li>Benefit rebalancing plan with cost-to-serve and owner reimbursement impact.</li>
+        <li>2027 change sequencing and member communication plan.</li>
+      </ul>
+      <h4>Case studies</h4>
+      <ul>
+        <li>Internal: Jon Mandell built WW’s global retention practice during its shift from transactional subscription to community membership.</li>
+        <li>External: Hilton made status easier to earn while Hyatt made awards costlier, a direct contrast for elite travelers choosing between programs.</li>
+      </ul>
+      <h4>BEG area and rationale</h4>
+      <p>Loyalty, CRM &amp; Personalization with Customer Experience &amp; Lifecycle. Chosen because the 2027 phase is a decision Hyatt has already scheduled, which gives the work a clear deadline.</p>
+      <h4>Partner lens</h4>
+      <p>Jon Mandell designs loyalty programs to change behavior, with discounts as a last resort. Janey Whiteside builds benefits that monetize relationships without degrading the experience.</p>
+      <h4>Risks</h4>
+      <ul>
+        <li>The CEO has called the member reaction positive. Leading with “risk” reads as second-guessing a decision already made. Lead with calibrating 2027.</li>
+        <li>Owners benefit from higher award prices through reimbursement and may resist rebalancing.</li>
+        <li>Internal data may show no leakage, which shrinks the scope.</li>
+      </ul>
+      <p><b>Timing:</b> Next six months, before 2027 hotel moves are set.</p>
+      <div class="bullets"><b>Slide-ready</b><ul><li>Calibrate 2027 award moves with elite stay data</li><li>Recognition benefits cost little and travel well</li><li>Protect the 100-plus-stay cohort first</li></ul></div>
+      <p class="conf">Confidence 84%: the schedule and scale come from Hyatt itself. Flagged assumption: that elite behavior has shifted at all; no public evidence either way.</p>
+    </div>
+  </details>
+</section>
+
+<section id="next">
+  <h2>Opportunities 6 to 10</h2>
+  <p class="lede">Shorter treatment. Items 9 and 10 are horizon ideas: directionally right, thinly evidenced, and carried without sizing.</p>
+
+  <div class="sec"><span class="n">6</span><div>
+    <h3>Move all-inclusive demand toward members and paid membership<small>Inclusive Collection commercial reset and Unlimited Vacation Club | Confidence 81%, published with note</small></h3>
+    <p><span class="tag f">Fact</span> Hyatt expects Distribution segment EBITDA to fall about $30 million in 2026, citing Mexico and weak 4-star demand, while its Cancun all-inclusives gained 400 basis points of share and first-quarter 2027 bookings are up high single digits (Q3 2026 call). <span class="tag f">Fact</span> Hyatt appointed Eduardo Schutte SVP Commercial for the Inclusive Collection in July 2026, covering brand, marketing and distribution (TravelPulse, July 23, 2026).</p>
+    <p><span class="tag i">Inference</span> Unlimited Vacation Club is a paid membership inside a business that sells mostly through tour operators and advisors. It is the clearest place to test subscription economics. Lens: Jon Mandell and Janey Whiteside on paid membership, Stacey Wilson on loyalty platforms and partner programs. <b>Flag:</b> the CEO declined to update investors on plans for the ALG distribution business, so scope could change with a transaction.</p>
+  </div></div>
+
+  <div class="sec"><span class="n">7</span><div>
+    <h3>Win the 2027 corporate group upswing directly<small>Corporate, group and small-business growth | Confidence 80%, published with note</small></h3>
+    <p><span class="tag f">Fact</span> Corporate group pace for 2027 is up almost 10%, corporate negotiated business rose about 4.8% in Q3, and corporate is typically about 40% of group (Q3 2026 call). <span class="tag f">Fact</span> Hilton opened a direct connection with Navan to bypass intermediaries (Q2 2026 call, via MarketBeat).</p>
+    <p><span class="tag h">Hypothesis</span> A joined-up plan across sales, the World of Hyatt Business card and managed-travel connections lifts direct corporate share. Lens: Josh McKay (B2B and enterprise payments) and Stacey Wilson, who ran the American Express Corporate Card suite for large corporates and led its small and mid-size business strategy. <b>Flag:</b> no Hyatt executive has named B2B sales structure as a priority.</p>
+  </div></div>
+
+  <div class="sec"><span class="n">8</span><div>
+    <h3>Make member value legible to AI booking agents<small>Agent-ready commercial offer | Confidence 80%, published with note | Feasibility 5</small></h3>
+    <p><span class="tag f">Fact</span> The CEO said LLM-originated bookings are still very small, that users arriving through Hyatt’s ChatGPT apps are younger and spend more on travel, and that agentic booking will become significant within a couple of years (Q3 2026 call). <span class="tag f">Fact</span> Hyatt named Danny Miles Chief Digital &amp; Information Officer on November 9, 2026, leading a newly combined digital and technology group under the Chief Commercial Officer (Hyatt newsroom).</p>
+    <p><span class="tag f">Fact</span> Hyatt’s 2026 proxy shows a special 2022 award for the Chief Commercial Officer tied to raising direct-booking share each year through 2025; the target was missed (Skift, April 6, 2026). <span class="tag i">Inference</span> When an agent compares rates, member rates and benefits are invisible unless they are structured for it. Consello’s role is the commercial layer: which member offers and brand content agents should see. Engineering stays with Hyatt. Lens: Janey Whiteside on digital commerce and customer platforms, Eric Bader on data-driven commercial platforms. <b>Flag:</b> a new technology leader will set his own roadmap first.</p>
+  </div></div>
+
+  <div class="sec"><span class="n">9</span><div>
+    <h3>Use Mr &amp; Mrs Smith as Europe’s member on-ramp<small>Horizon idea | Confidence 77%</small></h3>
+    <p><span class="tag f">Fact</span> As of March 31, 2026, 1,272 unaffiliated Mr &amp; Mrs Smith hotels were bookable through hyatt.com (Hyatt Q1 2026 10-Q). <span class="tag f">Fact</span> Hyatt is targeting Germany and Spain for co-brand cards and sponsored Laver Cup London 2026.</p>
+    <p><span class="tag h">Hypothesis</span> Curated independent inventory fills Hyatt’s European footprint gap for members and card prospects. Below 80 because no executive has linked Mr &amp; Mrs Smith to member growth in the last 12 months. No sizing. Lens: Janey Whiteside.</p>
+  </div></div>
+
+  <div class="sec"><span class="n">10</span><div>
+    <h3>Hold sponsorships to member and card targets<small>Horizon idea | Confidence 76%</small></h3>
+    <p><span class="tag f">Fact</span> In 2026 World of Hyatt became official hotel sponsor of Laver Cup London and official hospitality sponsor of the Premier and Women’s Lacrosse Leagues, and the Laver Cup release names member acquisition as a goal (Hyatt newsroom, July 2026).</p>
+    <p><span class="tag h">Hypothesis</span> Each property earns renewal on enrollments, card applications and elite engagement it generates. Lens: Wendy Clark on marketing tied to business metrics, Paul Gunning on agency and partner craft. Below 80 because nothing public suggests Hyatt questions sponsorship returns. No sizing.</p>
+  </div></div>
+</section>
+
+<section id="market">
+  <h2>Customers, marketing and distribution</h2>
+  <p class="lede">Who Hyatt sells to, how it markets, and which channels carry the bookings. Hyatt discloses neither its channel mix nor its marketing spend, so parts of this section rest on industry data and are labeled that way.</p>
+
+  <h3 class="sub-h" id="customers">Customers and experiences</h3>
+  <ul>
+    <li><span class="tag f">Fact</span> Hyatt guests spend more than 25% more per stay than competitors’ guests, and membership is concentrated in the top income quintiles (Investor Day, May 2026, via The Wise Marketer). Members fill nearly half of occupied rooms and spend nearly twice what non-members spend (Q1 2026 call).</li>
+    <li><span class="tag f">Fact</span> Q3 2026 by segment: leisure transient RevPAR up about 10%, group up 8%, business transient up about 1% (above 4% in September). Group typically splits 40% corporate, 40% associations, 20% other. Outbound US travel to Hyatt’s international hotels rose more than 10% (Q3 2026 call).</li>
+    <li><span class="tag f">Fact</span> Guests reaching Hyatt through its ChatGPT apps skew younger and spend more on travel (Q3 2026 call). Among hotel guests using AI tools to research stays, Gen Y accounts for 49% and Gen Z for 23% (J.D. Power, July 2026).</li>
+    <li><span class="tag f">Fact</span> In J.D. Power’s 2026 North America guest satisfaction study, Hyatt House ranked first in Upscale Extended Stay for a fifth straight year (728). The luxury and upper-upscale segments were led by The Ritz-Carlton (785) and Kimpton (738).</li>
+    <li><span class="tag i">Inference</span> Hyatt’s growth is led by luxury and leisure, yet its benchmark win is an extended-stay brand. The most-cited independent proof of experience leadership in North American luxury belongs to Marriott. With average rate driving nearly 80% of RevPAR growth, that proof matters to item 3.</li>
+    <li><span class="tag f">Fact</span> Hyatt told investors it operates 155 all-inclusive resorts with more than 58,000 rooms and is designing experiences that earn revenue beyond the package (Hospitality Investor, Investor Day coverage). The 2025 Form 10-K counts 127 managed all-inclusive resorts with 45,385 rooms at year-end. <span class="tag e">disputed</span> The figures differ by date and likely by scope; room math on this page uses the 10-K.</li>
+    <li><span class="tag i">Inference</span> Experiences (Guest of Honor, FIND, Laver Cup and lacrosse access, Miraval) work today as loyalty benefits. The commercial next step is pricing them two ways: as a cash product for non-members and as a high-value use of points for members as award prices rise.</li>
+  </ul>
+
+  <h3 class="sub-h" id="marketing">Marketing</h3>
+  <ul>
+    <li><span class="tag f">Fact</span> Hyatt launched its “Be More Here” platform in January 2024 with VML as creative agency, leading with World of Hyatt across the portfolio (VML; Mobile Marketing Magazine). VML describes its starting point as a Hyatt brand muddled by sub-brands and inconsistent messaging <span class="tag e">agency source</span>. <span class="tag e">older than 12 months, context only</span></li>
+    <li><span class="tag f">Fact</span> In April 2025 Hyatt consolidated global paid media with Stagwell’s Assembly as agency of record, and in July 2025 Assembly also took Hyatt’s affiliate program from Dentsu (Assembly release; Hello Partner). <span class="tag e">older than 12 months, context only</span></li>
+    <li><span class="tag f">Fact</span> Marketing leadership now spans Laurie Blair (SVP global marketing and loyalty), a new EAME marketing and loyalty VP (2026), a new Chief Creative Officer owning brand definition (September 2026), and a new Chief Digital &amp; Information Officer under the Chief Commercial Officer (November 2026). Marketing spend is not disclosed. <span class="tag e">requires validation</span></li>
+    <li><span class="tag i">Inference</span> Hyatt runs one master platform built on loyalty through one media agency, while brand definition has just moved to the Chief Creative Officer. That leaves two open questions: who owns brand-level marketing for more than 30 brands, and how media and sponsorships are judged on member and card outcomes.</li>
+    <li><span class="tag h">Hypothesis</span> A marketing operating-model review fits this moment: the split between master-brand and brand-level spend, agency roles after the 2025 consolidation, and one measurement standard tied to members, card applications and direct share. Lens: Wendy Clark, with Paul Gunning on agency craft. It connects items 3 and 10.</li>
+  </ul>
+
+  <h3 class="sub-h" id="distribution">Distribution</h3>
+  <ul>
+    <li><span class="tag f">Fact</span> Hyatt does not disclose its direct share. Its 2026 proxy shows the Chief Commercial Officer had half of a special 2022 stock award tied to raising direct-booking share each year through 2025; the target was missed and the award paid nothing (Skift, April 6, 2026).</li>
+    <li><span class="tag f">Fact</span> Industry context: Kalibri Labs data show hotel-controlled channels slipping from 59% to 58% of room nights over the past decade while online travel agencies rose from 20% to 21%, and Marriott pays agencies roughly 10% to 12.5% (Skift, May 2026). In Europe, 51.3% of hotel bookings were direct and 29.9% went through online agencies in 2025, with Booking Holdings holding 68.8% of agency bookings (HOTREC 2026).</li>
+    <li><span class="tag f">Fact</span> Hyatt’s own channel assets: hyatt.com and the app with natural-language search; ChatGPT apps that hand bookings to hyatt.com; the ALG Vacations platform used by more than 175,000 travel advisors (Q3 2026 call); Hyatt Privé for invited luxury advisors, whose bookings count as direct and earn points (Travel Codex, trade source); 1,272 unaffiliated Mr &amp; Mrs Smith hotels bookable on hyatt.com; and an affiliate program.</li>
+    <li><span class="tag f">Fact</span> Hyatt stays booked through Chase’s The Edit are treated as third-party bookings and earn no World of Hyatt points or elite benefits (The Points Party, 2026). Expedia’s business-to-business arm, which supplies bank travel portals, airlines and corporate tools, grew 21% in Q2 2026 (Hospitality Net).</li>
+    <li><span class="tag i">Inference</span> Membership grew 17% to 19% a year while the direct-share target was missed, so member growth has not converted into direct share. Part of the leak runs through partners’ portals, including the one run by Hyatt’s own card issuer.</li>
+    <li><b>Recommendation:</b> a channel-economics teardown that prices each channel, including loyalty cost, across hyatt.com, advisors, online agencies, bank portals and AI agents, and sets one rule for which channels earn points and status. Trade-off: tighter rules can cost volume in the agency channel. Success metric: direct share of member room nights. It feeds items 6, 8 and 9. Lens: Stacey Wilson and Eric Bader.</li>
+  </ul>
+</section>
+
+<section id="teardown">
+  <h2>Cards, partners and property mix</h2>
+  <p class="lede">Three teardowns behind items 1, 2 and 5. The card table filters by tier, the partnership map re-ranks as you change the weights, and the property bar is clickable. Everything stays readable without the controls.</p>
+
+  <h3 class="sub-h" id="cards">Card teardown: Hyatt’s Visa cards vs. Marriott and Hilton</h3>
+  <p><span class="tag f">Fact</span> Hyatt has two cards, both Chase-issued Visa Signature products. Marriott runs six across Chase and American Express; Hilton runs four with American Express. <span class="tag i">Inference</span> Hyatt is missing the two tiers that do the most work for its rivals: a no-fee card that recruits members and a premium card that sells top-tier status to the highest spenders.</p>
+  <div class="pills" role="group" aria-label="Filter cards by tier">
+    <button type="button" data-f="all" aria-pressed="true">All tiers</button><button type="button" data-f="entry" aria-pressed="false">No fee</button><button type="button" data-f="mid" aria-pressed="false">Mid</button><button type="button" data-f="premium" aria-pressed="false">Premium</button><button type="button" data-f="biz" aria-pressed="false">Business</button>
+  </div>
+  <div class="rank-scroll">
+  <table class="cards" id="cardtable">
+    <thead><tr><th>Card</th><th>Issuer and network</th><th>Annual fee</th><th>Status from card</th><th>Annual free night</th><th>Earn at brand</th><th>Standout</th></tr></thead>
+    <tbody>
+      <tr class="prog"><td colspan="7">World of Hyatt</td></tr>
+      <tr class="hy gap" data-t="entry"><td>No entry card</td><td>None</td><td>None</td><td>None</td><td>None</td><td>None</td><td>Gap: no low-cost way to recruit cardholders</td></tr>
+      <tr class="hy" data-t="mid"><td>World of Hyatt Credit Card</td><td>Chase, Visa Signature</td><td>$95</td><td>Discoverist; 5 tier nights a year plus 2 per $5,000</td><td>Category 1-4</td><td>4X (plus 5X as a member)</td><td>2X dining, airlines, transit, fitness; current offer 4 free nights after $5,000</td></tr>
+      <tr class="hy gap" data-t="premium"><td>Premium Hyatt card</td><td>Chase (announced)</td><td>Not public</td><td>Not public</td><td>Not public</td><td>Not public</td><td>Gap: announced November 2025, not launched as of November 17, 2026</td></tr>
+      <tr class="hy" data-t="biz"><td>World of Hyatt Business</td><td>Chase, Visa Signature Business</td><td>$199</td><td>Discoverist; 5 elite nights per $10,000</td><td>None</td><td>4X</td><td>Two $50 Hyatt credits; 10% of points back after $50,000 spend</td></tr>
+      <tr class="prog"><td colspan="7">Marriott Bonvoy</td></tr>
+      <tr data-t="entry"><td>Bonvoy Bold</td><td>Chase</td><td>$0</td><td>Silver</td><td>None</td><td>Not compared</td><td>Feeder card</td></tr>
+      <tr data-t="mid"><td>Bonvoy Boundless</td><td>Chase</td><td>$95</td><td>Silver; Gold at $35,000 spend</td><td>Up to 35,000 points</td><td>Not compared</td><td>Up to $100 airline credit offer</td></tr>
+      <tr data-t="mid"><td>Bonvoy Bountiful</td><td>Chase</td><td>$250</td><td>Not compared</td><td>Not compared</td><td>Not compared</td><td>Upper-mid tier</td></tr>
+      <tr data-t="mid"><td>Bonvoy Bevy</td><td>American Express</td><td>$250</td><td>Not compared</td><td>None</td><td>6X</td><td>Upper-mid tier without an annual night</td></tr>
+      <tr data-t="premium"><td>Bonvoy Brilliant</td><td>American Express</td><td>$650</td><td>Elite status included</td><td>Up to 85,000 points</td><td>Not compared</td><td>$300 dining credit</td></tr>
+      <tr data-t="biz"><td>Bonvoy Business</td><td>American Express</td><td>$125</td><td>Not compared</td><td>Not compared</td><td>Not compared</td><td>Only Marriott business card open to new applicants</td></tr>
+      <tr class="prog"><td colspan="7">Hilton Honors</td></tr>
+      <tr data-t="entry"><td>Hilton Honors</td><td>American Express</td><td>$0</td><td>Silver</td><td>None</td><td>7X</td><td>Feeder card</td></tr>
+      <tr data-t="mid"><td>Hilton Surpass</td><td>American Express</td><td>$150</td><td>Gold</td><td>Not compared</td><td>12X</td><td>Mid-tier status on a mid-tier fee</td></tr>
+      <tr data-t="premium"><td>Hilton Aspire</td><td>American Express</td><td>$550</td><td>Diamond (top tier)</td><td>Yes</td><td>14X</td><td>$400 resort credit, $200 flight credit</td></tr>
+      <tr data-t="biz"><td>Hilton Business</td><td>American Express</td><td>$195</td><td>Gold</td><td>Not compared</td><td>12X</td><td>Business spend to status</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="legend">Points currencies differ in value, so earn multiples are not directly comparable across programs. “Not compared” means the term was not verified for this draft. Sources: issuer offer pages as reported by Frequent Miler, The Points Party, NerdWallet, CardCurator and Upgraded Points, 2026.</p>
+  <h4>What the teardown says</h4>
+  <ul>
+    <li><span class="tag f">Fact</span> Hyatt’s best card tops out at Discoverist, the entry tier. Hilton’s Aspire includes Diamond and the Surpass includes Gold. <span class="tag i">Inference</span> For a program that leads on members per hotel and guests in the top income quintiles, the missing premium card is the largest gap in the lineup.</li>
+    <li><span class="tag f">Fact</span> Chase gives Explorist, Hyatt’s middle tier, to Sapphire Reserve holders who spend $75,000 a year. <span class="tag i">Inference</span> Chase’s own flagship currently sells a higher Hyatt tier than the Hyatt co-brand does. The premium card has to be designed so Chase sees it as additive to Sapphire rather than cannibalizing it.</li>
+    <li><span class="tag f">Fact</span> Both bank transfer routes into Hyatt now convert at 4:3 (Chase from October 1, 2026; Bilt from January 1, 2027). <span class="tag i">Inference</span> The co-brand is the most efficient way to earn Hyatt points, which raises its value at exactly the moment a premium tier would launch.</li>
+    <li><span class="tag f">Fact</span> Hilton’s app lets eligible members pay hotel-bill charges with points at digital checkout, and an owner memo says hotels receive full retail value for those charges (InsideFlyer, 2026). <span class="tag h">Hypothesis</span> Paying with points on property is Hyatt’s next financial-services lever beyond the card: it turns points into spending money at Hyatt-managed restaurants, spas and resorts with no issuer in the middle. <span class="tag e">requires validation</span> of Hyatt’s current pay-with-points coverage.</li>
+    <li><span class="tag h">Hypothesis</span> A no-fee card matters less for Hyatt than for Marriott or Hilton, because Hyatt monetizes depth over breadth. Test it against the international launch, where a low-fee card may be the only way to recruit members in Germany and Spain under interchange caps.</li>
+    <li><b>Recommendation:</b> price the premium card against Aspire ($550) and Brilliant ($650), with status that clears Discoverist and a credible path to Globalist. Trade-off: richer status benefits raise owners’ loyalty costs. Success metric: share of new Explorist and Globalist qualifications that arrive through the card.</li>
+  </ul>
+
+  <h3 class="sub-h" id="partners">Partnership map: where everyday points engagement should come from</h3>
+  <p><span class="tag f">Fact</span> The highest-frequency slots are taken. Uber links with Marriott and Delta. Lyft links with Hilton, United, Alaska and Bilt. Starbucks links with Marriott and Delta. Marriott ties its Uber earn to its own hotels, paying 6 points per dollar on Uber Eats orders of $40 or more delivered to a Marriott property, and gives Uber One subscribers Silver status. Hyatt lost Small Luxury Hotels to Hilton in 2024 and ended its MGM tie in 2023; its everyday earning runs through Chase and Bilt.</p>
+  <p><span class="tag i">Inference</span> Every partner that buys Hyatt points is also a revenue line, so a partnership should be judged on what the partner pays as well as on how often members use it. Use the weights to test the ranking. Scores are Consello judgment on a 1 to 5 scale, not data.</p>
+  <div class="scorer">
+    <div class="weights" id="weights">
+      <label>How often members use it <output id="o-fr">1</output><input type="range" min="0" max="3" step="1" value="1" data-k="fr" aria-label="Weight for frequency"></label>
+      <label>Overlap with premium households <output id="o-pr">2</output><input type="range" min="0" max="3" step="1" value="2" data-k="pr" aria-label="Weight for premium overlap"></label>
+      <label>Slot open (no rival hotel there) <output id="o-op">2</output><input type="range" min="0" max="3" step="1" value="2" data-k="op" aria-label="Weight for slot availability"></label>
+      <label>Partner funds the points <output id="o-fu">1</output><input type="range" min="0" max="3" step="1" value="1" data-k="fu" aria-label="Weight for partner funding"></label>
+    </div>
+    <ol class="plist" id="plist">
+      <li><span class="pn">Wellness and fitness</span><span class="ps">27</span><span class="pb"><i style="width:90%"></i></span><span class="pd">Fits Miraval and the card’s fitness category; no hotel program owns it. Run a conflicts check against current Consello clients before naming a partner.</span></li>
+      <li><span class="pn">Food delivery</span><span class="ps">23</span><span class="pb"><i style="width:77%"></i></span><span class="pd">Highest frequency open slot; DoorDash already rides on Chase Sapphire. Validate that no hotel program holds it.</span></li>
+      <li><span class="pn">Premium chauffeur and airport transfers</span><span class="ps">23</span><span class="pb"><i style="width:77%"></i></span><span class="pd">Low frequency, very high overlap; a Globalist benefit more than an earning engine.</span></li>
+      <li><span class="pn">Rail and airlines in card markets</span><span class="ps">22</span><span class="pb"><i style="width:73%"></i></span><span class="pd">Pairs with the Germany and Spain cards to build frequency where hotels are thin.</span></li>
+      <li><span class="pn">Live events and ticketing</span><span class="ps">19</span><span class="pb"><i style="width:63%"></i></span><span class="pd">Extends the Laver Cup and lacrosse sponsorships into earning.</span></li>
+      <li><span class="pn">Mass rideshare</span><span class="ps">17</span><span class="pb"><i style="width:57%"></i></span><span class="pd">Uber and Lyft each have a hotel partner; Hyatt would be second on the screen.</span></li>
+      <li><span class="pn">Coffee</span><span class="ps">16</span><span class="pb"><i style="width:53%"></i></span><span class="pd">Starbucks is taken by Marriott and Delta.</span></li>
+    </ol>
+  </div>
+  <p><b>Lens:</b> Stacey Wilson negotiated partner benefits with Uber and Hilton in the American Express Corporate Card refresh and helped launch Plenti, a coalition of brands sharing one points currency. She leads on which partners to sign and who funds the points.</p>
+  <h4>Design rules worth borrowing</h4>
+  <ul>
+    <li>Tie partner earning to an on-property moment, as Marriott does with Uber Eats deliveries to its hotels.</li>
+    <li>Sell status through the partner’s subscription, as Marriott does with Uber One, so the partner pays to recruit Hyatt members.</li>
+    <li>Sequence after the card. A partner earning Hyatt points at scale is worth more once a premium card exists to concentrate that member’s spend.</li>
+  </ul>
+
+  <h3 class="sub-h" id="mix">Property mix: owned and leased vs. managed vs. franchised</h3>
+  <p><span class="tag f">Fact</span> At December 31, 2025, Hyatt had 1,528 hotels and all-inclusive resorts with 372,763 rooms (2025 Form 10-K). Asset-light earnings were 89% of the mix in 2025, against a target of about 90% (Hyatt Q2 2026 investor materials). Select a segment for detail.</p>
+  <div class="mixbar" id="mixbar" role="group" aria-label="Rooms by operating model">
+    <button type="button" class="m" style="flex:55" data-s="m" aria-pressed="true">Managed 55%</button><button type="button" class="f" style="flex:34.7" data-s="f" aria-pressed="false">Franchised 35%</button><button type="button" class="o" style="flex:2.5" data-s="o" aria-pressed="false" aria-label="Owned and leased 2.5%"></button><button type="button" class="j" style="flex:2" data-s="j" aria-pressed="false" aria-label="Joint ventures 2%"></button><button type="button" class="x" style="flex:5.9" data-s="x" aria-pressed="false" aria-label="Other 6%"></button>
+  </div>
+  <p class="legend">Share of rooms, derived from 10-K counts. <span class="tag e">Estimate</span></p>
+  <ul class="mixlist" id="mixlist">
+    <li data-s="m" class="on"><b><span class="sw" style="background:#000"></span>Managed: 682 properties, 204,841 rooms (~55%)</b>Includes 127 all-inclusive resorts with 45,385 rooms, about 12% of all Hyatt rooms. <span class="tag i">Inference</span> Hyatt runs operations in most of its rooms, which makes recognition benefits deliverable consistently. Owners carry the cost, so benefit design needs an owner-economics check.</li>
+    <li data-s="f"><b><span class="sw" style="background:#A64A30"></span>Franchised: 700 properties, 129,242 rooms (~35%)</b>Royalties typically run 2.75% to 5% of gross rooms revenue (2024 Form 10-K). <span class="tag i">Inference</span> Most Essentials growth lands here, so new-market activation spend falls on franchisees with thinner margins.</li>
+    <li data-s="o"><b><span class="sw" style="background:#F6D1A3"></span>Owned and leased: 28 properties, 9,190 rooms (~2.5%)</b>Remaining owned assets are 7 luxury and wellness properties and 10 business and convention hotels, estimated by Hyatt at $2.2 to $2.5 billion; the Hyatt Grand Central New York sale is in progress (Q2 and Q3 2026).</li>
+    <li data-s="j"><b><span class="sw" style="background:#BDB6AE"></span>Joint ventures: 23 properties, 7,477 rooms (~2%)</b>Managed or franchised properties owned or leased by unconsolidated hospitality ventures.</li>
+    <li data-s="x"><b><span class="sw" style="background:#E4E0DB"></span>Other: about 22,000 rooms (~6%)</b>Residual after the categories above, likely vacation club, residential and other agreements. <span class="tag e">requires validation</span></li>
+  </ul>
+  <p><span class="tag i">Inference</span> Two features set Hyatt apart for this pitch: a managed-heavy system, which lets it promise on-property recognition more credibly than franchise-led rivals (peer splits to confirm), and an all-inclusive base plus a separate Distribution segment (ALG Vacations, Mr &amp; Mrs Smith, Unlimited Vacation Club), which gives it leisure booking data no rival of its size holds.</p>
+</section>
+
+<section id="whitespace">
+  <h2>Competitive position and white space</h2>
+  <p class="lede">Rivals compete on breadth. Hyatt competes on depth per member. The open ground is the premium household’s whole travel wallet.</p>
+  <div class="ws">
+    <div>
+      <h3>What competitors are doing</h3>
+      <ul>
+        <li>Marriott: about 309 million Bonvoy members, card fees expected up in the high-30% range in 2026, Google AI Mode booking work, and owners asking for a larger share of card income (Q3 2026; Skift).</li>
+        <li>Hilton: more than 270 million Honors members, cheaper status thresholds, and loyalty-fee cuts plus its RISE program worth 75 to 100 basis points of owner margin (Q2 and Q3 2026).</li>
+        <li>Everyday earning: Uber links with Marriott and Delta; Lyft with Hilton, United, Alaska and Bilt; Starbucks with Marriott and Delta. Hyatt’s everyday earning runs through Chase and Bilt (see the <a href="#partners">partnership map</a>).</li>
+        <li>IHG: more than 160 million IHG One Rewards members across 6,963 open hotels, and an April 2026 partnership with All Nippon Airways that it calls a new benchmark for hotel-airline deals (IHG release).</li>
+        <li>Accor: folds dining, co-working and experiences into its points currency so members engage without booking a room (Hospitality Today), and converts points both ways with Emirates Skywards <span class="tag e">February 2025, context only</span>.</li>
+        <li>Hilton was approaching 70% Honors occupancy against a 75% target <span class="tag e">October 2025, older than 12 months</span>, vs. about 50% for Hyatt members in Q1 2026.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What nobody appears to be doing</h3>
+      <ul>
+        <li>Measuring and selling to share of a premium household’s total travel wallet: air, hotel and card together.</li>
+        <li>Making member rates and benefits structured for AI agents. All three large programs currently route agent traffic back to their own sites. <span class="tag i">Inference</span></li>
+        <li>Placing new hotels from members’ out-of-system stays and launching them to those same members. Hyatt has done the first half publicly.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Where the opportunity sits</h3>
+      <ul>
+        <li>Hyatt has the pieces no rival has combined: a Delta relationship, a Chase card, the most engaged members per hotel, and data on where members go when Hyatt is absent.</li>
+        <li><span class="tag e">Estimate</span> Each 5 points of occupied rooms moved from non-members to members puts about 10% more of Hyatt’s stays under data, direct booking and card cross-sell (5 points on a base of about 50).</li>
+        <li>The penetration gap to Hilton’s last reported level is about 20 points, the size of the prize if Hyatt chooses to chase it.</li>
+      </ul>
+    </div>
+  </div>
+  <h3 class="sub-h" id="compare">Program comparison</h3>
+  <p>Select a column heading to sort.</p>
+  <div class="rank-scroll">
+  <table class="cards cmp" id="cmptable">
+    <thead><tr><th data-k="0" data-type="s">Program</th><th data-k="1">Members</th><th data-k="2">Hotels</th><th data-k="3">Members per hotel</th><th>Card issuers</th><th>Signature partnerships</th></tr></thead>
+    <tbody>
+      <tr class="hy"><td data-v="World of Hyatt">World of Hyatt</td><td data-v="72">72M+</td><td data-v="1500">1,500+</td><td data-v="48">~48,000</td><td>Chase</td><td>Delta (live November 17, 2026), Aeroplan, Bilt</td></tr>
+      <tr><td data-v="Marriott Bonvoy">Marriott Bonvoy</td><td data-v="309">~309M</td><td data-v="9000">9,000+</td><td data-v="34">~34,000</td><td>Chase, American Express</td><td>Uber, Starbucks, United, Air Canada</td></tr>
+      <tr><td data-v="Hilton Honors">Hilton Honors</td><td data-v="270">270M+</td><td data-v="7000">7,000+</td><td data-v="39">~39,000 or less</td><td>American Express</td><td>Lyft, Small Luxury Hotels</td></tr>
+      <tr><td data-v="IHG One Rewards">IHG One Rewards</td><td data-v="160">160M+</td><td data-v="6963">6,963</td><td data-v="23">~23,000</td><td>Chase</td><td>All Nippon Airways</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="legend">Members per hotel is members divided by hotels <span class="tag e">Estimate</span>. Hyatt claims more than 40% more members per hotel than its nearest rival; simple division puts the gap nearer 24% over Hilton <span class="tag e">disputed</span>, likely because hotel counts and member definitions differ by company. IHG card issuer is general knowledge and needs confirming.</p>
+</section>
+
+<section id="risks">
+  <h2>Strongest counterargument and watch list</h2>
+  <div class="counter">
+    <h3>What someone who strongly disagrees would say</h3>
+    <p>Hyatt’s program is outperforming. Membership grows 17% to 19% a year, the 100-plus-stay cohort is up about 40% since 2022, the CEO calls the chart reaction positive, and its loyalty lead made Campaign’s CMO 50 in 2025. A firm that diagnoses a working program will be shown the door.</p>
+    <p><b>Response:</b> agreed on the diagnosis. The opening is capacity at decision points: a premium card launch, a new airline partner and a 2027 chart phase all scheduled for the next six months, inside a commercial organization that just added a Chief Creative Officer, a combined digital and technology group, a new Inclusive Collection commercial lead and a new regional marketing and loyalty role. Pitch operators for the launches and leave the diagnosis out.</p>
+    <p><b>Second objection:</b> five of the ten ideas run through loyalty. That concentration mirrors where Hyatt’s growth sits, and it also concentrates our pitch risk if Hyatt’s answer is “we have loyalty covered.” Items 3, 4 and 7 are the hedge.</p>
+  </div>
+  <h3>Watch list</h3>
+  <ul>
+    <li><b>Owner economics of loyalty (cut, about 70%).</b> <span class="tag f">Fact</span> Marriott owners wrote to management in 2026 seeking a bigger share of card income, and Hilton cut loyalty fees. <span class="tag i">Inference</span> Hyatt’s card line doubling invites the same question from its owners. No Hyatt-specific signal found, so it stays off the ranked list.</li>
+    <li><b>Delta phase 2 and Mexico timing.</b> Delta and Hyatt have promised more milestone rewards in 2027; Cancun airlift recovery drives the Inclusive Collection item.</li>
+    <li><b>ALG strategic direction.</b> Any transaction redraws item 6.</li>
+  </ul>
+</section>
+
+<section id="access">
+  <h2>Access and likelihood to win</h2>
+  <p><span class="tag f">Fact</span> The commercial buyer is Mark Vondrasek, Chief Commercial Officer, who now oversees digital and technology through the new CDIO. Laurie Blair runs global marketing and loyalty. Amar Lalvani owns brand clarity. Eduardo Schutte runs Inclusive Collection commercial. Geoffray Maugin runs EAME marketing and loyalty.</p>
+  <p><span class="tag f">Fact</span> The Pritzker family’s voting control makes Hyatt a hard target for activists, and Thomas Pritzker has stepped down as chairman; Mark Hoplamazian now holds the chair as well as the CEO role (Skift, April 6, 2026; Hyatt releases).</p>
+  <p><span class="tag i">Inference</span> Four commercial leadership changes in nine months signal openness to outside operators, and new leaders often re-examine partners in their first two quarters.</p>
+  <p><b>Recommended entry point:</b> open with Vondrasek on items 1 and 2 framed as one premium-household design, timed before the Q4 call. Bring item 3 to Lalvani separately as support for his agenda. Success metric for the first meeting: a working session on Delta phase 2 or the premium card before February 2027.</p>
+</section>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <p class="lede">Primary sources first. Points and loyalty trade press is marked; it meets the byline test but is enthusiast-weighted.</p>
+  <ol class="src">
+    <li>Hyatt Q3 2026 earnings call transcript, October 29, 2026. <a href="https://www.fool.com/earnings/call-transcripts/2026/10/31/hyatt-h-q3-2026-earnings-call-transcript/">The Motley Fool</a></li>
+    <li>Hyatt Q3 2026 results release, October 29, 2026. <a href="https://www.franchising.com/news/20261029_hyatt_reports_third_quarter_2026_results.html">Business Wire via Franchising.com</a>; <a href="https://hotelsmag.com/news/luxury-hotels-strong-development-activity-lead-hyatts-q3-growth/">Hotels magazine</a></li>
+    <li>Hyatt Q1 2026 earnings call transcript, April 30, 2026. <a href="https://www.fool.com/earnings/call-transcripts/2026/04/30/hyatt-h-q1-2026-earnings-call-transcript/">The Motley Fool</a></li>
+    <li>Hyatt Q2 2026 earnings call transcript, July 30, 2026. <a href="https://www.fool.com/earnings/call-transcripts/2026/08/03/hyatt-h-q2-2026-earnings-call-transcript/">The Motley Fool</a></li>
+    <li>Hyatt Investor Day release, May 28, 2026. <a href="https://investors.hyatt.com/news/investor-news/news-details/2026/Hyatt-Hotels-Corporation-Investor-Day-Highlights-Strategy-Driven-by-Premium-Position-and-Differentiation-at-Scale/default.aspx">Hyatt Investor Relations</a></li>
+    <li>“Hyatt’s Investor Day Reveals a Loyalty Program Built for Investors,” June 12, 2026. <a href="https://thewisemarketer.com/hyatts-investor-day-reveals-a-loyalty-program-built-for-investors-not-just-members/">The Wise Marketer</a> (loyalty trade press)</li>
+    <li>“Hyatt Projects Doubling Loyalty Profit,” May 2026. <a href="https://viewfromthewing.com/hyatt-projects-doubling-loyalty-profit-after-devaluation-will-launch-international-credit-cards/">View from the Wing</a> (points trade press)</li>
+    <li>World of Hyatt award chart update, February 25, 2026. <a href="https://newsroom.hyatt.com/awardchartupdates">Hyatt newsroom</a></li>
+    <li>Delta partnership and American Airlines exit, September 2026. <a href="https://liveandletsfly.com/hyatt-dumps-american-airlines-delta/">Live and Let’s Fly</a>; <a href="https://upgradedpoints.com/news/hyatt-delta-partnership/">Upgraded Points</a>; <a href="https://travel-on-points.com/hyatt-airline-partnership-changes/">Travel on Points</a> (points trade press)</li>
+    <li>Aeroplan and World of Hyatt, July 15, 2026. <a href="https://www.businesswire.com/news/home/20260715312519/en/Better-in-Both-Worlds-Air-Canadas-Aeroplan-and-World-of-Hyatt-Join-Forces-Bringing-Members-More-Ways-to-Earn-and-Redeem">Business Wire</a>; <a href="https://www.nerdwallet.com/travel/news/hyatt-air-canada-aeroplan-partnership">NerdWallet</a></li>
+    <li>Amar Lalvani named Chief Creative Officer, September 30, 2026. <a href="https://newsroom.hyatt.com/09-30-2026-Amar-Chief-Creative-Officer">Hyatt newsroom</a></li>
+    <li>Danny Miles named Chief Digital &amp; Information Officer, November 9, 2026. <a href="https://newsroom.hyatt.com/09-Nov-2026-Danny-Miles">Hyatt newsroom</a></li>
+    <li>Eduardo Schutte named SVP Commercial, Inclusive Collection, July 23, 2026. <a href="https://www.travelpulse.com/news/people/hyatt-appoints-eduardo-schutte-svp-commercial-hyatt-inclusive-collection">TravelPulse</a></li>
+    <li>Geoffray Maugin interview, July 16, 2026. <a href="https://hospitality-on.com/en/marketing/companies-will-lead-pack-will-combine-brand-clarity-customer-experience-and-long-term">Hospitality ON</a></li>
+    <li>Chase and Hyatt partnership expansion, November 2025 (older than 12 months, context only). <a href="https://onemileatatime.com/news/chase-hyatt-expand-partnership-new-credit-card-more-perks/">One Mile at a Time</a></li>
+    <li>Marriott Q3 2026: fees, card outlook and owner pressure, November 2, 2026. <a href="https://skift.com/2026/11/02/marriotts-fees-jump-14-as-hotel-owners-seek-a-bigger-cut/">Skift</a>; membership <a href="https://www.traveldailynews.com/hospitality/marriott-q3-2026-results/">Travel Daily News</a></li>
+    <li>Hilton Q3 2026 results release (Honors membership). <a href="https://stories.hilton.com/releases/hilton-reports-2026-third-quarter-results">Hilton</a>; Q2 2026 call highlights, July 28, 2026, <a href="https://www.marketbeat.com/instant-alerts/hilton-worldwide-q2-earnings-call-highlights-2026-07-28/">MarketBeat</a></li>
+    <li>Hilton Honors occupancy, Q3 2025 call (older than 12 months, context only). <a href="https://thewisemarketer.com/a-primer-on-loyalty-reporting-and-investor-friendly-communications">The Wise Marketer</a></li>
+    <li>Hilton Honors status changes, November 2025 (older than 12 months, context only). <a href="https://en.10minhotel.com/?p=169895">10 Minutes News for Hoteliers</a></li>
+    <li>Hyatt ChatGPT app, February 13, 2026. <a href="https://www.hospitality.today/article/hyatt-sees-booking-gains-from-ai-search-launches-chatgpt-app">Hospitality Today</a>; AI risk in Marriott and Hilton filings, February 2026, <a href="https://www.foster.com/duff-on-hospitality-law/a-busy-week-in-online-travel-expedia-earnings-hotelier-ai-developments-and-renewed-parity-concerns">Foster LLP summary of Skift reporting</a></li>
+    <li>Laver Cup London 2026 sponsorship, July 16, 2026. <a href="https://newsroom.hyatt.com/LaverCup2026">Hyatt newsroom</a>; Premier Lacrosse League, July 28, 2026, <a href="https://newsroom.hyatt.com/PremierLacrosseLeague">Hyatt newsroom</a></li>
+    <li>Hyatt Q1 2026 Form 10-Q, Mr &amp; Mrs Smith properties. <a href="https://pubt.io/view/F46354C60A238858E5AAE95BA8825BAF649ABD97">Filing mirror</a> (verify against EDGAR before external use)</li>
+    <li>Marriott and Hilton conversion shares, Q3 2026. <a href="https://www.traveldailynews.com/hospitality/marriott-q3-2026-results/">Travel Daily News</a>; <a href="https://www.hotelmanagement.net/operate/hilton-shifts-revpar-guidance-after-strong-q3-numbers">Hotel Management</a></li>
+    <li>Laurie Blair, Campaign CMO 50, 2025 (context only). <a href="https://campaignlive.com/article/cmo-50-2025-laurie-blair/1934313">Campaign</a></li>
+    <li>Hyatt and Delta launch terms, November 17, 2026. <a href="https://www.financialcontent.com/article/bizwire-2026-11-17-elevated-travel-exceptional-rewards-hyatt-and-delta-unveil-more-details-on-their-new-loyalty-collaboration">Hyatt release via Business Wire</a>; <a href="https://news.delta.com/delta-and-hyatt-launch-new-benefits-and-experiences-skymilesr-and-world-hyatt-members">Delta News Hub</a>; <a href="https://loyaltylobby.com/2026/11/17/world-of-hyatt-delta-skymiles-partnership-from-january-1-2027/">LoyaltyLobby</a> (points trade press)</li>
+    <li>World of Hyatt card terms and offer, November 2026. <a href="https://frequentmiler.com/world-of-hyatt-card-new-welcome-offer-with-four-category-1-4-free-night-certificates/">Frequent Miler</a>; business card terms, <a href="https://travelingformiles.com/chase-hyatt-spending-trackers/">Traveling for Miles</a>; card status earning, <a href="https://awardwallet.com/news/world-of-hyatt/chase-partnership-expansion/">AwardWallet</a></li>
+    <li>Transfer ratio changes. <a href="https://thepointsguy.com/credit-cards/chase-hyatt-transfer-ratio-world-of-hyatt-card-strategy">The Points Guy (Chase, 2026)</a>; <a href="https://onemileatatime.com/news/bilt-devalues-world-of-hyatt-points-transfers/">One Mile at a Time (Bilt, 2027)</a>; transfer partners, <a href="https://thepointsparty.com/articles/how-to-transfer-credit-card-points-to-hyatt">The Points Party</a>; Sapphire Reserve Explorist threshold, <a href="https://thepointsparty.com/articles/chase-hyatt-partnership-expansion-2026">The Points Party</a></li>
+    <li>Marriott card lineup, 2026. <a href="https://thepointsparty.com/articles/marriott-bonvoy-card-offers-september-2026">The Points Party</a>; <a href="https://frequentmiler.com/marriott-releases-its-new-card-lineup-is-it-a-bevy-of-bountiful-brilliance/">Frequent Miler</a>; <a href="https://www.nerdwallet.com/travel/learn/best-marriott-credit-card-offer">NerdWallet</a>; <a href="https://www.firstcard.app/learn/marriott-bonvoy-credit-card">Firstcard</a>; <a href="https://thepointsguy.com/news/new-chase-marriott-premier-plus-card/">The Points Guy</a></li>
+    <li>Hilton card lineup, 2026. <a href="https://cardcurator.ai/card/hilton-honors-aspire">CardCurator</a>; <a href="https://upgradedpoints.com/news/limited-time-increased-offer-hilton-honors-cards">Upgraded Points</a></li>
+    <li>Everyday-earn partnerships. <a href="https://thepointsguy.com/loyalty-programs/earn-points-miles-with-apps/">The Points Guy, February 2026</a>; <a href="https://travelingformiles.com/?p=57647">Traveling for Miles (Marriott and Uber)</a>; <a href="https://www.pulse.bot/hotels/news/earn-1500-bonus-points-link-your-marriott-bonvoy-and-uber-accounts-plus-de944de4-735f-4b15-b08e-4fcc5b61c0ae/">Uber One and Marriott status</a>; <a href="https://www.fodors.com/news/travel-tips/how-to-maximize-your-travel-points-with-points-partnerships">Fodor’s</a>; Hyatt partners lost, <a href="https://princeoftravel.com/guides/world-of-hyatt/">Prince of Travel</a></li>
+    <li>Hyatt property composition, 2025 Form 10-K. <a href="https://www.sec.gov/Archives/edgar/data/1468174/000146817426000007/h-20251231.htm">SEC EDGAR</a>; summary via <a href="https://www.stocktitan.net/sec-filings/H/10-k-hyatt-hotels-corp-files-annual-report-02883fedec3d.html">Stock Titan</a>; asset-light mix and remaining owned assets, <a href="https://www.investing.com/news/company-news/hyatt-q2-2026-slides-record-pipeline-amid-mixed-results-93CH-4825593">Investing.com, Q2 2026 slides</a>; franchise royalty range, <a href="https://stocklight.com/stocks/us/nyse-h/hyatt-hotels-corporation/annual-reports/nyse-h-2025-10K-25619985.pdf">2024 Form 10-K</a></li>
+    <li>Customers and satisfaction. <a href="https://www.jdpower.com/business/press-releases/2026-north-america-hotel-guest-satisfaction-study/">J.D. Power 2026 North America Hotel Guest Satisfaction Index</a>; AI usage by generation, <a href="https://www.businesstravelexecutive.com/news/jd-power-survey-shows-higher-hotel-guest-satisfaction/">Business Travel Executive</a>; all-inclusive scale at Investor Day, <a href="https://www.hospitalityinvestor.com/index%2ephp/brands/inside-hyatts-scale-strategy-its-next-act">Hospitality Investor</a></li>
+    <li>Marketing. <a href="https://www.vml.com/work/be-more-here">VML, Be More Here</a> and <a href="https://vml.com/work/welcome-to-a-whole-new-world-of-hyatt">case study</a> (agency sources); <a href="https://mobilemarketingmagazine.com/?p=119652">Mobile Marketing Magazine, January 2024</a>; <a href="https://assemblyglobal.com/news/hyatt-selects-assembly-as-paid-global-media-agency-of-record">Assembly release, April 2025</a>; <a href="https://www.mediapost.com/publications/article/404797/assembly-wins-hyatts-consolidated-global-media-ao.html">MediaPost</a>; <a href="https://hellopartner.com/2025/07/22/agency-wins-assembly-global-wins-hyatt-affiliate-business/">Hello Partner, July 2025</a></li>
+    <li>Distribution. <a href="https://skift.com/2026/04/06/hyatt-ties-c-suite-pay-to-direct-bookings-and-lifestyle-hotels-goals/">Skift, Hyatt proxy and direct bookings, April 6, 2026</a>; <a href="https://newsletters.skift.com/p/hotels-vs-otas-the-hidden-scoreboard">Skift, hotels vs. online agencies, May 2026</a>; <a href="https://www.hotrec.eu/media/static/files/import/all_news_2026_2026_35/executive-summary_european-hotel-distribution-study-2026_hotrec.pdf">HOTREC European Hotel Distribution Study 2026</a>; <a href="https://www.hospitalitynet.org/opinion/4135022/hotel-distribution-in-2026-the-otas-still-sell-your-rooms">Hospitality Net</a>; <a href="https://www.travelcodex.com/hyatt-prive/">Travel Codex, Hyatt Privé</a> (trade source); The Edit treatment, <a href="https://thepointsparty.com/articles/chase-hyatt-partnership-expansion-2026">The Points Party</a></li>
+    <li>Competitive set. <a href="https://www.ihgplc.com/en/news-and-media/news-releases/2026/ihg-hotels-and-resorts-and-all-nippon-airways-announce-milestone-loyalty-partnership">IHG and ANA release, April 22, 2026</a>; <a href="https://www.hospitality.today/article/demand-on-their-own-terms">Hospitality Today on Accor ALL</a>; <a href="https://loyaltylobby.com/2025/02/06/accor-all-emirates-skywards-two-way-conversions/">LoyaltyLobby, Accor and Emirates</a>; Hilton pay with points, <a href="https://www.insideflyer.com/tag/spg-amex/?page=1">InsideFlyer</a>; Hilton property count, <a href="https://thepointsparty.com/articles/which-hilton-credit-card-is-right-for-you">The Points Party</a>; Marriott property count, <a href="https://milesopedia.com/en/?p=413412">Milesopedia</a></li>
+  </ol>
+</section>
+
+<p class="final"><span>If I had to summarize this in one sentence:</span>Hyatt is converting member generosity into fee EBITDA faster than its footprint can replace it, so the work that matters is making the card, the Delta deal and the 2027 chart phase recruit and keep premium households as one design.</p>
+
+</main>
+<script>
+(function(){
+  try{
+    /* card filter */
+    var pills=document.querySelectorAll('.pills button');
+    var rows=document.querySelectorAll('#cardtable tbody tr[data-t]');
+    var progs=document.querySelectorAll('#cardtable tbody tr.prog');
+    pills.forEach(function(b){b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      pills.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      rows.forEach(function(r){r.hidden=!(f==='all'||r.getAttribute('data-t')===f);});
+    });});
+    /* partner scorer */
+    var P=[
+      ['Wellness and fitness',4,5,5,3,'Fits Miraval and the card’s fitness category; no hotel program owns it. Run a conflicts check against current Consello clients before naming a partner.'],
+      ['Food delivery',5,3,4,4,'Highest frequency open slot; DoorDash already rides on Chase Sapphire. Validate that no hotel program holds it.'],
+      ['Premium chauffeur and airport transfers',2,5,4,3,'Low frequency, very high overlap; a Globalist benefit more than an earning engine.'],
+      ['Rail and airlines in card markets',2,4,4,4,'Pairs with the Germany and Spain cards to build frequency where hotels are thin.'],
+      ['Live events and ticketing',2,4,3,3,'Extends the Laver Cup and lacrosse sponsorships into earning.'],
+      ['Mass rideshare',5,3,1,4,'Uber and Lyft each have a hotel partner; Hyatt would be second on the screen.'],
+      ['Coffee',5,3,1,3,'Starbucks is taken by Marriott and Delta.']
+    ];
+    var keys=['fr','pr','op','fu'];
+    var list=document.getElementById('plist');
+    var sliders=document.querySelectorAll('#weights input');
+    function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+    function render(){
+      var w={};sliders.forEach(function(s){w[s.getAttribute('data-k')]=+s.value;document.getElementById('o-'+s.getAttribute('data-k')).textContent=s.value;});
+      var max=5*(w.fr+w.pr+w.op+w.fu)||1;
+      var scored=P.map(function(p){return {n:p[0],d:p[5],s:p[1]*w.fr+p[2]*w.pr+p[3]*w.op+p[4]*w.fu};});
+      scored.sort(function(a,b){return b.s-a.s;});
+      list.innerHTML=scored.map(function(x){var pct=Math.round(100*x.s/max);return '<li><span class="pn">'+esc(x.n)+'</span><span class="ps">'+x.s+'</span><span class="pb"><i style="width:'+pct+'%"></i></span><span class="pd">'+esc(x.d)+'</span></li>';}).join('');
+    }
+    sliders.forEach(function(s){s.addEventListener('input',render);});
+    /* property mix */
+    var segs=document.querySelectorAll('#mixbar button');
+    var items=document.querySelectorAll('#mixlist li');
+    segs.forEach(function(b){b.addEventListener('click',function(){
+      var s=b.getAttribute('data-s');
+      segs.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      items.forEach(function(li){li.classList.toggle('on',li.getAttribute('data-s')===s);});
+    });});
+    /* comparison sort */
+    var ct=document.getElementById('cmptable');
+    if(ct){var dir={};ct.querySelectorAll('th[data-k]').forEach(function(th){th.setAttribute('tabindex','0');function go(){var k=+th.getAttribute('data-k');var s=th.getAttribute('data-type')==='s';dir[k]=!dir[k];var tb=ct.tBodies[0];var rs=[].slice.call(tb.rows);rs.sort(function(a,b){var x=a.cells[k].getAttribute('data-v'),y=b.cells[k].getAttribute('data-v');var r=s?x.localeCompare(y):(+y)-(+x);return dir[k]?r:-r;});rs.forEach(function(r){tb.appendChild(r);});}th.addEventListener('click',go);th.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});}
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
