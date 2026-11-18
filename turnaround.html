@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Turnaround strategy names: how the plans were built</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --ink:#000000; --paper:#FFFFFF; --terra:#A64A30; --apricot:#F6D1A3;
+  --muted:#5C5C5C; --line:#E4E0DA; --soft:#FBF6EF;
+  --font:'DM Sans', Arial, Helvetica, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ink:#000000; --paper:#FFFFFF; } }
+:root[data-theme="dark"]{ --ink:#000000; --paper:#FFFFFF; }
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px}
+header.top{display:flex;gap:20px;align-items:flex-start;border-bottom:2px solid var(--terra);padding-bottom:24px}
+header.top img{width:56px;height:56px;flex:0 0 56px;display:block}
+h1{font-size:clamp(28px,4.4vw,46px);line-height:1.05;letter-spacing:-0.025em;margin:0 0 10px;font-weight:700;max-width:22ch}
+.lede{color:var(--muted);max-width:68ch;margin:0;font-size:17px}
+h2{font-size:22px;letter-spacing:-0.015em;margin:44px 0 6px;font-weight:700}
+.sub{color:var(--muted);margin:0 0 18px;max-width:72ch}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.pill{font:500 14px/1 var(--font);border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:9999px;padding:9px 16px;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.pill:focus-visible,.thbtn:focus-visible,.rowbtn:focus-visible,summary:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+.bucketnote{font-size:14px;color:var(--muted);min-height:1.5em;margin:4px 0 0;max-width:72ch}
+
+/* the matrix is the centerpiece */
+.matrix-scroll{overflow-x:auto;margin-top:14px;border-top:1.5px solid var(--ink)}
+table.matrix{border-collapse:collapse;width:100%;min-width:760px}
+.matrix th,.matrix td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+.matrix th.co,.matrix td.co{text-align:left;padding-left:0;width:230px}
+.thbtn{font:500 13px/1.25 var(--font);background:none;border:0;color:var(--ink);cursor:pointer;padding:6px 4px;border-radius:6px;max-width:110px}
+.thbtn[aria-pressed="true"]{background:var(--apricot)}
+.thcount{display:block;font-weight:700;font-size:20px;color:var(--terra);letter-spacing:-0.02em}
+.rowbtn{all:unset;cursor:pointer;display:block;border-radius:4px}
+.rowbtn b{display:block;font-size:15px}
+.rowbtn span{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line)}
+.dot.on{background:var(--terra);border-color:var(--terra)}
+.dot.on.multi{box-shadow:0 0 0 3px var(--apricot)}
+td.pc{font-weight:700;font-size:18px}
+tr.dim td{opacity:.22}
+td.col-hl{background:var(--soft)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .dot{width:12px;height:12px}
+
+/* shared-elements strip */
+.shared{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;border-top:1.5px solid var(--ink);margin-top:14px}
+.shared div{padding:16px 18px 18px 0;border-bottom:1px solid var(--line)}
+.shared h3{margin:0 0 4px;font-size:16px}
+.shared .n{font-size:34px;font-weight:700;letter-spacing:-0.03em;color:var(--terra);line-height:1.1}
+.shared p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+
+/* company detail */
+.cards{border-top:1.5px solid var(--ink);margin-top:14px}
+details.co{border-bottom:1px solid var(--line)}
+details.co[hidden]{display:none}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;padding:18px 0}
+summary::-webkit-details-marker{display:none}
+.sname{font-size:20px;font-weight:700;letter-spacing:-0.015em}
+.smeta{font-size:14px;color:var(--muted);display:block;font-weight:400;letter-spacing:0}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:12px;font-weight:500;border:1px solid var(--ink);border-radius:9999px;padding:3px 10px;white-space:nowrap}
+.tag.stage{border-color:var(--terra);color:var(--terra)}
+.body{padding:0 0 26px}
+.crit{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px 28px;margin-bottom:22px}
+.crit h4{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--terra)}
+.crit p{margin:0;font-size:15px}
+.pillars{list-style:none;margin:0;padding:0;counter-reset:p}
+.pillars li{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;padding:12px 0;border-top:1px solid var(--line)}
+.pillars li::before{counter-increment:p;content:counter(p);font-weight:700;color:var(--terra)}
+.pillars li.hl{background:var(--soft)}
+.pname{font-weight:700}
+.pdesc{grid-column:2;font-size:14px;color:var(--muted)}
+.ptags{grid-column:2;display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.ptag{font-size:12px;background:var(--apricot);border-radius:9999px;padding:2px 9px}
+.note{font-size:14px;color:var(--muted);margin:14px 0 0;max-width:72ch}
+.src{font-size:12.5px;color:var(--muted);margin-top:48px;border-top:1px solid var(--line);padding-top:16px;max-width:90ch}
+.src a{color:var(--terra)}
+
+/* sequencing */
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 28px;border-top:1.5px solid var(--ink);margin-top:14px}
+.models div{padding:14px 0 16px;border-bottom:1px solid var(--line)}
+.models h3{margin:0 0 4px;font-size:16px}
+.models p{margin:0;font-size:14px;color:var(--muted)}
+.models .who{color:var(--ink);font-weight:500;margin-top:6px}
+.seq{border-top:1.5px solid var(--ink);margin-top:14px}
+.seqrow{display:grid;grid-template-columns:200px 1fr;gap:6px 20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.seqrow[hidden]{display:none}
+.seqname b{display:block;font-size:15px}
+.seqname span{font-size:13px;color:var(--muted)}
+.track{position:relative;height:30px;margin:2px 10px 0}
+.track::before{content:"";position:absolute;left:0;right:0;top:14px;height:2px;background:var(--line)}
+.track .zero{position:absolute;top:4px;bottom:4px;width:2px;background:var(--ink)}
+.mk{position:absolute;top:7px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:2px solid var(--paper);background:var(--terra);box-shadow:0 0 0 1.5px var(--terra)}
+.mk.d1{background:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+.mk.pre{background:var(--paper);box-shadow:0 0 0 1.5px var(--muted)}
+.mk.far{border-radius:3px;transform:rotate(45deg)}
+.axis{position:relative;height:18px;margin:0 10px;font-size:11.5px;color:var(--muted)}
+.axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.steps{grid-column:2;list-style:none;margin:6px 0 0;padding:0}
+.steps li{display:grid;grid-template-columns:96px 1fr;gap:10px;font-size:14px;padding:5px 0}
+.steps .when{color:var(--muted);font-variant-numeric:tabular-nums}
+.steps .d1 .when{color:var(--ink);font-weight:700}
+.steps .later .when{color:var(--terra);font-weight:500}
+.msg{grid-column:2;font-size:14px;margin:8px 0 0;padding-left:12px;border-left:3px solid var(--apricot)}
+.crit .wide{grid-column:1/-1}
+@media (max-width:700px){
+  .seqrow{grid-template-columns:1fr}
+  .steps,.msg{grid-column:1}
+  .steps li{grid-template-columns:84px 1fr}
+}
+
+@media (max-width:640px){
+  summary{grid-template-columns:1fr}
+  .tagrow{justify-content:flex-start}
+  header.top img{width:50px;height:50px;flex-basis:50px}
+}
+@media (prefers-reduced-motion:no-preference){ tr td{transition:opacity .2s} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD4yooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig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" alt="Consello" width="56" height="56">
+  <div>
+    <h1>How turnaround plans were built and sold to investors</h1>
+    <p class="lede">Seventeen public turnaround and growth programs, compared on the four things each gave the Street (a name, pillars, a financial framework and an early proof point) and on how they rolled each one out. Public sources only.</p>
+  </div>
+</header>
+
+<h2>Filter by naming pattern</h2>
+<p class="sub">Each plan is sorted into one of the four naming patterns. Pick one to narrow the comparison below.</p>
+<div class="pills" id="buckets" role="group" aria-label="Naming pattern"></div>
+<p class="bucketnote" id="bucketnote"></p>
+
+<h2>Which themes each plan’s pillars cover</h2>
+<p class="sub">Tap a theme to highlight the pillars behind it. Tap a company to open its detail.</p>
+<div class="matrix-scroll"><table class="matrix" id="matrix"></table></div>
+<div class="legend"><span><i class="dot on"></i>One pillar covers this theme</span><span><i class="dot on multi"></i>Two or more pillars cover it</span></div>
+
+<h2>How each plan was rolled out</h2>
+<p class="sub">What each company said on day one, what it added later, and how long the hard numbers took. Month 0 is the plan’s public launch; hollow dots are what came before it. Diamonds at the right edge are milestones beyond 60 months.</p>
+<div class="models" id="models"></div>
+<div class="legend"><span><i class="mk d1" style="position:static;display:inline-block;margin:0"></i>Day one</span><span><i class="mk" style="position:static;display:inline-block;margin:0"></i>Added later</span><span><i class="mk pre" style="position:static;display:inline-block;margin:0"></i>Before the name</span></div>
+<div class="seq" id="seq"></div>
+
+<h2>What they had in common</h2>
+<p class="sub">Counts update with the filter above.</p>
+<div class="shared" id="shared"></div>
+
+<h2>Plan by plan</h2>
+<p class="sub">Open a plan to see its pillars and the four elements it shared with investors.</p>
+<div class="cards" id="cards"></div>
+
+<div class="src">
+<p><b>How to read this.</b> Pillars are as the companies stated them publicly. The theme tags are Consello’s classification. Starbucks never published a numbered pillar list for Back to Starbucks, so its five entries are the workstreams management described to investors. Best Buy’s five priorities are from the November 2012 analyst day.</p>
+<p><b>Sources.</b> NIKE, Inc. Investor Day release and 8-K (Nov 17, 2026); Nike FY25 Q4, FY26 Q1 and Q3 earnings calls; Starbucks 2026 Investor Day release and coverage; Macy’s, Inc. investor site and Feb 2024 coverage; Best Buy Nov 2012 8-K, 2013 proxy, McKinsey interview with Hubert Joly; McDonald’s corporate releases (2020, 2023); lululemon Power of Three ×2 release (Apr 20, 2022). Starbucks Oct 22 and Oct 30, 2024 releases; Ralph Lauren 2018 8-K and 2025 Investor Day release; Disney Q1 FY2023 call coverage; Tapestry FY2020 Q4 release and 2020 proxy; Estée Lauder Q2 FY2025 release and call; Unilever Mar 2024 RNS; Kering Capital Markets Day release (Apr 16, 2026); Boeing Q3 2024 call; Chipotle Jun 27, 2018 release; Intel IDM 2.0 release (Mar 23, 2021); McDonald’s Dec 2023 Investor Update. Apple’s 1997–98 milestones, Best Buy’s early-2013 milestones and items marked medium confidence are from memory. Headlines for Apple and Disney follow common framing; neither company branded a formal plan with those words. Core messages are paraphrased. Prepared November 17, 2026.</p>
+</div>
+</div>
+
+<script>
+const THEMES = [
+  {id:"product", label:"Product & core offer"},
+  {id:"customer", label:"Customer experience"},
+  {id:"brand", label:"Brand & marketing"},
+  {id:"channel", label:"Channel, digital & partners"},
+  {id:"footprint", label:"Footprint & markets"},
+  {id:"ops", label:"Operations & cost"},
+  {id:"people", label:"People & culture"}
+];
+const BUCKETS = [
+  {id:"all", label:"All plans", note:""},
+  {id:"restoration", label:"Restoration", note:"Names that promise a return to what worked. Strong when the core asset is intact; the risk is reading as nostalgia."},
+  {id:"momentum", label:"Momentum", note:"Names that signal forward motion. Energizing, mostly generic, and exposed when a quarter misses."},
+  {id:"asset", label:"Own brand asset", note:"Names built on something only that brand owns (a color, a logo). The most ownable pattern."},
+  {id:"continuity", label:"Framework continuity", note:"Names that extend a prior plan. Signals consistency, and inherits the old plan’s scorecard."},
+  {id:"principle", label:"Brand idea or principle", note:"Names built on a value or a brand idea the company wants to restore. Durable, and only as credible as the operating proof behind it."},
+  {id:"unbranded", label:"No branded name", note:"Priorities without a plan name. Keeps attention on execution; gives investors nothing short to repeat."}
+];
+const CO = [
+ {id:"nike-wn", co:"Nike", plan:"Win Now", year:"Dec 2024 – 2026", ceo:"Elliott Hill", bucket:"momentum", stage:"Bridge plan",
+  criteria:{
+   name:"A short-term label for the reset, with a stated end date: actions wrap up by the end of calendar 2026.",
+   pillars:"Five actions, applied to five key sports, three key countries and five key cities. Later organized into a sport-by-sport structure (the Sport Offense).",
+   fin:"None on purpose. Full-year and long-term guidance was withheld until the Win Now actions finished, which set up today’s framework.",
+   proof:"Nike Running, the first sport moved to the new structure, grew more than 20% in a quarter."},
+  pillars:[
+   {n:"Culture", d:"Reset how teams work and make decisions.", t:["people"]},
+   {n:"Product", d:"Refocus franchises and pull back aging classics.", t:["product"]},
+   {n:"Marketing and storytelling", d:"Invest in big sport moments to win back brand voice.", t:["brand"]},
+   {n:"Marketplace", d:"Clean inventory and rebalance from direct-first toward wholesale partners.", t:["channel"]},
+   {n:"Ground game", d:"Win in priority cities and countries through local execution.", t:["footprint"]}
+  ]},
+ {id:"nike-fsa", co:"Nike", plan:"Full Stride Ahead", year:"Nov 17, 2026", ceo:"Elliott Hill", bucket:"momentum", stage:"Growth plan",
+  criteria:{
+   name:"The long-term strategy name, introduced at Investor Day once the bridge plan was near complete. Pillars are one-word capitalized labels.",
+   pillars:"Three pillars, focused on Performance Sports, Sportswear and 23 priority countries.",
+   fin:"About $5B of incremental revenue by FY2031 on an FY2027 base; 12–14% operating margin; $3.00–$3.50 adjusted EPS; about $12B in cumulative capital returns. FY2027 guidance reaffirmed.",
+   proof:"The Sport Offense results from the Win Now period, led by Running, plus new innovation shown on the day."},
+  pillars:[
+   {n:"EPIC: create athlete demand", d:"Scale innovation platforms, bring newness to Sportswear, restore Jordan’s premium position.", t:["product","brand"]},
+   {n:"CONNECTED: deepen local relevance", d:"Locally tailored product and experiences; continue the Greater China reset.", t:["footprint","customer"]},
+   {n:"FAST: capture demand faster, operate more efficiently", d:"Integrated planning, a more responsive supply network, simpler processes, data and AI.", t:["ops"]}
+  ]},
+ {id:"sbux", co:"Starbucks", plan:"Back to Starbucks", year:"Fall 2024 – present", ceo:"Brian Niccol", bucket:"restoration", stage:"Turnaround plan",
+  criteria:{
+   name:"Named in the CEO’s first months. Frames the problem as drift from the core coffeehouse experience.",
+   pillars:"No numbered pillar list. Management described about five workstreams consistently to investors.",
+   fin:"A financial framework through FY2028, including margin targets, came later, at the January 2026 Investor Day.",
+   proof:"Coffeehouse uplifts in stores; global same-store sales up nearly 8% in a recent quarter and four straight quarters of U.S. comp growth."},
+  pillars:[
+   {n:"Faster, simpler service", d:"Reset operating fundamentals and reduce complexity for baristas.", t:["ops"]},
+   {n:"Relevant menu", d:"Simplify, then innovate the menu.", t:["product"]},
+   {n:"Coffeehouse experience and store portfolio", d:"Uplift stores with more seating; close locations that don’t meet the bar.", t:["customer","footprint"]},
+   {n:"Starbucks Rewards", d:"A reimagined loyalty program.", t:["channel","customer"]},
+   {n:"Invest in partners", d:"Staffing investment funded partly by cost savings.", t:["people"]}
+  ]},
+ {id:"macys", co:"Macy’s, Inc.", plan:"A Bold New Chapter", year:"Feb 2024", ceo:"Tony Spring", bucket:"momentum", stage:"Turnaround plan",
+  criteria:{
+   name:"Announced with weak Q4 results and during an activist campaign. Presented as a call to action against the status quo.",
+   pillars:"Three priorities, with an explicit footprint decision: close about 150 stores and invest in about 350.",
+   fin:"Low-single-digit comparable sales growth and mid-single-digit adjusted EBITDA growth for 2025 and beyond.",
+   proof:"The “First 50” pilot stores, which posted comp growth and higher NPS."},
+  pillars:[
+   {n:"Strengthen the Macy’s nameplate", d:"Better assortment and value, modernized stores, close ~150 underproductive locations.", t:["product","customer","footprint"]},
+   {n:"Accelerate luxury growth", d:"About 15 new Bloomingdale’s and at least 30 new Bluemercury stores.", t:["footprint"]},
+   {n:"Simplify and modernize operations", d:"Monetize supply chain assets, streamline fulfillment, better inventory planning, scalable tech.", t:["ops"]}
+  ]},
+ {id:"bby", co:"Best Buy", plan:"Renew Blue", year:"Nov 2012 – 2017", ceo:"Hubert Joly", bucket:"asset", stage:"Turnaround plan",
+  criteria:{
+   name:"Built on the blue shirts and the company’s history. Presented eight weeks after the CEO joined, under activist pressure.",
+   pillars:"Five priorities, one per constituency.",
+   fin:"5–6% operating margin and ROIC of up to 15%.",
+   proof:"Price matching against online competitors, rolled out within weeks; more than $1B in costs taken out over the program."},
+  pillars:[
+   {n:"Customers", d:"Reinvigorate the customer experience, online and in store.", t:["customer","channel"]},
+   {n:"Employees", d:"Attract, engage and inspire leaders and the Blue Shirts.", t:["people"]},
+   {n:"Vendors", d:"Deepen relationships with vendor partners.", t:["channel"]},
+   {n:"Shareholders", d:"Raise ROIC through cost cuts and sales growth.", t:["ops"]},
+   {n:"Communities", d:"Continue leadership in public responsibility.", t:["people"]}
+  ],
+  note:"Successor plan: “Best Buy 2020: Building the New Blue,” announced when Renew Blue was declared complete."},
+ {id:"mcd", co:"McDonald’s", plan:"Accelerating the Arches", year:"Nov 2020; 2.0 in 2023", ceo:"Chris Kempczinski", bucket:"asset", stage:"Growth plan",
+  criteria:{
+   name:"Named after the Golden Arches; the pillars spell M-C-D, the stock ticker.",
+   pillars:"Three pillars, kept stable through the 2023 update, which added a fourth D for restaurant development.",
+   fin:"Updated targets for development, loyalty membership and cloud technology at the December 2023 Investor Update.",
+   proof:"About 30% comparable sales growth since 2019 attributed to the plan; digital at over a third of sales in top markets."},
+  pillars:[
+   {n:"Maximize our marketing", d:"Brand-led marketing and culturally relevant storytelling.", t:["brand"]},
+   {n:"Commit to the core", d:"Focus on core menu items: burgers, chicken, coffee.", t:["product"]},
+   {n:"Double down on the 3 D’s (4 D’s in 2.0)", d:"Digital, delivery, drive-thru; development added in 2023.", t:["channel","footprint"]}
+  ],
+  note:"Successor version: Accelerating the Arches 2.0 (2023)."},
+ {id:"lulu", co:"lululemon", plan:"Power of Three ×2", year:"Apr 2022", ceo:"Calvin McDonald", bucket:"continuity", stage:"Growth plan",
+  criteria:{
+   name:"Extended the 2019 Power of Three plan, with the same three pillars and doubled targets.",
+   pillars:"Three pillars, plus an Impact Agenda for people and planet.",
+   fin:"Double revenue to $12.5B by 2026 (15% CAGR from 2021); double men’s and digital; quadruple international.",
+   proof:"The original Power of Three hit its 2023 targets early."},
+  pillars:[
+   {n:"Product innovation", d:"Technical product and new categories.", t:["product"]},
+   {n:"Guest experience", d:"Connect physical and digital; cultivate community.", t:["customer","channel"]},
+   {n:"Market expansion", d:"Quadruple international revenue; China as the biggest opportunity.", t:["footprint"]}
+  ],
+  note:"This scorecard remains public until it is formally replaced."},
+ {id:"apple", co:"Apple", plan:"Back to Basics (no formal plan name)", year:"Sep 1997", ceo:"Steve Jobs", bucket:"restoration", stage:"Turnaround plan",
+  criteria:{
+   name:"“Back to Basics” is how commentators framed it; Apple never branded a plan. The message was carried by actions and the Think Different campaign.",
+   pillars:"Four moves, made within months of Jobs’ return.",
+   fin:"None. Apple gave no long-range targets; it returned to profit within two quarters.",
+   proof:"Profitable quarter reported January 1998, then the iMac in May 1998."},
+  pillars:[
+   {n:"Focus the product line", d:"Cut a sprawling lineup to four products: consumer and pro, desktop and portable.", t:["product"]},
+   {n:"Stabilize the ecosystem", d:"Microsoft investment and five-year Office-for-Mac commitment.", t:["channel"]},
+   {n:"Make the brand mean something again", d:"Think Different campaign.", t:["brand"]},
+   {n:"Fix operations and selling", d:"Cut inventory, launch the build-to-order online store.", t:["ops","channel"]}
+  ],
+  note:"Dates and moves for Apple are from memory and carry medium confidence."},
+ {id:"rl", co:"Ralph Lauren", plan:"Next Great Chapter", year:"Jun 2018; updated 2022, 2025", ceo:"Patrice Louvet", bucket:"momentum", stage:"Turnaround plan",
+  criteria:{
+   name:"“Writing Our Next Great Chapter,” unveiled about 11 months into the CEO’s tenure. Kept and versioned since: Accelerate (2022), Drive (2025).",
+   pillars:"Five priorities in 2018; Drive (2025) narrowed to three.",
+   fin:"2018: low-to-mid-single-digit revenue CAGR and mid-teens operating margin by FY2023, return to growth in FY2020. 2025: mid-single-digit CAGR through FY2028 and at least $2B returned.",
+   proof:"Deliberate revenue decline from exiting distribution, with margin expansion as the early evidence."},
+  pillars:[
+   {n:"Win over a new generation of consumers", d:"Put the consumer back at the center.", t:["customer","brand"]},
+   {n:"Energize core products, build under-developed categories", d:"Iconic core plus high-potential categories.", t:["product"]},
+   {n:"Drive targeted expansion in regions and channels", d:"Key cities, especially China.", t:["footprint","channel"]},
+   {n:"Lead with digital", d:"Digital across all activities.", t:["channel"]},
+   {n:"Operate with discipline to fuel growth", d:"Restructuring and cost savings funding brand investment.", t:["ops"]}
+  ],
+  note:"Drive (2025) pillars: elevate and energize the lifestyle brand; drive the core and expand for more; win in key cities with the consumer ecosystem."},
+ {id:"disney", co:"Disney", plan:"Creativity at the Centre", year:"Feb 2023", ceo:"Bob Iger", bucket:"principle", stage:"Turnaround plan",
+  criteria:{
+   name:"An organizing principle, not a program name: return authority to creative leaders. Announced on Iger’s first earnings call back, under activist pressure.",
+   pillars:"A reorganization into three segments, a cost program and a streaming reset.",
+   fin:"$5.5B cost savings and about 7,000 job cuts on day one, plus a commitment to restore the dividend by year-end.",
+   proof:"Dividend restored and savings target raised later in 2023; entertainment streaming turned profitable in 2024."},
+  pillars:[
+   {n:"Put creativity back at the center", d:"Three segments (Disney Entertainment, ESPN, Parks, Experiences and Products), with creative leaders accountable for results.", t:["people","product"]},
+   {n:"Run more efficiently", d:"$5.5B in savings across content and operating costs.", t:["ops"]},
+   {n:"Make streaming profitable and restore returns", d:"Curate content, fix streaming economics, bring back the dividend.", t:["channel"]}
+  ]},
+ {id:"coach", co:"Tapestry (Coach)", plan:"Acceleration Program / Expressive Luxury", year:"Aug 2020", ceo:"Joanne Crevoiserat", bucket:"principle", stage:"Turnaround plan",
+  criteria:{
+   name:"Two layers: a corporate program name (Acceleration Program) and Coach’s brand idea (Expressive Luxury). Announced weeks into the interim CEO role.",
+   pillars:"Three program pillars.",
+   fin:"No fiscal 2021 outlook. Directional expectations only: top-line growth from the second half of FY2021, bottom-line growth in FY2021–23. Multi-year targets came later.",
+   proof:"Results beat expectations within two quarters, credited to the program; gross margin expanded on less promotion."},
+  pillars:[
+   {n:"Sharpen focus on the consumer", d:"Brand-led, consumer-centered growth.", t:["customer","brand"]},
+   {n:"Use data and lead with digital", d:"Digital-first mindset across brands.", t:["channel"]},
+   {n:"Become leaner and more responsive", d:"Streamline the organization, close select stores.", t:["ops","footprint"]}
+  ],
+  note:"The slide dates this June 2020; the program was first presented publicly on August 13, 2020. FY2025 targets from the 2022 investor day are from memory (medium confidence)."},
+ {id:"el", co:"Estée Lauder", plan:"Beauty Reimagined", year:"Feb 2025", ceo:"Stéphane de La Faverie", bucket:"momentum", stage:"Turnaround plan",
+  criteria:{
+   name:"Launched on the CEO’s first earnings call, about five weeks into the job, with a candid account of lost agility.",
+   pillars:"Five action-plan priorities, enabled by an expanded restructuring program.",
+   fin:"A solid double-digit adjusted operating margin “over the next few years.” The growth algorithm was explicitly deferred until the plan was operationalized.",
+   proof:"Early channel moves (Amazon Premium Beauty, TikTok Shop) and faster innovation cycles."},
+  pillars:[
+   {n:"Accelerate best-in-class consumer coverage", d:"Expand into high-growth channels, markets, media and price tiers.", t:["channel","footprint"]},
+   {n:"Create transformative innovation", d:"Triple the share of innovation launched in under a year.", t:["product"]},
+   {n:"Fuel consumer-facing investments", d:"More visible advertising; cut unproductive spend.", t:["brand"]},
+   {n:"Drive growth through bold efficiencies", d:"Expanded Profit Recovery and Growth Plan.", t:["ops"]},
+   {n:"Reimagine the way we work", d:"Remove complexity, simplify the organization.", t:["people"]}
+  ]},
+ {id:"unilever", co:"Unilever", plan:"Growth Action Plan", year:"Oct 2023", ceo:"Hein Schumacher", bucket:"momentum", stage:"Turnaround plan",
+  criteria:{
+   name:"A plain program name, launched about three months into the CEO’s tenure. Later extended as GAP 2030.",
+   pillars:"Three focus areas: performance, productivity, culture.",
+   fin:"Medium-term guidance came five months later with the portfolio move: mid-single-digit underlying sales growth and modest margin improvement.",
+   proof:"30 Power Brands growing faster than the group; Ice Cream separation and an €800M productivity program."},
+  pillars:[
+   {n:"Performance: fewer, bigger bets", d:"Concentrate investment on 30 Power Brands; bigger innovations.", t:["product","brand"]},
+   {n:"Productivity", d:"€800M savings program; separate Ice Cream.", t:["ops"]},
+   {n:"Culture", d:"Sharper performance focus, stretching targets, new leadership team.", t:["people"]}
+  ],
+  note:"The CEO was replaced in March 2025; the plan continued under his successor."},
+ {id:"kering", co:"Kering", plan:"ReconKering", year:"Apr 2026", ceo:"Luca de Meo", bucket:"asset", stage:"Turnaround plan",
+  criteria:{
+   name:"A play on the company name (reconnect, reconstruct), unveiled at a Capital Markets Day seven months into the CEO’s tenure.",
+   pillars:"House-level brand strategies, growth engines and a shared Group platform, sequenced in three phases to 2030.",
+   fin:"ROCE above 20% mid-term, capex at 5–6% of revenue, about 50% payout, and doubling jewelry revenue by 2030.",
+   proof:"Portfolio and balance-sheet moves before the plan (beauty sale, property deal); stabilized organic revenue in Q1 2026."},
+  pillars:[
+   {n:"Desirability first", d:"Distinct strategies for each House, measured by a brand-equity framework.", t:["brand","product"]},
+   {n:"Reset Gucci’s distribution and pricing", d:"Refurbish or relocate stores, cut selling space, reduce inventory.", t:["footprint","ops"]},
+   {n:"Scale growth engines", d:"Jewelry, eyewear and Kering Next.", t:["product","footprint"]},
+   {n:"One Group platform and financial discipline", d:"Shared services for speed and efficiency; capital efficiency targets.", t:["ops"]}
+  ]},
+ {id:"boeing", co:"Boeing", plan:"No plan name", year:"Oct 2024", ceo:"Kelly Ortberg", bucket:"unbranded", stage:"Turnaround plan",
+  criteria:{
+   name:"No branded plan. Four priorities were laid out on the first earnings call, about 11 weeks in, and published to employees beforehand.",
+   pillars:"Four priorities.",
+   fin:"No long-term targets. The early financial actions were a large equity raise and workforce cuts to protect the investment-grade rating.",
+   proof:"Ending the strike and restarting production; later, regulator approval to raise 737 output."},
+  pillars:[
+   {n:"Fundamental culture change", d:"Leaders closer to the work; stop the festering of issues.", t:["people"]},
+   {n:"Stabilize the business", d:"End the strike, restart production, restore the balance sheet.", t:["ops"]},
+   {n:"Execution discipline on development programs", d:"Deliver on platform commitments such as the 777X.", t:["product"]},
+   {n:"Build the foundation for the future", d:"A leaner, more focused portfolio before the next aircraft.", t:["ops","product"]}
+  ]},
+ {id:"chipotle", co:"Chipotle", plan:"Cultivate a Better World (purpose; plan unnamed)", year:"Jun 2018", ceo:"Brian Niccol", bucket:"principle", stage:"Turnaround plan",
+  criteria:{
+   name:"The plan itself carried no name; the company purpose, Cultivate a Better World, framed it. Laid out on a special investor call about three months into the job.",
+   pillars:"Five focus areas.",
+   fin:"No numeric targets at launch; the CFO said it was too early to time the impact. Restructuring charges and 55–65 restaurant closures were disclosed.",
+   proof:"Digital passed $0.5B and about 11% of 2018 sales; the loyalty program launched in 2019."},
+  pillars:[
+   {n:"A more culturally relevant, engaging brand", d:"Make the brand visible again; a validated menu pipeline.", t:["brand","product"]},
+   {n:"Digital and access", d:"Second make-line, delivery in the app, loyalty in 2019.", t:["channel"]},
+   {n:"Great restaurant operations", d:"Throughput and hospitality, built on great teams.", t:["ops","customer"]},
+   {n:"A disciplined economic model", d:"Close underperforming units; protect unit economics.", t:["ops","footprint"]},
+   {n:"A supporting culture", d:"New talent and a consolidated organization.", t:["people"]}
+  ]},
+ {id:"intel", co:"Intel", plan:"IDM 2.0", year:"Mar 2021", ceo:"Pat Gelsinger", bucket:"continuity", stage:"Turnaround plan",
+  criteria:{
+   name:"A version number on Intel’s existing integrated model, announced about five weeks into the CEO’s tenure.",
+   pillars:"Three components.",
+   fin:"About $20B for two Arizona fabs on day one; long-term financial targets came about 11 months later.",
+   proof:"The process roadmap (five nodes in four years) became the scorecard. The plan was largely unwound by late 2024 as the CEO departed."},
+  pillars:[
+   {n:"Internal factory network at scale", d:"Keep manufacturing in-house as a competitive advantage.", t:["ops"]},
+   {n:"Expanded use of third-party foundries", d:"Build on existing foundry relationships.", t:["channel"]},
+   {n:"Intel Foundry Services", d:"Become a major foundry provider in the U.S. and Europe.", t:["product","footprint"]}
+  ],
+  note:"A cautionary case: a clear name and story on day one, without the operating proof to sustain it."}
+];
+
+
+const MODELS = [
+ {id:"full", label:"Full package on day one", d:"Name, pillars, targets and a pilot or proof point in one announcement. Used when the assessment was finished or the prior plan had already worked.", ids:["macys","lulu","nike-fsa","disney"]},
+ {id:"namefirst", label:"Name first, numbers later", d:"Name, a candid diagnosis and visible early actions, with guidance withheld or kept directional. Targets followed over 5 to 37 months.", ids:["sbux","nike-wn","mcd","el","unilever","coach"]},
+ {id:"hybrid", label:"Priorities first, specifics later", d:"Diagnosis, priorities and investment or margin goals at launch; specific targets and proof points in the months after.", ids:["bby","intel"]},
+ {id:"diagfirst", label:"Diagnosis and actions first, plan later", d:"The first call carried candor and early moves but no plan. The named plan, if any, came 3 to 11 months later.", ids:["rl","kering","chipotle","boeing","apple"]}
+];
+const SEQ = {
+ "nike-wn":{model:"namefirst", guidance:"Already withdrawn before the CEO started; Nike later said guidance would resume once Win Now finished.",
+  msg:"The near-term pain is intentional: clean up the marketplace, lead with sport, and win back the brand’s voice.",
+  steps:[
+   {m:0, when:"Dec 2024", k:"d1", t:"Name and five actions on the CEO’s first earnings call, focused on five sports, three countries and five cities."},
+   {m:6, when:"Jun 2025", k:"later", t:"Sport Offense reorganization announced as the next step; quarter flagged as the largest financial hit from the reset."},
+   {m:9, when:"Sep 2025", k:"later", t:"Proof point: Running up more than 20%; about 8,000 employees realigned by sport."},
+   {m:15, when:"Mar 2026", k:"later", t:"End date set: actions to finish by calendar year-end, then full guidance returns."},
+   {m:23, when:"Nov 2026", k:"later", t:"Replaced by Full Stride Ahead and a 2031 financial framework."}]},
+ "nike-fsa":{model:"full", guidance:"FY2027 guidance reaffirmed and a 2031 framework added.",
+  msg:"Get closer to athletes and put resources where long-term growth is largest.",
+  steps:[
+   {m:-23, when:"Dec 2024", k:"pre", t:"Win Now bridge plan starts; its results become the proof points."},
+   {m:0, when:"Nov 2026", k:"d1", t:"Investor Day: name, three pillars, 23 priority countries, 2031 targets, capital returns and new innovation, all at once."}]},
+ "sbux":{model:"namefirst", guidance:"FY2025 guidance suspended at launch; a financial framework through FY2028 came about 15 months later.",
+  msg:"Starbucks drifted from its core; go back to being the community coffeehouse where coffee comes first.",
+  steps:[
+   {m:-1, when:"Sep 2024", k:"pre", t:"CEO’s first open letter: reestablish the community coffeehouse; 100-day plan."},
+   {m:0, when:"Oct 22, 2024", k:"d1", t:"Name used in preliminary results; guidance suspended; menu simplification and pricing fixes committed."},
+   {m:0, when:"Oct 30, 2024", k:"d1", t:"Q4 call one week later outlines the key strategies."},
+   {m:11, when:"Sep 2025", k:"later", t:"Store closures, about 900 corporate roles cut, 1,000+ coffeehouse refreshes."},
+   {m:15, when:"Jan 2026", k:"later", t:"Investor Day: FY2028 framework with margin targets and a reimagined Rewards program."}]},
+ "macys":{model:"full", guidance:"2024 guidance plus multi-year targets for 2025 and beyond, given at launch.",
+  msg:"A call to action against the status quo: a more modern Macy’s, built on a smaller, better store base.",
+  steps:[
+   {m:0, when:"Feb 2024", k:"d1", t:"With Q4 results: name, three pillars, 150 closures and 350 go-forward stores, luxury store counts, financial targets, First 50 pilot."},
+   {m:11, when:"Jan 2025", k:"later", t:"Pilot results: comp growth at the First 50 stores and three straight quarters of higher NPS."}]},
+ "bby":{model:"hybrid", guidance:"Long-range margin and ROIC goals at launch; detailed cost targets followed.",
+  msg:"An honest assessment first: Best Buy has real strengths to build on, and here is what is broken.",
+  steps:[
+   {m:-1, when:"Oct 2012", k:"pre", t:"Online price-match pilot launched within weeks of the CEO’s arrival."},
+   {m:0, when:"Nov 13, 2012", k:"d1", t:"Analyst day about ten weeks into the job: diagnosis, five priorities, margin and ROIC goals."},
+   {m:3, when:"Early 2013", k:"later", t:"Price matching made permanent; specific cost-reduction target set (later raised)."},
+   {m:52, when:"Mar 2017", k:"later", t:"Declared complete; successor plan Best Buy 2020: Building the New Blue."}]},
+ "mcd":{model:"namefirst", guidance:"No multi-year targets at launch; hard 2027 targets came three years later.",
+  msg:"Build on the brand’s historic strengths; the pillars are rooted in McDonald’s identity.",
+  steps:[
+   {m:0, when:"Nov 2020", k:"d1", t:"Name, M-C-D pillars, the 3 D’s and the MyMcDonald’s digital platform."},
+   {m:26, when:"Jan 2023", k:"later", t:"Accelerating the Arches 2.0: development added as a fourth D, plus leadership changes."},
+   {m:37, when:"Dec 2023", k:"later", t:"Investor Update: 50,000 restaurants, 250M active loyalty members and $45B loyalty sales by 2027."}]},
+ "lulu":{model:"full", guidance:"Five-year revenue target and growth goals at launch.",
+  msg:"Bold but realistic targets set from a position of financial strength.",
+  steps:[
+   {m:-1, when:"2019–2022", k:"pre", t:"Original Power of Three hits its 2023 targets early, becoming the proof point."},
+   {m:0, when:"Apr 2022", k:"d1", t:"Analyst day: name, three pillars, Impact Agenda and the $12.5B scorecard."},
+   {m:44, when:"Dec 2025", k:"later", t:"Interim three-part action plan added: product creation, product activation, enterprise efficiency."}]},
+ "apple":{model:"diagfirst", guidance:"No long-range targets; returned to profit within two quarters.",
+  msg:"Focus on a few great products and make the brand stand for something again.",
+  steps:[
+   {m:-1, when:"Aug 1997", k:"pre", t:"Microsoft investment and partnership announced; new board."},
+   {m:0, when:"Sep 1997", k:"d1", t:"Jobs named interim CEO; Think Different campaign launches."},
+   {m:2, when:"Nov 1997", k:"later", t:"Online store with build-to-order."},
+   {m:4, when:"Jan 1998", k:"later", t:"Product line cut to four; first profitable quarter in a year."},
+   {m:8, when:"May 1998", k:"later", t:"iMac unveiled."}]},
+ "rl":{model:"diagfirst", guidance:"Kept the inherited FY2018 outlook at the first call; five-year targets came with the plan.",
+  msg:"Put the consumer back at the center, elevate the brand, and balance productivity with growth.",
+  steps:[
+   {m:-10, when:"Aug 2017", k:"pre", t:"First call: kept the inherited Way Forward plan and outlook while flagging continued revenue decline."},
+   {m:0, when:"Jun 2018", k:"d1", t:"Investor day: Writing Our Next Great Chapter, five priorities, FY2023 targets, restructuring, $1B buyback."},
+   {m:51, when:"Sep 2022", k:"later", t:"Next Great Chapter: Accelerate."},
+   {m:87, when:"Sep 2025", k:"later", t:"Next Great Chapter: Drive, three drivers and FY2028 targets."}]},
+ "disney":{model:"full", guidance:"Cost target, dividend restoration and streaming-profitability timing given on day one.",
+  msg:"Creativity drives the business, so return authority to creative leaders and run leaner.",
+  steps:[
+   {m:-3, when:"Nov 2022", k:"pre", t:"Iger returns as CEO."},
+   {m:0, when:"Feb 2023", k:"d1", t:"First call back: three-segment reorganization, $5.5B savings, about 7,000 job cuts, dividend promise."},
+   {m:7, when:"Sep 2023", k:"later", t:"Parks investment plan of about $60B over ten years."},
+   {m:9, when:"Nov 2023", k:"later", t:"Savings target raised; dividend restored."},
+   {m:18, when:"Aug 2024", k:"later", t:"Entertainment streaming reaches profitability."}]},
+ "coach":{model:"namefirst", guidance:"No FY2021 outlook; directional return-to-growth expectations; multi-year targets later.",
+  msg:"Sharpen focus on the consumer, lead with digital, and get leaner; Coach stands for expressive luxury.",
+  steps:[
+   {m:-1, when:"Jul 2020", k:"pre", t:"Crevoiserat named interim CEO."},
+   {m:0, when:"Aug 2020", k:"d1", t:"Acceleration Program and three pillars with Q4 results; no FY2021 outlook."},
+   {m:2, when:"Oct 2020", k:"later", t:"Named permanent CEO; first-quarter results beat on the program."},
+   {m:25, when:"Sep 2022", k:"later", t:"Investor day with FY2025 targets (medium confidence)."}]},
+ "el":{model:"namefirst", guidance:"Margin ambition on day one; the growth algorithm was explicitly deferred.",
+  msg:"We lost our agility; become leaner, faster and consumer-centric to restore growth.",
+  steps:[
+   {m:-1, when:"Jan 2025", k:"pre", t:"De La Faverie becomes CEO."},
+   {m:0, when:"Feb 2025", k:"d1", t:"First call: Beauty Reimagined, five priorities, expanded restructuring, margin ambition."},
+   {m:6, when:"Aug 2025", k:"later", t:"First full-year outlook under the plan (medium confidence)."}]},
+ "unilever":{model:"namefirst", guidance:"Medium-term targets came five months after the name, with the portfolio move.",
+  msg:"Do fewer things, better, with greater impact.",
+  steps:[
+   {m:-3, when:"Jul 2023", k:"pre", t:"Schumacher becomes CEO."},
+   {m:0, when:"Oct 2023", k:"d1", t:"Growth Action Plan launched."},
+   {m:5, when:"Mar 2024", k:"later", t:"Ice Cream separation, €800M productivity program, enhanced medium-term guidance."},
+   {m:17, when:"Mar 2025", k:"later", t:"CEO replaced; plan continues."},
+   {m:26, when:"Dec 2025", k:"later", t:"Ice Cream demerger completed (medium confidence)."}]},
+ "kering":{model:"diagfirst", guidance:"No plan at the first results; full targets at the Capital Markets Day.",
+  msg:"Reconnect with what makes Kering unique while embracing what luxury is becoming.",
+  steps:[
+   {m:-7, when:"Sep 2025", k:"pre", t:"De Meo becomes CEO."},
+   {m:-6, when:"Oct 2025", k:"pre", t:"Beauty business sold to L’Oréal; balance-sheet repair begins."},
+   {m:0, when:"Apr 2026", k:"d1", t:"Capital Markets Day: ReconKering, three phases to 2030, ROCE and jewelry targets."}]},
+ "boeing":{model:"diagfirst", guidance:"No long-term targets; focus on cash, production and the balance sheet.",
+  msg:"This is a big ship that will take time to turn; culture change comes first.",
+  steps:[
+   {m:-2, when:"Aug 2024", k:"pre", t:"Ortberg becomes CEO; layoffs announced in October."},
+   {m:0, when:"Oct 2024", k:"d1", t:"First call: four priorities, published to employees in advance."},
+   {m:1, when:"Nov 2024", k:"later", t:"Equity raise completed; strike ends."},
+   {m:12, when:"Oct 2025", k:"later", t:"Regulator lets 737 output rise (medium confidence)."}]},
+ "chipotle":{model:"diagfirst", guidance:"No numeric targets at plan launch; restructuring charges disclosed.",
+  msg:"The brand had become invisible; make it visible, accessible and culturally relevant.",
+  steps:[
+   {m:-3, when:"Mar 2018", k:"pre", t:"Niccol becomes CEO."},
+   {m:-2, when:"Apr 2018", k:"pre", t:"First earnings call."},
+   {m:0, when:"Jun 2018", k:"d1", t:"Special investor call: five focus areas, 55–65 closures, headquarters move."},
+   {m:3, when:"Sep 2018", k:"later", t:"New brand campaign launches."},
+   {m:9, when:"Mar 2019", k:"later", t:"Loyalty program launches; digital reported at about 11% of 2018 sales."}]},
+ "intel":{model:"hybrid", guidance:"Strategy and capex on day one; long-term financial targets about 11 months later.",
+  msg:"Only Intel can pair leading design with at-scale manufacturing; rebuild leadership through the factory.",
+  steps:[
+   {m:-1, when:"Feb 2021", k:"pre", t:"Gelsinger becomes CEO."},
+   {m:0, when:"Mar 2021", k:"d1", t:"IDM 2.0: three components, $20B Arizona fabs, Intel Foundry Services."},
+   {m:4, when:"Jul 2021", k:"later", t:"Process roadmap: five nodes in four years."},
+   {m:11, when:"Feb 2022", k:"later", t:"Investor meeting with long-term financial targets."},
+   {m:41, when:"Aug 2024", k:"later", t:"Dividend suspended, major workforce cut."},
+   {m:45, when:"Dec 2024", k:"later", t:"CEO departs."}]}
+};
+const MIN_M=-12, MAX_M=60;
+const pos = m => ((Math.min(MAX_M,Math.max(MIN_M,m))-MIN_M)/(MAX_M-MIN_M)*100).toFixed(2)+"%";
+function renderModels(){
+  const vis = visible().map(c=>c.id);
+  $("#models").innerHTML = MODELS.map(m=>{
+    const names = m.ids.filter(id=>vis.includes(id)).map(id=>CO.find(c=>c.id===id).plan);
+    return `<div><h3>${m.label}</h3><p>${m.d}</p><p class="who">${names.length?names.join(", "):"None in this filter"}</p></div>`;
+  }).join("");
+}
+function renderSeq(){
+  const vis = visible();
+  const ticks=[-12,0,12,24,36,48,60];
+  const axis = `<div class="axis" aria-hidden="true">${ticks.map(t=>`<span style="left:${pos(t)}">${t===0?"Launch":t===60?"60+":t}</span>`).join("")}</div>`;
+  $("#seq").innerHTML = CO.map(c=>{
+    const q=SEQ[c.id];
+    return `<div class="seqrow" ${vis.includes(c)?"":"hidden"}>
+     <div class="seqname"><b>${c.plan}</b><span>${c.co}</span></div>
+     <div><div class="track" role="img" aria-label="${c.plan} rollout timeline"><i class="zero" style="left:${pos(0)}"></i>${q.steps.filter(st=>st.m>=MIN_M).map(st=>`<i class="mk ${st.k==="d1"?"d1":st.k==="pre"?"pre":""} ${st.m>MAX_M?"far":""}" style="left:${pos(st.m)}" title="${st.when}: ${st.t.replace(/"/g,"&quot;")}"></i>`).join("")}</div>${axis}</div>
+     <ol class="steps">${q.steps.map(st=>`<li class="${st.k}"><span class="when">${st.when}</span><span>${st.t}</span></li>`).join("")}</ol>
+     <p class="msg"><b>Core message:</b> ${q.msg}</p>
+    </div>`;
+  }).join("");
+}
+
+const state = {bucket:"all", theme:null};
+const $ = s => document.querySelector(s);
+const visible = () => CO.filter(c => state.bucket==="all" || c.bucket===state.bucket);
+const bucketLabel = id => BUCKETS.find(b=>b.id===id).label;
+const themeLabel = id => THEMES.find(t=>t.id===id).label;
+
+function renderBuckets(){
+  $("#buckets").innerHTML = BUCKETS.map(b=>`<button class="pill" data-b="${b.id}" aria-pressed="${state.bucket===b.id}">${b.label}</button>`).join("");
+  $("#bucketnote").textContent = BUCKETS.find(b=>b.id===state.bucket).note;
+}
+function themeHits(c,t){ return c.pillars.filter(p=>p.t.includes(t)).length; }
+function renderMatrix(){
+  const vis = visible();
+  let h = `<thead><tr><th class="co" scope="col">Plan</th><th scope="col">Pillars</th>`;
+  THEMES.forEach(t=>{
+    const n = vis.filter(c=>themeHits(c,t.id)>0).length;
+    h += `<th scope="col"><button class="thbtn" data-t="${t.id}" aria-pressed="${state.theme===t.id}"><span class="thcount">${n}</span>${t.label}</button></th>`;
+  });
+  h += `</tr></thead><tbody>`;
+  CO.forEach(c=>{
+    const on = vis.includes(c);
+    h += `<tr class="${on?"":"dim"}"><td class="co"><button class="rowbtn" data-c="${c.id}"><b>${c.plan}</b><span>${c.co}, ${c.year}</span></button></td><td class="pc">${c.pillars.length}</td>`;
+    THEMES.forEach(t=>{
+      const k = themeHits(c,t.id);
+      const lab = k ? `${c.plan}: ${k} pillar${k>1?"s":""} on ${t.label}` : `${c.plan}: no pillar on ${t.label}`;
+      h += `<td class="${state.theme===t.id?"col-hl":""}"><i class="dot ${k?"on":""} ${k>1?"multi":""}" role="img" aria-label="${lab}"></i></td>`;
+    });
+    h += `</tr>`;
+  });
+  $("#matrix").innerHTML = h + `</tbody>`;
+}
+function renderShared(){
+  const vis = visible(); const n = vis.length;
+  const counts = vis.map(c=>c.pillars.length);
+  const avg = n ? (counts.reduce((a,b)=>a+b,0)/n) : 0;
+  const three = counts.filter(x=>x===3).length;
+  const fin = vis.filter(c=>c.id!=="nike-wn").length;
+  const d1fin = vis.filter(c=>["macys","lulu","nike-fsa","bby","disney","kering","rl"].includes(c.id)).length;
+  const finAny = vis.filter(c=>!["nike-wn","apple","boeing"].includes(c.id)).length;
+  const maxP = n ? Math.max(...counts) : 0;
+  const tc = THEMES.map(t=>({t, k:vis.filter(c=>themeHits(c,t.id)>0).length})).sort((a,b)=>b.k-a.k);
+  const top = tc.filter(x=>x.k===tc[0].k && x.k>0).map(x=>x.t.label);
+  const minK = tc[tc.length-1].k; const low = tc.filter(x=>x.k===minK).map(x=>x.t.label);
+  const succ = vis.filter(c=>["nike-wn","bby","mcd","lulu","rl","unilever","intel"].includes(c.id)).length;
+  $("#shared").innerHTML = `
+   <div><span class="n">${n ? avg.toFixed(1) : "–"}</span><h3>Average pillar count</h3><p>${three} of ${n} used exactly three. The most any plan used was ${maxP}.</p></div>
+   <div><span class="n">${d1fin} of ${n}</span><h3>Had hard targets on day one</h3><p>${finAny} of ${n} gave targets at some point. Win Now, Apple and Boeing never set long-range targets.</p></div>
+   <div><span class="n">${n} of ${n}</span><h3>Pointed to a proof point</h3><p>Running, the First 50, store uplifts, price matching, the iMac. Analysts repeat these more often than the plan name.</p></div>
+   <div><span class="n">${n ? tc[0].k+" of "+n : "–"}</span><h3>Most common theme</h3><p>${top.length? top.join(" and ") : "None"}. Least common: ${low.join(" and ")}.</p></div>
+   <div><span class="n">${succ}</span><h3>Later replaced or extended</h3><p>Includes Win Now, Renew Blue, Arches, Power of Three, Next Great Chapter, GAP and IDM 2.0.</p></div>`;
+}
+function renderCards(){
+  const vis = visible();
+  $("#cards").innerHTML = CO.map(c=>`
+   <details class="co" id="${c.id}" ${vis.includes(c)?"":"hidden"}>
+    <summary><span class="sname">${c.plan}<span class="smeta">${c.co}, ${c.ceo}, ${c.year}</span></span>
+     <span class="tagrow"><span class="tag">${bucketLabel(c.bucket)}</span><span class="tag stage">${c.stage}</span><span class="tag">${c.pillars.length} pillars</span></span></summary>
+    <div class="body">
+     <div class="crit">
+      <div><h4>Name</h4><p>${c.criteria.name}</p></div>
+      <div><h4>Pillars</h4><p>${c.criteria.pillars}</p></div>
+      <div><h4>Financial framework</h4><p>${c.criteria.fin}</p></div>
+      <div><h4>Proof point</h4><p>${c.criteria.proof}</p></div>
+      <div><h4>Guidance posture</h4><p>${SEQ[c.id].guidance}</p></div>
+      <div><h4>Core message</h4><p>${SEQ[c.id].msg}</p></div>
+      <div><h4>Launch model</h4><p>${MODELS.find(m=>m.id===SEQ[c.id].model).label}</p></div>
+     </div>
+     <ol class="pillars">${c.pillars.map(p=>`<li class="${state.theme && p.t.includes(state.theme)?"hl":""}"><span class="pname">${p.n}</span><span class="pdesc">${p.d}</span><span class="ptags">${p.t.map(t=>`<span class="ptag">${themeLabel(t)}</span>`).join("")}</span></li>`).join("")}</ol>
+     ${c.note?`<p class="note">${c.note}</p>`:""}
+    </div>
+   </details>`).join("");
+}
+function renderAll(keepOpen){
+  const open = keepOpen ? [...document.querySelectorAll("details.co[open]")].map(d=>d.id) : [];
+  renderBuckets(); renderMatrix(); renderModels(); renderSeq(); renderShared(); renderCards();
+  open.forEach(id=>{const d=document.getElementById(id); if(d && !d.hidden) d.open=true;});
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-b]");
+  if(b){ state.bucket=b.dataset.b; renderAll(true); return; }
+  const t = e.target.closest("[data-t]");
+  if(t){
+    state.theme = state.theme===t.dataset.t ? null : t.dataset.t;
+    renderAll(true);
+    if(state.theme){
+      CO.filter(c=>visible().includes(c) && themeHits(c,state.theme)>0).forEach(c=>{document.getElementById(c.id).open=true;});
+    }
+    return;
+  }
+  const r = e.target.closest("[data-c]");
+  if(r){
+    const id=r.dataset.c;
+    if(!visible().some(c=>c.id===id)){ state.bucket="all"; renderAll(true); }
+    const d=document.getElementById(id); d.open=true;
+    d.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth", block:"start"});
+  }
+});
+renderAll(false);
+</script>
+</body>
+</html>
